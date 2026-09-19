@@ -1,0 +1,347 @@
+{
+ "intro": {
+  "title": "0단계: 들어가기 전에 먼저 알아둘 것",
+  "body": "LLM은 크게 보면 (1) Transformer 구조 → (2) 대규모 사전학습 → (3) instruction tuning / alignment → (4) 추론 강화(reasoning) → (5) 도구 사용, RAG, 에이전트화 이 흐름으로 발전해 왔습니다. Transformer가 뼈대이고, GPT-3가 \"스케일의 힘\"을 보여줬고, InstructGPT가 \"사람 의도에 맞는 모델\"을 보여줬고, 최근에는 DeepSeek 계열처럼 RL 기반 reasoning이 핵심 흐름이 되었습니다."
+ },
+ "stages": [
+  {
+   "no": 1,
+   "title": "Transformer 이전의 배경 이해",
+   "summary": "\"왜 Transformer가 혁신이었는가\"를 이해하기 위한 준비입니다.",
+   "papers": [
+    {
+     "id": "bahdanau2014",
+     "label": "1-1. Attention의 출발점",
+     "title": "Neural Machine Translation by Jointly Learning to Align and Translate",
+     "authors": "Bahdanau et al.",
+     "year": 2014,
+     "desc": "encoder-decoder의 병목을 줄이기 위해 attention을 도입한 고전 논문입니다. Transformer를 보기 전에 \"attention이 왜 필요했는지\"를 이해하는 데 아주 중요합니다.",
+     "keywords": ["attention", "seq2seq", "NMT", "alignment"]
+    }
+   ],
+   "goals": ["seq2seq의 한계", "attention이 필요한 이유", "\"모든 정보를 한 벡터에 압축\"하는 방식의 문제점"]
+  },
+  {
+   "no": 2,
+   "title": "LLM의 뼈대인 Transformer",
+   "summary": "여기부터가 본격적인 시작입니다.",
+   "papers": [
+    {
+     "id": "attention",
+     "label": "2-1. 가장 먼저 읽을 핵심 논문",
+     "title": "Attention Is All You Need",
+     "authors": "Vaswani et al.",
+     "year": 2017,
+     "desc": "Transformer의 원형입니다. self-attention, multi-head attention, positional encoding, encoder-decoder 구조가 모두 여기서 나옵니다. 지금 LLM 대부분의 출발점입니다. 이 논문은 반드시 여러 번 읽는 게 좋습니다. LLM 공부에서 가장 중요한 1편입니다.",
+     "keywords": ["transformer", "self-attention", "multi-head", "positional encoding", "encoder-decoder"]
+    }
+   ],
+   "goals": ["self-attention 계산 방식", "query / key / value", "multi-head attention", "positional encoding", "residual connection, layer norm", "왜 RNN 없이 병렬 처리가 가능한지"]
+  },
+  {
+   "no": 3,
+   "title": "사전학습(pretraining)의 두 갈래 이해",
+   "summary": "\"BERT 계열\"과 \"GPT 계열\"이 어떻게 갈라졌는지 봅니다.",
+   "papers": [
+    {
+     "id": "gpt1",
+     "label": "3-1. GPT 계열의 출발",
+     "title": "Improving Language Understanding by Generative Pre-Training",
+     "authors": "Radford et al.",
+     "year": 2018,
+     "desc": "GPT-1 논문입니다. \"생성형 언어모델을 먼저 크게 학습하고, 이후 task별로 미세조정한다\"는 흐름을 보여줍니다.",
+     "keywords": ["GPT", "generative pre-training", "fine-tuning", "decoder-only"]
+    },
+    {
+     "id": "bert",
+     "label": "3-2. BERT 계열의 출발",
+     "title": "BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding",
+     "authors": "Devlin et al.",
+     "year": 2018,
+     "desc": "양방향 문맥을 이용한 masked language modeling 중심의 대표 논문입니다. GPT와 달리 encoder 중심 모델이 왜 강력했는지 보여줍니다.",
+     "keywords": ["BERT", "masked language model", "bidirectional", "encoder-only"]
+    },
+    {
+     "id": "gpt2",
+     "label": "3-3. GPT-2의 의미",
+     "title": "Language Models are Unsupervised Multitask Learners",
+     "authors": "Radford et al.",
+     "year": 2019,
+     "desc": "GPT-2는 \"다양한 작업이 next-token prediction 하나로 꽤 많이 해결된다\"는 흐름을 강화했습니다. LLM의 \"범용성\" 감각이 여기서 크게 살아납니다.",
+     "keywords": ["GPT-2", "zero-shot", "multitask", "next-token prediction"]
+    },
+    {
+     "id": "t5",
+     "label": "3-4. Text-to-Text 패러다임",
+     "title": "Exploring the Limits of Transfer Learning with a Unified Text-to-Text Transformer (T5)",
+     "authors": "Raffel et al.",
+     "year": 2019,
+     "desc": "모든 NLP 문제를 text-to-text로 통일해버린 매우 중요한 논문입니다. 이후 instruction tuning과도 연결됩니다.",
+     "keywords": ["T5", "text-to-text", "transfer learning", "encoder-decoder"]
+    }
+   ],
+   "goals": ["autoregressive LM과 masked LM 차이", "encoder-only / decoder-only / encoder-decoder 차이", "왜 지금은 decoder-only LLM이 주류가 되었는지"]
+  },
+  {
+   "no": 4,
+   "title": "\"큰 모델이 진짜 달라진다\"를 보여주는 논문",
+   "summary": "스케일의 충격과 compute-optimal scaling.",
+   "papers": [
+    {
+     "id": "gpt3",
+     "label": "4-1. 스케일의 충격",
+     "title": "Language Models are Few-Shot Learners (GPT-3)",
+     "authors": "Brown et al.",
+     "year": 2020,
+     "desc": "GPT-3는 parameter를 크게 키우면 few-shot generalization이 강해진다는 것을 보여줬습니다. 현대 LLM 시대를 연 대표 논문입니다.",
+     "keywords": ["GPT-3", "few-shot", "in-context learning", "scale"]
+    },
+    {
+     "id": "chinchilla",
+     "label": "4-2. 스케일링을 더 똑똑하게",
+     "title": "Training Compute-Optimal Large Language Models (Chinchilla)",
+     "authors": "Hoffmann et al.",
+     "year": 2022,
+     "desc": "\"모델만 키우는 게 아니라 데이터 양도 같이 늘려야 한다\"는 compute-optimal scaling 법칙을 보여줬습니다. 이후 LLM 학습 설계의 기준점이 됐습니다.",
+     "keywords": ["Chinchilla", "scaling laws", "compute-optimal", "tokens"]
+    }
+   ],
+   "goals": ["emergent ability가 왜 나오는지 감각 잡기", "scaling laws", "parameter 수와 token 수의 균형"]
+  },
+  {
+   "no": 5,
+   "title": "사람 말 잘 듣는 모델로 가는 길",
+   "summary": "\"기초 LLM\"에서 \"대화형 챗모델\"로 넘어가는 구간입니다.",
+   "papers": [
+    {
+     "id": "instructgpt",
+     "label": "5-1. 가장 중요한 alignment 논문",
+     "title": "Training language models to follow instructions with human feedback (InstructGPT)",
+     "authors": "Ouyang et al.",
+     "year": 2022,
+     "desc": "instruction tuning + reward model + RLHF의 대표 논문입니다. 왜 단순 pretraining만으로는 사용자 의도에 맞지 않는지, 그리고 RLHF가 왜 필요했는지를 이해하게 해줍니다.",
+     "keywords": ["InstructGPT", "RLHF", "reward model", "SFT", "alignment"]
+    },
+    {
+     "id": "selfinstruct",
+     "label": "5-2. 사람 데이터가 부족할 때",
+     "title": "Self-Instruct: Aligning Language Models with Self-Generated Instructions",
+     "authors": "Wang et al.",
+     "year": 2022,
+     "desc": "instruction 데이터가 부족할 때 모델이 스스로 instruction 데이터를 만들어 정렬을 돕는 아이디어입니다. 오픈소스 instruction tuning 흐름에서 매우 중요합니다.",
+     "keywords": ["Self-Instruct", "instruction data", "bootstrapping"]
+    },
+    {
+     "id": "constitutional",
+     "label": "5-3. 안전성과 원칙 기반 정렬",
+     "title": "Constitutional AI: Harmlessness from AI Feedback",
+     "authors": "Bai et al.",
+     "year": 2022,
+     "desc": "인간 선호뿐 아니라 \"원칙/헌법\"을 기반으로 모델을 정렬하는 접근입니다. 최근 alignment 연구를 이해하는 데 핵심입니다.",
+     "keywords": ["Constitutional AI", "RLAIF", "harmlessness", "alignment"]
+    }
+   ],
+   "goals": ["instruction tuning과 pretraining의 차이", "SFT, reward model, RLHF", "alignment란 무엇인가", "helpful / honest / harmless 관점"]
+  },
+  {
+   "no": 6,
+   "title": "더 간단하고 강한 preference optimization",
+   "summary": "RLHF를 꼭 복잡하게 하지 않고 더 단순한 방법들이 많이 나왔습니다.",
+   "papers": [
+    {
+     "id": "dpo",
+     "label": "6-1. DPO",
+     "title": "Direct Preference Optimization: Your Language Model is Secretly a Reward Model",
+     "authors": "Rafailov et al.",
+     "year": 2023,
+     "desc": "reward model + PPO를 따로 두지 않고, preference pair만으로 직접 최적화하는 방법입니다. 지금 post-training을 공부할 때 거의 필수입니다.",
+     "keywords": ["DPO", "preference optimization", "post-training"]
+    },
+    {
+     "id": "orpo",
+     "label": "6-2. ORPO",
+     "title": "ORPO: Monolithic Preference Optimization without Reference Model",
+     "authors": "Hong et al.",
+     "year": 2024,
+     "desc": "reference model 없이 더 단순하게 preference alignment를 하는 방식입니다. DPO 이후 흐름을 보는 데 좋습니다.",
+     "keywords": ["ORPO", "preference optimization", "reference-free"]
+    }
+   ],
+   "goals": ["PPO 기반 RLHF의 복잡성", "DPO가 왜 인기를 끌었는지", "최근 post-training이 왜 점점 단순화되는지"]
+  },
+  {
+   "no": 7,
+   "title": "추론(reasoning) 시대의 핵심 논문",
+   "summary": "요즘 LLM의 가장 뜨거운 주제입니다.",
+   "papers": [
+    {
+     "id": "cot",
+     "label": "7-1. prompting 기반 reasoning의 출발",
+     "title": "Chain-of-Thought Prompting Elicits Reasoning in Large Language Models",
+     "authors": "Wei et al.",
+     "year": 2022,
+     "desc": "LLM에게 중간 추론 과정을 유도하면 성능이 좋아진다는 것을 보여준 대표 논문입니다. reasoning을 공부하려면 가장 먼저 읽어야 합니다.",
+     "keywords": ["chain-of-thought", "CoT", "reasoning", "prompting"]
+    },
+    {
+     "id": "react",
+     "label": "7-2. reasoning + action",
+     "title": "ReAct: Synergizing Reasoning and Acting in Language Models",
+     "authors": "Yao et al.",
+     "year": 2023,
+     "desc": "생각만 하는 게 아니라 외부 정보 검색, 환경 상호작용 같은 \"행동\"까지 결합합니다. 에이전트의 출발점 중 하나입니다.",
+     "keywords": ["ReAct", "agent", "tool use", "reasoning and acting"]
+    },
+    {
+     "id": "tot",
+     "label": "7-3. 탐색 기반 추론",
+     "title": "Tree of Thoughts: Deliberate Problem Solving with Large Language Models",
+     "authors": "Yao et al.",
+     "year": 2023,
+     "desc": "하나의 사고 흐름이 아니라 여러 후보 thought를 탐색하는 접근입니다. planning과 search가 필요한 문제에서 중요합니다.",
+     "keywords": ["tree of thoughts", "search", "planning", "reasoning"]
+    }
+   ],
+   "goals": ["CoT의 의미", "reasoning trace와 final answer의 차이", "prompt-based reasoning의 한계", "search / planning이 왜 필요한지"]
+  },
+  {
+   "no": 8,
+   "title": "RAG와 외부지식 결합",
+   "summary": "LLM을 실무에 쓰려면 거의 필수입니다.",
+   "papers": [
+    {
+     "id": "rag",
+     "label": "8-1. RAG의 원형",
+     "title": "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks",
+     "authors": "Lewis et al.",
+     "year": 2020,
+     "desc": "모델 파라미터 안의 지식만 쓰는 대신, 외부 문서를 검색해서 함께 생성하는 구조입니다. 오늘날 기업형 LLM 시스템의 기본 골격입니다.",
+     "keywords": ["RAG", "retrieval", "non-parametric memory", "hallucination"]
+    }
+   ],
+   "goals": ["parametric memory vs non-parametric memory", "hallucination 완화 방식", "실무에서 RAG가 왜 중요한지"]
+  },
+  {
+   "no": 9,
+   "title": "파인튜닝과 경량화",
+   "summary": "실제로 모델을 다뤄보려면 꼭 봐야 합니다.",
+   "papers": [
+    {
+     "id": "lora",
+     "label": "9-1. LoRA",
+     "title": "LoRA: Low-Rank Adaptation of Large Language Models",
+     "authors": "Hu et al.",
+     "year": 2021,
+     "desc": "전체 모델을 다 학습하지 않고, 작은 저차원 행렬만 학습해 효율적으로 적응시키는 방법입니다. 실무에서 거의 기본 도구입니다.",
+     "keywords": ["LoRA", "PEFT", "low-rank", "fine-tuning"]
+    },
+    {
+     "id": "qlora",
+     "label": "9-2. QLoRA",
+     "title": "QLoRA: Efficient Finetuning of Quantized LLMs",
+     "authors": "Dettmers et al.",
+     "year": 2023,
+     "desc": "4-bit 양자화된 모델 위에 LoRA를 얹어 적은 메모리로도 큰 모델을 튜닝할 수 있게 해줍니다. 개인 연구/실무에 매우 중요합니다.",
+     "keywords": ["QLoRA", "quantization", "4-bit", "PEFT"]
+    }
+   ],
+   "goals": ["full fine-tuning vs PEFT", "LoRA rank의 의미", "양자화와 튜닝의 결합"]
+  },
+  {
+   "no": 10,
+   "title": "오픈소스 LLM 계열 이해",
+   "summary": "\"최신 공개모델이 어떻게 설계되고 학습되는가\"를 보는 단계입니다.",
+   "papers": [
+    {
+     "id": "llama",
+     "label": "10-1. LLaMA",
+     "title": "LLaMA: Open and Efficient Foundation Language Models",
+     "authors": "Touvron et al.",
+     "year": 2023,
+     "desc": "오픈 모델 생태계를 크게 바꾼 논문입니다. 공개 데이터만으로도 강한 모델을 만들 수 있다는 점이 중요합니다.",
+     "keywords": ["LLaMA", "open-weight", "foundation model"]
+    },
+    {
+     "id": "llama3",
+     "label": "10-2. Llama 3",
+     "title": "The Llama 3 Herd of Models",
+     "authors": "Grattafiori et al.",
+     "year": 2024,
+     "desc": "현대 오픈 LLM이 multilinguality, coding, reasoning, tool usage까지 어떻게 확장되는지 보여줍니다. 최신 오픈 모델 흐름을 이해하는 데 좋습니다.",
+     "keywords": ["Llama 3", "multilingual", "tool use", "open-weight"]
+    }
+   ],
+   "goals": ["최신 오픈소스 LLM의 학습/평가 관점", "context window, multilinguality, tool use", "open-weight 모델 발전 흐름"]
+  },
+  {
+   "no": 11,
+   "title": "효율적인 학습/추론 인프라",
+   "summary": "실제로 LLM을 돌리려면 이 부분도 중요합니다.",
+   "papers": [
+    {
+     "id": "flashattention",
+     "label": "11-1. FlashAttention",
+     "title": "FlashAttention: Fast and Memory-Efficient Exact Attention with IO-Awareness",
+     "authors": "Dao et al.",
+     "year": 2022,
+     "desc": "Transformer가 긴 문맥에서 느리고 무거운 이유를 시스템 관점에서 해결한 중요한 논문입니다.",
+     "keywords": ["FlashAttention", "IO-aware", "GPU", "memory"]
+    },
+    {
+     "id": "flashattention2",
+     "label": "11-2. FlashAttention-2",
+     "title": "FlashAttention-2: Faster Attention with Better Parallelism and Work Partitioning",
+     "authors": "Dao",
+     "year": 2023,
+     "desc": "실전 inference/training 최적화 관점에서 더 발전된 버전입니다. 현대 LLM 시스템 구현을 이해하는 데 좋습니다.",
+     "keywords": ["FlashAttention-2", "parallelism", "work partitioning"]
+    }
+   ],
+   "goals": ["이론 성능과 실제 GPU 성능 차이", "IO bottleneck", "긴 context 처리의 현실적인 문제"]
+  },
+  {
+   "no": 12,
+   "title": "2024~2026 최신 흐름 — reasoning RL",
+   "summary": "이제 최신 쪽입니다.",
+   "papers": [
+    {
+     "id": "deepseekmath",
+     "label": "12-1. GRPO의 등장",
+     "title": "DeepSeekMath: Pushing the Limits of Mathematical Reasoning in Open Language Models",
+     "authors": "DeepSeek-AI",
+     "year": 2024,
+     "desc": "수학 reasoning뿐 아니라, 이후 많이 언급되는 GRPO를 소개했다는 점에서 중요합니다. PPO보다 메모리 효율적으로 reasoning을 강화하는 방향을 보여줍니다.",
+     "keywords": ["DeepSeekMath", "GRPO", "math reasoning", "RL"]
+    },
+    {
+     "id": "deepseekr1",
+     "label": "12-2. reasoning RL의 대표",
+     "title": "DeepSeek-R1: Incentivizing Reasoning Capability in LLMs via Reinforcement Learning",
+     "authors": "DeepSeek-AI",
+     "year": 2025,
+     "desc": "최근 reasoning LLM 흐름에서 가장 영향력이 큰 논문 중 하나입니다. RL만으로 reasoning 패턴이 emergence할 수 있다는 점, 그리고 cold-start + multi-stage training의 중요성을 보여줍니다.",
+     "keywords": ["DeepSeek-R1", "reasoning", "RL", "cold start", "GRPO"]
+    },
+    {
+     "id": "deepseekmathv2",
+     "label": "12-3. 2025 이후 frontier",
+     "title": "DeepSeekMath-V2: Towards Self-Verifiable Mathematical Reasoning",
+     "authors": "DeepSeek-AI",
+     "year": 2025,
+     "desc": "최신 흐름은 단순히 \"정답만 맞추는 reasoning\"이 아니라, 자기 검증(self-verification)이 가능한 reasoning으로 가고 있습니다. frontier 읽기로 좋습니다.",
+     "keywords": ["self-verification", "math reasoning", "frontier"]
+    },
+    {
+     "id": "grpo-theory",
+     "label": "12-4. 이론 보강",
+     "title": "Demystifying Group Relative Policy Optimization",
+     "authors": "",
+     "year": 2026,
+     "desc": "GRPO가 왜 동작하는지 수학적으로 이해하고 싶다면 이 논문이 최신 이론 보강 자료입니다. 입문용은 아니고, DeepSeekMath와 R1을 먼저 본 뒤에 보는 것이 좋습니다.",
+     "keywords": ["GRPO", "theory", "policy optimization"]
+    }
+   ],
+   "goals": ["RL로 reasoning을 강화한다는 개념", "SFT만으로는 부족한 이유", "verifiable reward가 중요한 이유", "앞으로의 frontier가 \"정답 생성\"에서 \"검증 가능한 추론\"으로 가는 흐름"]
+  }
+ ]
+}

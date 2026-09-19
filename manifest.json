@@ -1,0 +1,33 @@
+{
+ "schema": 1,
+ "generatedAt": "2026-09-19T01:31:08Z",
+ "roadmap": {
+  "version": 1,
+  "file": {
+   "path": "roadmap.json",
+   "sha256": "b75f8c258f709243abd5ef66b10101524b55d5b9cb9fc5afd1e48c7f960a5ba6",
+   "size": 17304
+  }
+ },
+ "papers": [
+  {
+   "id": "attention",
+   "title": "Attention Is All You Need",
+   "version": 1,
+   "updatedAt": "2026-09-19T01:31:07Z",
+   "sentences": 152,
+   "words": 193,
+   "changes": "첫 게시",
+   "paper": {
+    "path": "papers/attention/paper.json",
+    "sha256": "83b661fcb04a9ee5c58948ac9134df88b92190d198a07bacf5aff6beef9b04b6",
+    "size": 928784
+   },
+   "voca": {
+    "path": "papers/attention/voca.json",
+    "sha256": "ecda4182fc375c9dfc0486bebb9cf618514ea68ee250b6780ec5155d7e1c7753",
+    "size": 254124
+   }
+  }
+ ]
+}

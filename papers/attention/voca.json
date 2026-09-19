@@ -1,0 +1,4020 @@
+{
+ "paperId": "attention",
+ "parts": [
+  "Part 1. Abstract: 패러다임 선언 및 성능 요약",
+  "Part 2. Introduction: 순환 구조의 본질적 한계 규명",
+  "Part 3. Background: 선행 연구 분석 및 이론적 복잡도 대조",
+  "Part 4. Model Architecture: 인코더-디코더 스택과 연결 구조",
+  "Part 5. Attention & FFN: Scaled Dot-Product, Multi-Head 및 피드포워드",
+  "Part 6. Positional Encoding & Training: 위치 주입과 학습 테크닉",
+  "Part 7. Complexity, Results & Conclusion: 연산 복잡도와 최종 결론"
+ ],
+ "words": [
+  {
+   "id": "w001",
+   "part": 1,
+   "partTitle": "Part 1. Abstract: 패러다임 선언 및 성능 요약",
+   "no": 1,
+   "word": "dominant",
+   "pos": "형",
+   "meaning": "지배적인, 우세한",
+   "context": "Abstract: 당시 SOTA 표준이었던 Seq2Seq + RNN/CNN 지배적 아키텍처를 지칭.",
+   "exampleEn": "The dominant sequence transduction models are based on complex recurrent networks.",
+   "exampleKo": "현재 주류를 이루는 시퀀스 변환 모델들은 복잡한 순환 신경망에 기반을 둡니다.",
+   "paperExamples": [
+    {
+     "sentenceId": "abstract-1",
+     "en": "The dominant sequence transduction models are based on complex recurrent or convolutional neural networks that include an encoder and a decoder.",
+     "ko": "현재 주류를 이루는 시퀀스 변환 모델들은 인코더와 디코더를 포함하는 복잡한 RNN(순환 신경망) 또는 CNN(합성곱 신경망) 구조를기반으로 합니다."
+    }
+   ]
+  },
+  {
+   "id": "w002",
+   "part": 1,
+   "partTitle": "Part 1. Abstract: 패러다임 선언 및 성능 요약",
+   "no": 2,
+   "word": "transduction",
+   "pos": "명",
+   "meaning": "(신호·형태의) 변환, 사상",
+   "context": "입력 시퀀스를 다른 형태/길이의 출력 시퀀스로 매핑하는 기계번역, 요약 등의 통칭 태스크.",
+   "exampleEn": "Sequence transduction is fundamental to automated speech recognition and translation.",
+   "exampleKo": "시퀀스 변환은 자동 음성 인식 및 번역의 기본이 된다.",
+   "paperExamples": [
+    {
+     "sentenceId": "abstract-1",
+     "en": "The dominant sequence transduction models are based on complex recurrent or convolutional neural networks that include an encoder and a decoder.",
+     "ko": "현재 주류를 이루는 시퀀스 변환 모델들은 인코더와 디코더를 포함하는 복잡한 RNN(순환 신경망) 또는 CNN(합성곱 신경망) 구조를기반으로 합니다."
+    },
+    {
+     "sentenceId": "1-1",
+     "en": "Recurrent neural networks, long short-term memory and gated recurrent neural networks in particular, have been firmly established as state of the art approaches in sequence modeling and transduction problems such as language modeling and machine translation.",
+     "ko": "순환 신경망(RNN), 특히 장단기 메모리(LSTM ) 및 게이트 순환 신경망(GRU)은 언어 모델링이나 기계 번역과 같은 시퀀스 모델링 및시퀀스 변환 문제에서 최첨단(state of the art) 접근 방식으로 확고하게 자리 잡아 왔습니다."
+    }
+   ]
+  },
+  {
+   "id": "w003",
+   "part": 1,
+   "partTitle": "Part 1. Abstract: 패러다임 선언 및 성능 요약",
+   "no": 3,
+   "word": "be based on",
+   "pos": "숙어",
+   "meaning": "~에 근거하다, 기반을 두다",
+   "context": "기존 모델들의 구조적 토대가 RNN/CNN에 기반하고 있음을 서술.",
+   "exampleEn": "The report is based on extensive customer feedback and market analysis.",
+   "exampleKo": "그 보고서는 광범위한 고객 피드백과 시장 분석에 근거하고 있다.",
+   "paperExamples": [
+    {
+     "sentenceId": "abstract-1",
+     "en": "The dominant sequence transduction models are based on complex recurrent or convolutional neural networks that include an encoder and a decoder.",
+     "ko": "현재 주류를 이루는 시퀀스 변환 모델들은 인코더와 디코더를 포함하는 복잡한 RNN(순환 신경망) 또는 CNN(합성곱 신경망) 구조를기반으로 합니다."
+    },
+    {
+     "sentenceId": "abstract-3",
+     "en": "We propose a new simple network architecture, the Transformer, based solely on attention mechanisms, dispensing with recurrence and convolutions entirely.",
+     "ko": "우리는 순환(RNN)과 합성곱(CNN)을 완전히 배제하고, 오로지 어텐션 메커니즘에만 기반을 둔 새로운 단순 신경망 아키텍처인 '트랜스포머(Transformer)'를 제안합니다."
+    }
+   ]
+  },
+  {
+   "id": "w004",
+   "part": 1,
+   "partTitle": "Part 1. Abstract: 패러다임 선언 및 성능 요약",
+   "no": 4,
+   "word": "complex",
+   "pos": "형",
+   "meaning": "복잡한 / (명) 복합단지",
+   "context": "기존 모델들이 복잡한 순환/합성곱 연결 구조를 가졌음을 지적하며 단순화의 복선을 깜.",
+   "exampleEn": "The legacy system contains a complex web of interdependent software modules.",
+   "exampleKo": "기존 레거시 시스템은 상호 의존적인 소프트웨어 모듈들의 복잡한 망을 포함한다.",
+   "paperExamples": [
+    {
+     "sentenceId": "abstract-1",
+     "en": "The dominant sequence transduction models are based on complex recurrent or convolutional neural networks that include an encoder and a decoder.",
+     "ko": "현재 주류를 이루는 시퀀스 변환 모델들은 인코더와 디코더를 포함하는 복잡한 RNN(순환 신경망) 또는 CNN(합성곱 신경망) 구조를기반으로 합니다."
+    },
+    {
+     "sentenceId": "3.2.1-10",
+     "en": "While the two are similar in theoretical complexity, dot-product attention is much faster and more space-efficient in practice, since it can be implemented using highly optimized matrix multiplication code. While.",
+     "ko": "이론적 복잡도(theoretical complexity) 측면에서는 두 방식이 유사하지만, 실제(in practice)로는 점곱 어텐션(dot-productattention)이 훨씬 더 빠르고 메모리 공간 효율적입니다. 왜냐하면 고도로 최적화된 행렬 곱셈(matrix multiplication) 코드를 사용하여 구현할 수 있기 때문입니다."
+    }
+   ]
+  },
+  {
+   "id": "w005",
+   "part": 1,
+   "partTitle": "Part 1. Abstract: 패러다임 선언 및 성능 요약",
+   "no": 5,
+   "word": "recurrent",
+   "pos": "형",
+   "meaning": "순환하는, 재발하는",
+   "context": "RNN(Recurrent Neural Network)의 기본 축. 시간 축을 따라 이전 상태를 반복 재사용함.",
+   "exampleEn": "We took preventive measures to avoid the recurrent occurrence of system errors.",
+   "exampleKo": "우리는 시스템 오류의 반복적인 발생을 방지하기 위해 예방 조치를 취했습니다.",
+   "paperExamples": [
+    {
+     "sentenceId": "abstract-1",
+     "en": "The dominant sequence transduction models are based on complex recurrent or convolutional neural networks that include an encoder and a decoder.",
+     "ko": "현재 주류를 이루는 시퀀스 변환 모델들은 인코더와 디코더를 포함하는 복잡한 RNN(순환 신경망) 또는 CNN(합성곱 신경망) 구조를기반으로 합니다."
+    },
+    {
+     "sentenceId": "1-1",
+     "en": "Recurrent neural networks, long short-term memory and gated recurrent neural networks in particular, have been firmly established as state of the art approaches in sequence modeling and transduction problems such as language modeling and machine translation.",
+     "ko": "순환 신경망(RNN), 특히 장단기 메모리(LSTM ) 및 게이트 순환 신경망(GRU)은 언어 모델링이나 기계 번역과 같은 시퀀스 모델링 및시퀀스 변환 문제에서 최첨단(state of the art) 접근 방식으로 확고하게 자리 잡아 왔습니다."
+    }
+   ]
+  },
+  {
+   "id": "w006",
+   "part": 1,
+   "partTitle": "Part 1. Abstract: 패러다임 선언 및 성능 요약",
+   "no": 6,
+   "word": "convolutional",
+   "pos": "형",
+   "meaning": "합성곱의",
+   "context": "CNN(Convolutional Neural Network)의 핵심. 국소 수용 영역(Kernel) 필터 연산 기반.",
+   "exampleEn": "Convolutional layers are widely utilized to extract hierarchical spatial features.",
+   "exampleKo": "합성곱 계층은 계층적인 공간 특징을 추출하기 위해 널리 활용된다.",
+   "paperExamples": [
+    {
+     "sentenceId": "abstract-1",
+     "en": "The dominant sequence transduction models are based on complex recurrent or convolutional neural networks that include an encoder and a decoder.",
+     "ko": "현재 주류를 이루는 시퀀스 변환 모델들은 인코더와 디코더를 포함하는 복잡한 RNN(순환 신경망) 또는 CNN(합성곱 신경망) 구조를기반으로 합니다."
+    },
+    {
+     "sentenceId": "abstract-3",
+     "en": "We propose a new simple network architecture, the Transformer, based solely on attention mechanisms, dispensing with recurrence and convolutions entirely.",
+     "ko": "우리는 순환(RNN)과 합성곱(CNN)을 완전히 배제하고, 오로지 어텐션 메커니즘에만 기반을 둔 새로운 단순 신경망 아키텍처인 '트랜스포머(Transformer)'를 제안합니다."
+    }
+   ]
+  },
+  {
+   "id": "w007",
+   "part": 1,
+   "partTitle": "Part 1. Abstract: 패러다임 선언 및 성능 요약",
+   "no": 7,
+   "word": "include",
+   "pos": "동",
+   "meaning": "포함하다 (반: exclude)",
+   "context": "인코더와 디코더를 필수 기본 구성 블록으로 포함함을 서술.",
+   "exampleEn": "The service package includes automated database backups and 24/7 technical support.",
+   "exampleKo": "서비스 패키지에는 자동 데이터베이스 백업과 연중무휴 기술 지원이 포함됩니다.",
+   "paperExamples": [
+    {
+     "sentenceId": "abstract-1",
+     "en": "The dominant sequence transduction models are based on complex recurrent or convolutional neural networks that include an encoder and a decoder.",
+     "ko": "현재 주류를 이루는 시퀀스 변환 모델들은 인코더와 디코더를 포함하는 복잡한 RNN(순환 신경망) 또는 CNN(합성곱 신경망) 구조를기반으로 합니다."
+    }
+   ]
+  },
+  {
+   "id": "w008",
+   "part": 1,
+   "partTitle": "Part 1. Abstract: 패러다임 선언 및 성능 요약",
+   "no": 8,
+   "word": "perform",
+   "pos": "동",
+   "meaning": "수행하다, 실적/성능을 내다",
+   "context": "best performing models: 당대 가장 뛰어난 성능을 발휘하던 모델들을 칭함.",
+   "exampleEn": "The newly deployed optimization algorithm performed well under heavy transaction loads.",
+   "exampleKo": "새로 배포된 최적화 알고리즘은 과중한 트랜잭션 부하 속에서도 우수한 성능을 발휘했다.",
+   "paperExamples": [
+    {
+     "sentenceId": "abstract-2",
+     "en": "The best performing models also connect the encoder and decoder through an attention mechanism.",
+     "ko": "가장 뛰어난 성능을 내는 모델들 역시 어텐션 메커니즘(attention mechanism)을 통해 인코더와 디코더를 연결합니다."
+    },
+    {
+     "sentenceId": "1-6",
+     "en": "Recent work has achieved significant improvements in computational efficiency through factorization tricks and conditional computation, while also improving model performance in case of the latter.",
+     "ko": "최근 연구들은 인수분해 기법(factorization tricks)과 조건부 연산(conditional computation)을 통해 연산 효율성을 크게 향상시켰으며, 후자(조건부 연산)의 경우에는 모델 성능까지 동시에 끌어올렸습니다."
+    }
+   ]
+  },
+  {
+   "id": "w009",
+   "part": 1,
+   "partTitle": "Part 1. Abstract: 패러다임 선언 및 성능 요약",
+   "no": 9,
+   "word": "connect",
+   "pos": "동",
+   "meaning": "연결하다, 잇다",
+   "context": "어텐션 메커니즘을 매개로 인코더와 디코더를 상호 연결하는 구조를 서술.",
+   "exampleEn": "The pipeline connects data ingestion nodes with the central processing cluster.",
+   "exampleKo": "그 파이프라인은 데이터 수집 노드들을 중앙 처리 클러스터와 연결한다.",
+   "paperExamples": [
+    {
+     "sentenceId": "abstract-2",
+     "en": "The best performing models also connect the encoder and decoder through an attention mechanism.",
+     "ko": "가장 뛰어난 성능을 내는 모델들 역시 어텐션 메커니즘(attention mechanism)을 통해 인코더와 디코더를 연결합니다."
+    },
+    {
+     "sentenceId": "3-5",
+     "en": "The Transformer follows this overall architecture using stacked self-attention and point-wise, fully connected layers for both the encoder and decoder, shown in the left and right halves of Figure 1, respectively.",
+     "ko": "트랜스포머는 인코더와 디코더 모두에 쌓아 올린 셀프 어텐션(stacked self-attention)과 위치별 완전 연결 계층(point-wise, fullyconnected layers)을 사용하여 이러한 전반적인 아키텍처를 따르며, 이는 각각 그림 1의 왼쪽(인코더)과 오른쪽(디코더)에 나타나 있습니다."
+    }
+   ]
+  },
+  {
+   "id": "w010",
+   "part": 1,
+   "partTitle": "Part 1. Abstract: 패러다임 선언 및 성능 요약",
+   "no": 10,
+   "word": "mechanism",
+   "pos": "명",
+   "meaning": "메커니즘, 기제, 구조",
+   "context": "정보 병목(Information Bottleneck)을 해소하기 위해 도입된 어텐션 기제를 지칭.",
+   "exampleEn": "The platform employs a robust caching mechanism to reduce database latency.",
+   "exampleKo": "그 플랫폼은 데이터베이스 지연을 줄이기 위해 견고한 캐싱 메커니즘을 채택한다.",
+   "paperExamples": [
+    {
+     "sentenceId": "abstract-2",
+     "en": "The best performing models also connect the encoder and decoder through an attention mechanism.",
+     "ko": "가장 뛰어난 성능을 내는 모델들 역시 어텐션 메커니즘(attention mechanism)을 통해 인코더와 디코더를 연결합니다."
+    },
+    {
+     "sentenceId": "abstract-3",
+     "en": "We propose a new simple network architecture, the Transformer, based solely on attention mechanisms, dispensing with recurrence and convolutions entirely.",
+     "ko": "우리는 순환(RNN)과 합성곱(CNN)을 완전히 배제하고, 오로지 어텐션 메커니즘에만 기반을 둔 새로운 단순 신경망 아키텍처인 '트랜스포머(Transformer)'를 제안합니다."
+    }
+   ]
+  },
+  {
+   "id": "w011",
+   "part": 1,
+   "partTitle": "Part 1. Abstract: 패러다임 선언 및 성능 요약",
+   "no": 11,
+   "word": "through",
+   "pos": "전",
+   "meaning": "~을 통해, 매개로",
+   "context": "어텐션 메커니즘이라는 수단을 통해 인코더와 디코더가 결합됨을 나타냄.",
+   "exampleEn": "The engineering team resolved the bottleneck through extensive memory profiling.",
+   "exampleKo": "엔지니어링 팀은 광범위한 메모리 프로파일링을 통해 병목 현상을 해결했다.",
+   "paperExamples": [
+    {
+     "sentenceId": "abstract-2",
+     "en": "The best performing models also connect the encoder and decoder through an attention mechanism.",
+     "ko": "가장 뛰어난 성능을 내는 모델들 역시 어텐션 메커니즘(attention mechanism)을 통해 인코더와 디코더를 연결합니다."
+    },
+    {
+     "sentenceId": "1-6",
+     "en": "Recent work has achieved significant improvements in computational efficiency through factorization tricks and conditional computation, while also improving model performance in case of the latter.",
+     "ko": "최근 연구들은 인수분해 기법(factorization tricks)과 조건부 연산(conditional computation)을 통해 연산 효율성을 크게 향상시켰으며, 후자(조건부 연산)의 경우에는 모델 성능까지 동시에 끌어올렸습니다."
+    }
+   ]
+  },
+  {
+   "id": "w012",
+   "part": 1,
+   "partTitle": "Part 1. Abstract: 패러다임 선언 및 성능 요약",
+   "no": 12,
+   "word": "propose",
+   "pos": "동",
+   "meaning": "제안하다, 제시하다",
+   "context": "논문의 핵심 기여인 새로운 트랜스포머 아키텍처를 공식 제안함.",
+   "exampleEn": "We propose a new simple network architecture, the Transformer.",
+   "exampleKo": "우리는 새로운 단순 신경망 아키텍처인 트랜스포머를 제안합니다.",
+   "paperExamples": [
+    {
+     "sentenceId": "abstract-3",
+     "en": "We propose a new simple network architecture, the Transformer, based solely on attention mechanisms, dispensing with recurrence and convolutions entirely.",
+     "ko": "우리는 순환(RNN)과 합성곱(CNN)을 완전히 배제하고, 오로지 어텐션 메커니즘에만 기반을 둔 새로운 단순 신경망 아키텍처인 '트랜스포머(Transformer)'를 제안합니다."
+    },
+    {
+     "sentenceId": "1-10",
+     "en": "In this work we propose the Transformer, a model architecture eschewing recurrence and instead relying entirely on an attention mechanism to draw global dependencies between input and output.",
+     "ko": "본 연구에서 우리는 순환(RNN) 구조를 완전히 배제하고, 입력과 출력 사이의 전역적 의존성(global dependencies)을 학습하기 위해 전적으로 어텐션 메커니즘에만 의존하는 모델 아키텍처인 '트랜스포머(Transformer)'를 제안합니다."
+    }
+   ]
+  },
+  {
+   "id": "w013",
+   "part": 1,
+   "partTitle": "Part 1. Abstract: 패러다임 선언 및 성능 요약",
+   "no": 13,
+   "word": "architecture",
+   "pos": "명",
+   "meaning": "아키텍처, 구조 설계",
+   "context": "순환과 합성곱을 완전히 걷어낸 새로운 신경망 구조 전체를 의미함.",
+   "exampleEn": "The system is designed with a highly scalable microservices architecture.",
+   "exampleKo": "그 시스템은 고도로 확장 가능한 마이크로서비스 아키텍처로 설계되었다.",
+   "paperExamples": [
+    {
+     "sentenceId": "abstract-3",
+     "en": "We propose a new simple network architecture, the Transformer, based solely on attention mechanisms, dispensing with recurrence and convolutions entirely.",
+     "ko": "우리는 순환(RNN)과 합성곱(CNN)을 완전히 배제하고, 오로지 어텐션 메커니즘에만 기반을 둔 새로운 단순 신경망 아키텍처인 '트랜스포머(Transformer)'를 제안합니다."
+    },
+    {
+     "sentenceId": "1-2",
+     "en": "Numerous efforts have since continued to push the boundaries of recurrent language models and encoder-decoder architectures.",
+     "ko": "그 이후로 순환 언어 모델과 인코더-디코더 아키텍처의 한계를 넓히기 위한 수많은 연구와 시도들이 지속적으로 이어져 왔습니다."
+    }
+   ]
+  },
+  {
+   "id": "w014",
+   "part": 1,
+   "partTitle": "Part 1. Abstract: 패러다임 선언 및 성능 요약",
+   "no": 14,
+   "word": "solely",
+   "pos": "부",
+   "meaning": "오로지, 전적으로 (=exclusively)",
+   "context": "외부 보조 수단 없이 오직 어텐션 메커니즘 하나만에 100% 기반함을 강조.",
+   "exampleEn": "The decision was based solely on measurable technical benchmarks and performance data.",
+   "exampleKo": "그 결정은 오로지 측정 가능한 기술적 벤치마크와 성능 데이터에만 근거했다.",
+   "paperExamples": [
+    {
+     "sentenceId": "abstract-3",
+     "en": "We propose a new simple network architecture, the Transformer, based solely on attention mechanisms, dispensing with recurrence and convolutions entirely.",
+     "ko": "우리는 순환(RNN)과 합성곱(CNN)을 완전히 배제하고, 오로지 어텐션 메커니즘에만 기반을 둔 새로운 단순 신경망 아키텍처인 '트랜스포머(Transformer)'를 제안합니다."
+    }
+   ]
+  },
+  {
+   "id": "w015",
+   "part": 1,
+   "partTitle": "Part 1. Abstract: 패러다임 선언 및 성능 요약",
+   "no": 15,
+   "word": "dispense with",
+   "pos": "구동사",
+   "meaning": "~을 없애다, 배제하다",
+   "context": "시간 순서 의존성을 유발하는 순환과 합성곱을 과감히 제거했음을 선언.",
+   "exampleEn": "The new digital onboarding process dispenses with paper documentation entirely.",
+   "exampleKo": "새로운 디지털 온보딩 프로세스는 종이 서류 작업을 완전히 없앴습니다.",
+   "paperExamples": []
+  },
+  {
+   "id": "w016",
+   "part": 1,
+   "partTitle": "Part 1. Abstract: 패러다임 선언 및 성능 요약",
+   "no": 16,
+   "word": "entirely",
+   "pos": "부",
+   "meaning": "완전히, 전적으로 (=completely)",
+   "context": "순환과 합성곱을 어설프게 남기지 않고 100% 통째로 제거했음을 강조.",
+   "exampleEn": "The legacy codebase was entirely rewritten to improve execution efficiency.",
+   "exampleKo": "레거시 코드베이스는 실행 효율성을 향상시키기 위해 완전히 재작성되었다.",
+   "paperExamples": [
+    {
+     "sentenceId": "abstract-3",
+     "en": "We propose a new simple network architecture, the Transformer, based solely on attention mechanisms, dispensing with recurrence and convolutions entirely.",
+     "ko": "우리는 순환(RNN)과 합성곱(CNN)을 완전히 배제하고, 오로지 어텐션 메커니즘에만 기반을 둔 새로운 단순 신경망 아키텍처인 '트랜스포머(Transformer)'를 제안합니다."
+    },
+    {
+     "sentenceId": "1-10",
+     "en": "In this work we propose the Transformer, a model architecture eschewing recurrence and instead relying entirely on an attention mechanism to draw global dependencies between input and output.",
+     "ko": "본 연구에서 우리는 순환(RNN) 구조를 완전히 배제하고, 입력과 출력 사이의 전역적 의존성(global dependencies)을 학습하기 위해 전적으로 어텐션 메커니즘에만 의존하는 모델 아키텍처인 '트랜스포머(Transformer)'를 제안합니다."
+    }
+   ]
+  },
+  {
+   "id": "w017",
+   "part": 1,
+   "partTitle": "Part 1. Abstract: 패러다임 선언 및 성능 요약",
+   "no": 17,
+   "word": "superior",
+   "pos": "형",
+   "meaning": "더 우수한, 뛰어난 (to)",
+   "context": "기존 최고 앙상블 및 SOTA 모델 대비 번역 품질(BLEU) 측면에서 월등함을 증명.",
+   "exampleEn": "The new model proved to be superior in quality while requiring significantly less time to train.",
+   "exampleKo": "새 모델은 학습 시간을 대폭 단축하면서도 품질 면에서 더 우수한 성능을 보여줍니다.",
+   "paperExamples": [
+    {
+     "sentenceId": "abstract-4",
+     "en": "Experiments on two machine translation tasks show these models to be superior in quality while being more parallelizable and requiring significantly less time to train.",
+     "ko": "두 가지 기계 번역 과제에 대한 실험 결과, 이 모델(Transformer)은 더 뛰어난 병렬화가 가능하고 학습 시간을 대폭 단축시키면서도번역 품질 면에서 우수한 성능을 보여줍니다."
+    }
+   ]
+  },
+  {
+   "id": "w018",
+   "part": 1,
+   "partTitle": "Part 1. Abstract: 패러다임 선언 및 성능 요약",
+   "no": 18,
+   "word": "parallelizable",
+   "pos": "형",
+   "meaning": "병렬화가 가능한",
+   "context": "GPU/TPU 다중 코어에서 모든 토큰 연산을 분산 실행할 수 있는 하드웨어 친화적 속성.",
+   "exampleEn": "Modern deep learning workloads must be highly parallelizable across distributed clusters.",
+   "exampleKo": "현대 딥러닝 워크로드는 분산 클러스터 전반에 걸쳐 고도로 병렬화될 수 있어야 한다.",
+   "paperExamples": [
+    {
+     "sentenceId": "abstract-4",
+     "en": "Experiments on two machine translation tasks show these models to be superior in quality while being more parallelizable and requiring significantly less time to train.",
+     "ko": "두 가지 기계 번역 과제에 대한 실험 결과, 이 모델(Transformer)은 더 뛰어난 병렬화가 가능하고 학습 시간을 대폭 단축시키면서도번역 품질 면에서 우수한 성능을 보여줍니다."
+    }
+   ]
+  },
+  {
+   "id": "w019",
+   "part": 1,
+   "partTitle": "Part 1. Abstract: 패러다임 선언 및 성능 요약",
+   "no": 19,
+   "word": "significantly",
+   "pos": "부",
+   "meaning": "상당히, 현저하게",
+   "context": "학습 시간 단축 및 성능 격차의 유의미한 수치적 증감을 수식하는 최빈출 부사.",
+   "exampleEn": "Implementing automated testing significantly shortened the software development lifecycle.",
+   "exampleKo": "자동화 테스트 구현은 소프트웨어 개발 수명 주기를 상당히 단축시켰다.",
+   "paperExamples": [
+    {
+     "sentenceId": "abstract-4",
+     "en": "Experiments on two machine translation tasks show these models to be superior in quality while being more parallelizable and requiring significantly less time to train.",
+     "ko": "두 가지 기계 번역 과제에 대한 실험 결과, 이 모델(Transformer)은 더 뛰어난 병렬화가 가능하고 학습 시간을 대폭 단축시키면서도번역 품질 면에서 우수한 성능을 보여줍니다."
+    },
+    {
+     "sentenceId": "1-6",
+     "en": "Recent work has achieved significant improvements in computational efficiency through factorization tricks and conditional computation, while also improving model performance in case of the latter.",
+     "ko": "최근 연구들은 인수분해 기법(factorization tricks)과 조건부 연산(conditional computation)을 통해 연산 효율성을 크게 향상시켰으며, 후자(조건부 연산)의 경우에는 모델 성능까지 동시에 끌어올렸습니다."
+    }
+   ]
+  },
+  {
+   "id": "w020",
+   "part": 1,
+   "partTitle": "Part 1. Abstract: 패러다임 선언 및 성능 요약",
+   "no": 20,
+   "word": "require",
+   "pos": "동",
+   "meaning": "요구하다, 필요로 하다",
+   "context": "더 적은 학습 시간(less time to train)을 소모함을 나타낼 때 목적어를 수반.",
+   "exampleEn": "The enterprise license requires annual compliance audits by independent inspectors.",
+   "exampleKo": "엔터프라이즈 라이선스는 독립 감사관에 의한 연례 규정 준수 감사를 요구한다.",
+   "paperExamples": [
+    {
+     "sentenceId": "2-2",
+     "en": "In these models, the number of operations required to relate signals from two arbitrary input or output positions grows in the distance between positions, linearly for ConvS2S and logarithmically for ByteNet.",
+     "ko": "이러한 (CNN 기반) 모델들에서는 임의의 두 입력 또는 출력 위치의 신호를 서로 연결하는 데 필요한 연산 횟수가 두 위치 사이의 거리에 비례하여 증가하는데, ConvS2S의 경우에는 선형적(linear)으로, ByteNet의 경우에는 로그(logarithmic) 함수 형태로 증가합니다."
+    },
+    {
+     "sentenceId": "4-4",
+     "en": "Another is the amount of computation that can be parallelized, as measured by the minimum number of sequential operations required.",
+     "ko": "또 다른 기준은 병렬화(parallelized)할 수 있는 연산의 양이며, 이는 요구되는 최소 순차 연산 횟수(minimum number ofsequential operations)로 측정됩니다."
+    }
+   ]
+  },
+  {
+   "id": "w021",
+   "part": 1,
+   "partTitle": "Part 1. Abstract: 패러다임 선언 및 성능 요약",
+   "no": 21,
+   "word": "task",
+   "pos": "명",
+   "meaning": "작업, 과제, 태스크",
+   "context": "기계번역 과제(two machine translation tasks) 등 풀고자 하는 대상 문제.",
+   "exampleEn": "Employees were assigned complex analytical tasks to complete before the quarterly deadline.",
+   "exampleKo": "직원들은 분기 마감일 전에 완료해야 할 복잡한 분석 과제들을 배정받았다.",
+   "paperExamples": [
+    {
+     "sentenceId": "abstract-4",
+     "en": "Experiments on two machine translation tasks show these models to be superior in quality while being more parallelizable and requiring significantly less time to train.",
+     "ko": "두 가지 기계 번역 과제에 대한 실험 결과, 이 모델(Transformer)은 더 뛰어난 병렬화가 가능하고 학습 시간을 대폭 단축시키면서도번역 품질 면에서 우수한 성능을 보여줍니다."
+    },
+    {
+     "sentenceId": "abstract-5",
+     "en": "Our model achieves 28.4 BLEU on the WMT 2014 Englishto-German translation task, improving over the existing best results, including ensembles, by over 2 BLEU.",
+     "ko": "우리 모델은 WMT 2014 영어-독일어 번역 과제에서 28.4 BLEU를 달성하였으며, 앙상블 모델을 포함한 기존 최고 기록보다 2 BLEU 이상 향상된 성능을 보여주었습니다."
+    }
+   ]
+  },
+  {
+   "id": "w022",
+   "part": 1,
+   "partTitle": "Part 1. Abstract: 패러다임 선언 및 성능 요약",
+   "no": 22,
+   "word": "achieve",
+   "pos": "동",
+   "meaning": "달성하다, 성취하다",
+   "context": "28.4 BLEU라는 당시 사상 최고 벤치마크 점수를 달성했음을 기술.",
+   "exampleEn": "The sales team achieved its annual performance target two months ahead of schedule.",
+   "exampleKo": "영업팀은 예정보다 두 달 앞서 연간 실적 목표를 달성했다.",
+   "paperExamples": [
+    {
+     "sentenceId": "abstract-5",
+     "en": "Our model achieves 28.4 BLEU on the WMT 2014 Englishto-German translation task, improving over the existing best results, including ensembles, by over 2 BLEU.",
+     "ko": "우리 모델은 WMT 2014 영어-독일어 번역 과제에서 28.4 BLEU를 달성하였으며, 앙상블 모델을 포함한 기존 최고 기록보다 2 BLEU 이상 향상된 성능을 보여주었습니다."
+    },
+    {
+     "sentenceId": "1-6",
+     "en": "Recent work has achieved significant improvements in computational efficiency through factorization tricks and conditional computation, while also improving model performance in case of the latter.",
+     "ko": "최근 연구들은 인수분해 기법(factorization tricks)과 조건부 연산(conditional computation)을 통해 연산 효율성을 크게 향상시켰으며, 후자(조건부 연산)의 경우에는 모델 성능까지 동시에 끌어올렸습니다."
+    }
+   ]
+  },
+  {
+   "id": "w023",
+   "part": 1,
+   "partTitle": "Part 1. Abstract: 패러다임 선언 및 성능 요약",
+   "no": 23,
+   "word": "existing",
+   "pos": "형",
+   "meaning": "기존의, 현재 있는",
+   "context": "트랜스포머 이전에 존재하던 기존의 최고 모델 기록군(existing best results)을 지칭.",
+   "exampleEn": "The firm decided to modernize existing infrastructure rather than build a new facility.",
+   "exampleKo": "회사는 새 시설을 짓기보다 기존 인프라를 현대화하기로 결정했다.",
+   "paperExamples": [
+    {
+     "sentenceId": "abstract-5",
+     "en": "Our model achieves 28.4 BLEU on the WMT 2014 Englishto-German translation task, improving over the existing best results, including ensembles, by over 2 BLEU.",
+     "ko": "우리 모델은 WMT 2014 영어-독일어 번역 과제에서 28.4 BLEU를 달성하였으며, 앙상블 모델을 포함한 기존 최고 기록보다 2 BLEU 이상 향상된 성능을 보여주었습니다."
+    }
+   ]
+  },
+  {
+   "id": "w024",
+   "part": 1,
+   "partTitle": "Part 1. Abstract: 패러다임 선언 및 성능 요약",
+   "no": 24,
+   "word": "improve over",
+   "pos": "구동사",
+   "meaning": "~보다 개선되다, 능가하다",
+   "context": "기존 최고 모델(앙상블 포함) 기록을 2 BLEU 이상 큰 폭으로 상회했음을 서술.",
+   "exampleEn": "The revised algorithm improved over earlier benchmarks in computational throughput.",
+   "exampleKo": "개정된 알고리즘은 연산 처리량 면에서 이전 벤치마크들보다 개선되었다.",
+   "paperExamples": [
+    {
+     "sentenceId": "1-6",
+     "en": "Recent work has achieved significant improvements in computational efficiency through factorization tricks and conditional computation, while also improving model performance in case of the latter.",
+     "ko": "최근 연구들은 인수분해 기법(factorization tricks)과 조건부 연산(conditional computation)을 통해 연산 효율성을 크게 향상시켰으며, 후자(조건부 연산)의 경우에는 모델 성능까지 동시에 끌어올렸습니다."
+    },
+    {
+     "sentenceId": "4-12",
+     "en": "To improve computational performance for tasks involving very long sequences, self-attention could be restricted to considering only a neighborhood of size r in the input sequence centered around the respective output position.",
+     "ko": "매우 긴 시퀀스를 다루는 과업에서 계산 성능을 개선하기 위해, 셀프 어텐션은 각 출력 위치를 중심으로 입력 시퀀스 내의 크기 인 국소 이웃(neighborhood)만을 고려하도록 제한될 수 있습니다."
+    }
+   ]
+  },
+  {
+   "id": "w025",
+   "part": 1,
+   "partTitle": "Part 1. Abstract: 패러다임 선언 및 성능 요약",
+   "no": 25,
+   "word": "ensemble",
+   "pos": "명",
+   "meaning": "앙상블 모델, 총체",
+   "context": "여러 개별 모델의 예측 가중치를 결합한 기법. 트랜스포머는 단일 모델로 이를 능가함.",
+   "exampleEn": "The competition winner utilized an ensemble of diverse neural network checkpoints.",
+   "exampleKo": "대회 우승자는 다양한 신경망 체크포인트들의 앙상블을 활용했다.",
+   "paperExamples": [
+    {
+     "sentenceId": "abstract-5",
+     "en": "Our model achieves 28.4 BLEU on the WMT 2014 Englishto-German translation task, improving over the existing best results, including ensembles, by over 2 BLEU.",
+     "ko": "우리 모델은 WMT 2014 영어-독일어 번역 과제에서 28.4 BLEU를 달성하였으며, 앙상블 모델을 포함한 기존 최고 기록보다 2 BLEU 이상 향상된 성능을 보여주었습니다."
+    },
+    {
+     "sentenceId": "6.1-1",
+     "en": "On the WMT 2014 English-to-German translation task, the big transformer model (Transformer (big) in Table 2) outperforms the best previously reported models (including ensembles) by more than 2.0 BLEU, establishing a new state-of-the-art BLEU score of 28.4.",
+     "ko": "6 결과: 기계 번역(Results: Machine Translation): WMT 2014 영어-독일어 번역 과업에서, 대형 트랜스포머 모델(표 2의Transformer (big))은 (앙상블 모델들을 포함하여) 이전에 보고된 최고의 모델들을 2.0 BLEU 이상 능가하며, 28.4라는 새로운 최고(state-of-the-art) BLEU 점수를 달성했습니다."
+    }
+   ]
+  },
+  {
+   "id": "w026",
+   "part": 1,
+   "partTitle": "Part 1. Abstract: 패러다임 선언 및 성능 요약",
+   "no": 26,
+   "word": "by + 수치",
+   "pos": "전치사구",
+   "meaning": "~의 차이로, ~만큼",
+   "context": "by over 2 BLEU: 성능 지표의 구체적 증가/격차 폭을 나타내는 전치사.",
+   "exampleEn": "Operating revenue grew by fifteen percent compared to the preceding quarter.",
+   "exampleKo": "영업 수익은 직전 분기 대비 15%만큼 증가했다.",
+   "paperExamples": [
+    {
+     "sentenceId": "abstract-5",
+     "en": "Our model achieves 28.4 BLEU on the WMT 2014 Englishto-German translation task, improving over the existing best results, including ensembles, by over 2 BLEU.",
+     "ko": "우리 모델은 WMT 2014 영어-독일어 번역 과제에서 28.4 BLEU를 달성하였으며, 앙상블 모델을 포함한 기존 최고 기록보다 2 BLEU 이상 향상된 성능을 보여주었습니다."
+    },
+    {
+     "sentenceId": "abstract-7",
+     "en": "We show that the Transformer generalizes well to other tasks by applying it successfully to English constituency parsing both with large and limited training data.",
+     "ko": "우리는 대규모 훈련 데이터뿐만 아니라 제한된 훈련 데이터 환경에서도 Transformer를 영어 구 구조 구문 분석(constituencyparsing)에 성공적으로 적용함으로써, 이 모델이 다른 자연어 처리 과제에도 훌륭하게 일반화(확장)된다는 점을 증명합니다."
+    }
+   ]
+  },
+  {
+   "id": "w027",
+   "part": 1,
+   "partTitle": "Part 1. Abstract: 패러다임 선언 및 성능 요약",
+   "no": 27,
+   "word": "establish",
+   "pos": "동",
+   "meaning": "수립하다, 확립하다",
+   "context": "단일 모델 기준 SOTA 41.8 BLEU라는 신기록을 공식 수립했음을 명시.",
+   "exampleEn": "Our model establishes a new single-model state-of-the-art BLEU score of 41.8.",
+   "exampleKo": "우리 모델은 41.8이라는 새로운 단일 모델 기준 최고 수준의 BLEU 점수를 수립합니다.",
+   "paperExamples": [
+    {
+     "sentenceId": "abstract-6",
+     "en": "On the WMT 2014 English-to-French translation task, our model establishes a new single-model state-of-the-art BLEU score of 41.8 after training for 3.5 days on eight GPUs, a small fraction of the training costs of the best models from the literature.",
+     "ko": "WMT 2014 영어-프랑스어 번역 과제에서도 우리 모델은 8개의 GPU로 단 3.5일 동안 학습한 후 41.8 BLEU라는 새로운 단일 모델최고 기록(SOTA)을 달성하였는데, 이는 기존 문헌의 최고 모델들이 소모한 훈련 비용의 극히 일부에 불과한 수준입니다."
+    },
+    {
+     "sentenceId": "1-1",
+     "en": "Recurrent neural networks, long short-term memory and gated recurrent neural networks in particular, have been firmly established as state of the art approaches in sequence modeling and transduction problems such as language modeling and machine translation.",
+     "ko": "순환 신경망(RNN), 특히 장단기 메모리(LSTM ) 및 게이트 순환 신경망(GRU)은 언어 모델링이나 기계 번역과 같은 시퀀스 모델링 및시퀀스 변환 문제에서 최첨단(state of the art) 접근 방식으로 확고하게 자리 잡아 왔습니다."
+    }
+   ]
+  },
+  {
+   "id": "w028",
+   "part": 1,
+   "partTitle": "Part 1. Abstract: 패러다임 선언 및 성능 요약",
+   "no": 28,
+   "word": "state-of-the-art",
+   "pos": "형",
+   "meaning": "최첨단의, 최고 수준의 (SOTA)",
+   "context": "당대 최고 기술 수준의 모델 성능 및 아키텍처를 뜻하는 핵심 학술 수식어.",
+   "exampleEn": "The research laboratory is fully equipped with state-of-the-art diagnostic instruments.",
+   "exampleKo": "그 연구소는 최첨단 진단 기기들을 완벽히 갖추고 있다.",
+   "paperExamples": [
+    {
+     "sentenceId": "abstract-6",
+     "en": "On the WMT 2014 English-to-French translation task, our model establishes a new single-model state-of-the-art BLEU score of 41.8 after training for 3.5 days on eight GPUs, a small fraction of the training costs of the best models from the literature.",
+     "ko": "WMT 2014 영어-프랑스어 번역 과제에서도 우리 모델은 8개의 GPU로 단 3.5일 동안 학습한 후 41.8 BLEU라는 새로운 단일 모델최고 기록(SOTA)을 달성하였는데, 이는 기존 문헌의 최고 모델들이 소모한 훈련 비용의 극히 일부에 불과한 수준입니다."
+    },
+    {
+     "sentenceId": "4-11",
+     "en": "In terms of computational complexity, self-attention layers are faster than recurrent layers when the sequence length n is smaller than the representation dimensionality d, which is most often the case with sentence representations used by state-of-the-art models in machine translations, such as word-piece and byte-pair representations.",
+     "ko": "계산 복잡도(computational complexity) 관점에서 볼 때, 시퀀스 길이 n이 표현 차원수 d보다 작을 경우 셀프 어텐션 계층은 순 환 계층보다 더 빠릅니다. 이는 워드피스(word-piece) [38] 및 바이트페어(byte-pair) [31] 표현과 같이 기계 번역 분야의 SOTA(최고 성능) 모델들이사용하는 문장 표현에서 대부분의 경우에 해당합니다."
+    }
+   ]
+  },
+  {
+   "id": "w029",
+   "part": 1,
+   "partTitle": "Part 1. Abstract: 패러다임 선언 및 성능 요약",
+   "no": 29,
+   "word": "fraction",
+   "pos": "명",
+   "meaning": "극히 적은 일부, 분수",
+   "context": "a small fraction of the training costs: 기존 모델 훈련 비용의 극히 일부분만 소모함.",
+   "exampleEn": "Online platforms deliver comprehensive training at a fraction of traditional tuition costs.",
+   "exampleKo": "온라인 플랫폼은 기존 등록금 비용의 극히 일부에 불과한 비용으로 종합 교육을 제공한다.",
+   "paperExamples": [
+    {
+     "sentenceId": "abstract-6",
+     "en": "On the WMT 2014 English-to-French translation task, our model establishes a new single-model state-of-the-art BLEU score of 41.8 after training for 3.5 days on eight GPUs, a small fraction of the training costs of the best models from the literature.",
+     "ko": "WMT 2014 영어-프랑스어 번역 과제에서도 우리 모델은 8개의 GPU로 단 3.5일 동안 학습한 후 41.8 BLEU라는 새로운 단일 모델최고 기록(SOTA)을 달성하였는데, 이는 기존 문헌의 최고 모델들이 소모한 훈련 비용의 극히 일부에 불과한 수준입니다."
+    },
+    {
+     "sentenceId": "6.1-2",
+     "en": "Even our base model surpasses all previously published models and ensembles, at a fraction of the training cost of any of the competitive models.",
+     "ko": "심지어 우리의 기본 모델(base model)조차도 그 어떤 경쟁 모델들의 훈련 비용의 극히 일부분(fraction)만으로 이전에 보고된 모든모델들과 앙상블(ensembles)의 성능을 능가합니다."
+    }
+   ]
+  },
+  {
+   "id": "w030",
+   "part": 1,
+   "partTitle": "Part 1. Abstract: 패러다임 선언 및 성능 요약",
+   "no": 30,
+   "word": "literature",
+   "pos": "명",
+   "meaning": "문헌, 출판된 학술 논문들",
+   "context": "문학이 아니라 기존에 공식 발표된 AI 연구 논문군(the best models from the literature)을 뜻함.",
+   "exampleEn": "Researchers conducted a systematic review of the literature before formulating their hypothesis.",
+   "exampleKo": "연구자들은 가설을 수립하기 전에 기존 학술 문헌들에 대한 체계적인 검토를 수행했다.",
+   "paperExamples": [
+    {
+     "sentenceId": "abstract-6",
+     "en": "On the WMT 2014 English-to-French translation task, our model establishes a new single-model state-of-the-art BLEU score of 41.8 after training for 3.5 days on eight GPUs, a small fraction of the training costs of the best models from the literature.",
+     "ko": "WMT 2014 영어-프랑스어 번역 과제에서도 우리 모델은 8개의 GPU로 단 3.5일 동안 학습한 후 41.8 BLEU라는 새로운 단일 모델최고 기록(SOTA)을 달성하였는데, 이는 기존 문헌의 최고 모델들이 소모한 훈련 비용의 극히 일부에 불과한 수준입니다."
+    },
+    {
+     "sentenceId": "6.1-8",
+     "en": "Table 2 summarizes our results and compares our translation quality and training costs to other model architectures from the literature.",
+     "ko": "표 2(Table 2)는 실험 결과를 요약하며, 우리의 번역 품질(translation quality) 및 훈련 비용(training costs)을 기존 문헌에 보고된 다른 모델 아키텍처들과 비교합니다."
+    }
+   ]
+  },
+  {
+   "id": "w031",
+   "part": 1,
+   "partTitle": "Part 1. Abstract: 패러다임 선언 및 성능 요약",
+   "no": 31,
+   "word": "generalize",
+   "pos": "동",
+   "meaning": "일반화하다, 폭넓게 적용되다",
+   "context": "기계번역 훈련 가중치가 구문 분석 등 이종 태스크(other tasks)에도 잘 작동함을 증명.",
+   "exampleEn": "The transformer architecture generalizes remarkably well to computer vision workloads.",
+   "exampleKo": "트랜스포머 아키텍처는 컴퓨터 비전 워크로드에도 대단히 훌륭하게 일반화된다.",
+   "paperExamples": [
+    {
+     "sentenceId": "abstract-7",
+     "en": "We show that the Transformer generalizes well to other tasks by applying it successfully to English constituency parsing both with large and limited training data.",
+     "ko": "우리는 대규모 훈련 데이터뿐만 아니라 제한된 훈련 데이터 환경에서도 Transformer를 영어 구 구조 구문 분석(constituencyparsing)에 성공적으로 적용함으로써, 이 모델이 다른 자연어 처리 과제에도 훌륭하게 일반화(확장)된다는 점을 증명합니다."
+    },
+    {
+     "sentenceId": "6.3-1",
+     "en": "To evaluate if the Transformer can generalize to other tasks we performed experiments on English constituency parsing.",
+     "ko": "6.3 영어 구구조 구문 분석(English Constituency Parsing): 트랜스포머가 다른 과업으로도 일반화(generalize)될 수 있는지를평가하기 위해, 우리는 영어 구구조 구문 분석(English constituency parsing)에 대한 실험을 수행했습니다."
+    }
+   ]
+  },
+  {
+   "id": "w032",
+   "part": 1,
+   "partTitle": "Part 1. Abstract: 패러다임 선언 및 성능 요약",
+   "no": 32,
+   "word": "apply",
+   "pos": "동",
+   "meaning": "적용하다, 응용하다",
+   "context": "트랜스포머를 영어 구 구조 구문 분석(constituency parsing)에 실제로 적용함.",
+   "exampleEn": "Engineers must apply rigorous safety guidelines throughout all implementation phases.",
+   "exampleKo": "엔지니어들은 모든 구현 단계에 걸쳐 엄격한 안전 지침을 적용해야 한다.",
+   "paperExamples": [
+    {
+     "sentenceId": "abstract-7",
+     "en": "We show that the Transformer generalizes well to other tasks by applying it successfully to English constituency parsing both with large and limited training data.",
+     "ko": "우리는 대규모 훈련 데이터뿐만 아니라 제한된 훈련 데이터 환경에서도 Transformer를 영어 구 구조 구문 분석(constituencyparsing)에 성공적으로 적용함으로써, 이 모델이 다른 자연어 처리 과제에도 훌륭하게 일반화(확장)된다는 점을 증명합니다."
+    },
+    {
+     "sentenceId": "3.2.1-3",
+     "en": "We compute the dot products of the query with all keys, divide each by √dₖ, and apply a softmax function to obtain the weights on the values.",
+     "ko": "우리는 쿼리와 모든 키 사이의 점곱(내적)을 계산한 뒤, 각 결과를 √dₖ로 나누고, 소프트맥스(softmax) 함수를 적용하여각 값(value)들에 할당할 가중치를 얻습니다."
+    }
+   ]
+  },
+  {
+   "id": "w033",
+   "part": 1,
+   "partTitle": "Part 1. Abstract: 패러다임 선언 및 성능 요약",
+   "no": 33,
+   "word": "successfully",
+   "pos": "부",
+   "meaning": "성공적으로",
+   "context": "새로운 모델이 다운스트림 태스크에 오차 없이 유효하게 안착했음을 수식.",
+   "exampleEn": "The IT division successfully migrated the production cluster without service disruption.",
+   "exampleKo": "IT 부서는 서비스 중단 없이 프로덕션 클러스터를 성공적으로 이전했다.",
+   "paperExamples": [
+    {
+     "sentenceId": "abstract-7",
+     "en": "We show that the Transformer generalizes well to other tasks by applying it successfully to English constituency parsing both with large and limited training data.",
+     "ko": "우리는 대규모 훈련 데이터뿐만 아니라 제한된 훈련 데이터 환경에서도 Transformer를 영어 구 구조 구문 분석(constituencyparsing)에 성공적으로 적용함으로써, 이 모델이 다른 자연어 처리 과제에도 훌륭하게 일반화(확장)된다는 점을 증명합니다."
+    },
+    {
+     "sentenceId": "2-6",
+     "en": "Self-attention has been used successfully in a variety of tasks including reading comprehension, abstractive summarization, textual entailment and learning task-independent sentence representations.",
+     "ko": "셀프 어텐션(Self-attention)은 기계 독해(reading comprehension), 생성 요약(abstractive summarization), 텍스트 함의(textual entailment), 과제 독립적 문장 표현 학습 등 다양한 자연어 처리 분야에서 성공적으로 활용되어 왔습니다."
+    }
+   ]
+  },
+  {
+   "id": "w034",
+   "part": 1,
+   "partTitle": "Part 1. Abstract: 패러다임 선언 및 성능 요약",
+   "no": 34,
+   "word": "parsing",
+   "pos": "명",
+   "meaning": "구문 분석 (트리 파싱)",
+   "context": "문장의 단어들을 문법적 성분(명사구, 동사구 등) 트리 계층으로 분석하는 NLP 핵심 과제.",
+   "exampleEn": "Accurate syntactic parsing is vital for extracting semantic dependencies from raw text.",
+   "exampleKo": "정확한 구문 분석은 원시 텍스트에서 의미론적 의존성을 추출하는 데 필수적이다.",
+   "paperExamples": [
+    {
+     "sentenceId": "abstract-7",
+     "en": "We show that the Transformer generalizes well to other tasks by applying it successfully to English constituency parsing both with large and limited training data.",
+     "ko": "우리는 대규모 훈련 데이터뿐만 아니라 제한된 훈련 데이터 환경에서도 Transformer를 영어 구 구조 구문 분석(constituencyparsing)에 성공적으로 적용함으로써, 이 모델이 다른 자연어 처리 과제에도 훌륭하게 일반화(확장)된다는 점을 증명합니다."
+    },
+    {
+     "sentenceId": "6.3-1",
+     "en": "To evaluate if the Transformer can generalize to other tasks we performed experiments on English constituency parsing.",
+     "ko": "6.3 영어 구구조 구문 분석(English Constituency Parsing): 트랜스포머가 다른 과업으로도 일반화(generalize)될 수 있는지를평가하기 위해, 우리는 영어 구구조 구문 분석(English constituency parsing)에 대한 실험을 수행했습니다."
+    }
+   ]
+  },
+  {
+   "id": "w035",
+   "part": 1,
+   "partTitle": "Part 1. Abstract: 패러다임 선언 및 성능 요약",
+   "no": 35,
+   "word": "limited",
+   "pos": "형",
+   "meaning": "제한된, 한정된 (=restricted)",
+   "context": "훈련 데이터가 극히 적은 환경(limited training data)에서도 높은 일반화 성능을 유지함.",
+   "exampleEn": "The project was successfully delivered on time despite having access to limited resources.",
+   "exampleKo": "제한된 자원에만 접근할 수 있었음에도 불구하고 프로젝트는 제시간에 성공적으로 완수되었다.",
+   "paperExamples": [
+    {
+     "sentenceId": "abstract-7",
+     "en": "We show that the Transformer generalizes well to other tasks by applying it successfully to English constituency parsing both with large and limited training data.",
+     "ko": "우리는 대규모 훈련 데이터뿐만 아니라 제한된 훈련 데이터 환경에서도 Transformer를 영어 구 구조 구문 분석(constituencyparsing)에 성공적으로 적용함으로써, 이 모델이 다른 자연어 처리 과제에도 훌륭하게 일반화(확장)된다는 점을 증명합니다."
+    },
+    {
+     "sentenceId": "1-5",
+     "en": "This inherently sequential nature precludes parallelization within training examples, which becomes critical at longer sequence lengths, as memory constraints limit batching across examples.",
+     "ko": "이러한 본질적으로 순차적인 구조적 특성은 단일 훈련 예제 내부에서의 병렬 처리를 원천적으로 가로막으며, 이는 메모리 제약으로인해 여러 예제 간의 배치(batch) 크기가 제한되는 긴 시퀀스 환경에서 대단히 치명적인 문제가 됩니다."
+    }
+   ]
+  },
+  {
+   "id": "w036",
+   "part": 2,
+   "partTitle": "Part 2. Introduction: 순환 구조의 본질적 한계 규명",
+   "no": 36,
+   "word": "in particular",
+   "pos": "부사구",
+   "meaning": "특히, 특별히 (=specifically)",
+   "context": "RNN 계열 중에서도 특히 널리 쓰이던 LSTM과 GRU를 구체적으로 한정 지목.",
+   "exampleEn": "The audit highlighted several areas for improvement, in particular data security governance.",
+   "exampleKo": "감사는 몇 가지 개선 영역, 특히 데이터 보안 거버넌스를 강조했다.",
+   "paperExamples": [
+    {
+     "sentenceId": "1-1",
+     "en": "Recurrent neural networks, long short-term memory and gated recurrent neural networks in particular, have been firmly established as state of the art approaches in sequence modeling and transduction problems such as language modeling and machine translation.",
+     "ko": "순환 신경망(RNN), 특히 장단기 메모리(LSTM ) 및 게이트 순환 신경망(GRU)은 언어 모델링이나 기계 번역과 같은 시퀀스 모델링 및시퀀스 변환 문제에서 최첨단(state of the art) 접근 방식으로 확고하게 자리 잡아 왔습니다."
+    },
+    {
+     "sentenceId": "3.2.1-1",
+     "en": "We call our particular attention \"Scaled Dot-Product Attention\" (Figure 2).",
+     "ko": "우리는 우리가 제안하는 특정한 어텐션을 '스케일드 닷-프로덕트 어텐션(Scaled Dot-Product Attention, 크기 조절 점곱 어텐션)'이라고 부릅니다 (그림 2)."
+    }
+   ]
+  },
+  {
+   "id": "w037",
+   "part": 2,
+   "partTitle": "Part 2. Introduction: 순환 구조의 본질적 한계 규명",
+   "no": 37,
+   "word": "firmly",
+   "pos": "부사",
+   "meaning": "확고하게, 단호히",
+   "context": "LSTM/GRU가 SOTA 접근법으로 확고하게 자리 잡아 왔던 기존 NLP 판도를 묘사.",
+   "exampleEn": "The brand has become firmly established as a pioneer in enterprise software solutions.",
+   "exampleKo": "그 브랜드는 엔터프라이즈 소프트웨어 솔루션의 선구자로 확고히 자리 잡았다.",
+   "paperExamples": [
+    {
+     "sentenceId": "1-1",
+     "en": "Recurrent neural networks, long short-term memory and gated recurrent neural networks in particular, have been firmly established as state of the art approaches in sequence modeling and transduction problems such as language modeling and machine translation.",
+     "ko": "순환 신경망(RNN), 특히 장단기 메모리(LSTM ) 및 게이트 순환 신경망(GRU)은 언어 모델링이나 기계 번역과 같은 시퀀스 모델링 및시퀀스 변환 문제에서 최첨단(state of the art) 접근 방식으로 확고하게 자리 잡아 왔습니다."
+    }
+   ]
+  },
+  {
+   "id": "w038",
+   "part": 2,
+   "partTitle": "Part 2. Introduction: 순환 구조의 본질적 한계 규명",
+   "no": 38,
+   "word": "approach",
+   "pos": "명",
+   "meaning": "접근 방식, 처리 방법",
+   "context": "시퀀스 모델링 및 변환 문제를 해결하기 위한 기술적 패러다임을 뜻함.",
+   "exampleEn": "The engineering department adopted an agile approach to accelerate feature delivery.",
+   "exampleKo": "엔지니어링 부서는 기능 배포를 가속하기 위해 애자일 접근법을 채택했다.",
+   "paperExamples": [
+    {
+     "sentenceId": "1-1",
+     "en": "Recurrent neural networks, long short-term memory and gated recurrent neural networks in particular, have been firmly established as state of the art approaches in sequence modeling and transduction problems such as language modeling and machine translation.",
+     "ko": "순환 신경망(RNN), 특히 장단기 메모리(LSTM ) 및 게이트 순환 신경망(GRU)은 언어 모델링이나 기계 번역과 같은 시퀀스 모델링 및시퀀스 변환 문제에서 최첨단(state of the art) 접근 방식으로 확고하게 자리 잡아 왔습니다."
+    },
+    {
+     "sentenceId": "4-13",
+     "en": "This would increase the maximum path length to O(n/r). We plan to investigate this approach further in future work.",
+     "ko": "이렇게 하면 최대 경로 길이(maximum path length)가 O(n/r)로 증가하게 됩니다. 우리는 향후 연구(future work)에서 이러한 접근 방식을 추가로 탐구할 계획입니다."
+    }
+   ]
+  },
+  {
+   "id": "w039",
+   "part": 2,
+   "partTitle": "Part 2. Introduction: 순환 구조의 본질적 한계 규명",
+   "no": 39,
+   "word": "such as",
+   "pos": "전치사구",
+   "meaning": "~와 같은 (=like)",
+   "context": "sequence transduction problem의 대표 예시로 언어 모델링과 기계번역을 연결.",
+   "exampleEn": "The workshop covers cutting-edge topics such as transformer scaling and model quantization.",
+   "exampleKo": "그 워크숍은 트랜스포머 스케일링 및 모델 양자화와 같은 최첨단 주제들을 다룬다.",
+   "paperExamples": [
+    {
+     "sentenceId": "1-1",
+     "en": "Recurrent neural networks, long short-term memory and gated recurrent neural networks in particular, have been firmly established as state of the art approaches in sequence modeling and transduction problems such as language modeling and machine translation.",
+     "ko": "순환 신경망(RNN), 특히 장단기 메모리(LSTM ) 및 게이트 순환 신경망(GRU)은 언어 모델링이나 기계 번역과 같은 시퀀스 모델링 및시퀀스 변환 문제에서 최첨단(state of the art) 접근 방식으로 확고하게 자리 잡아 왔습니다."
+    },
+    {
+     "sentenceId": "1-9",
+     "en": "In all but a few cases, however, such attention mechanisms are used in conjunction with a recurrent network.",
+     "ko": "그러나 극히 드문 몇몇 사례를 제외하면, 이러한 어텐션 메커니즘은 여전히 순환 신경망(RNN)과 결합된 형태로 사용되고 있습니다."
+    }
+   ]
+  },
+  {
+   "id": "w040",
+   "part": 2,
+   "partTitle": "Part 2. Introduction: 순환 구조의 본질적 한계 규명",
+   "no": 40,
+   "word": "numerous",
+   "pos": "형",
+   "meaning": "수많은, 다수의 (뒤에 복수명사)",
+   "context": "RNN의 한계를 극복하기 위해 그동안 쏟아졌던 방대한 연구 노력들(numerous efforts)을 수식.",
+   "exampleEn": "Researchers performed numerous validation trials before confirming the experimental results.",
+   "exampleKo": "연구자들은 실험 결과를 확증하기 전에 수많은 검증 시험을 수행했다.",
+   "paperExamples": [
+    {
+     "sentenceId": "1-2",
+     "en": "Numerous efforts have since continued to push the boundaries of recurrent language models and encoder-decoder architectures.",
+     "ko": "그 이후로 순환 언어 모델과 인코더-디코더 아키텍처의 한계를 넓히기 위한 수많은 연구와 시도들이 지속적으로 이어져 왔습니다."
+    }
+   ]
+  },
+  {
+   "id": "w041",
+   "part": 2,
+   "partTitle": "Part 2. Introduction: 순환 구조의 본질적 한계 규명",
+   "no": 41,
+   "word": "effort",
+   "pos": "명",
+   "meaning": "노력, 연구 시도",
+   "context": "RNN/LSTM의 표현력 한계를 확장하려던 학계의 끈질긴 연구 개발 시도들.",
+   "exampleEn": "Dedicated engineering efforts led to significant breakthroughs in system throughput.",
+   "exampleKo": "헌신적인 엔지니어링 노력은 시스템 처리량의 중대한 획기적 개선으로 이어졌다.",
+   "paperExamples": [
+    {
+     "sentenceId": "1-2",
+     "en": "Numerous efforts have since continued to push the boundaries of recurrent language models and encoder-decoder architectures.",
+     "ko": "그 이후로 순환 언어 모델과 인코더-디코더 아키텍처의 한계를 넓히기 위한 수많은 연구와 시도들이 지속적으로 이어져 왔습니다."
+    }
+   ]
+  },
+  {
+   "id": "w042",
+   "part": 2,
+   "partTitle": "Part 2. Introduction: 순환 구조의 본질적 한계 규명",
+   "no": 42,
+   "word": "since",
+   "pos": "부",
+   "meaning": "그 이후로, 그 이래로",
+   "context": "LSTM/GRU 등장 이후 논문 작성 시점까지 지속적으로 시도가 이어져 왔음을 나타냄.",
+   "exampleEn": "The framework was introduced in 2017 and has since transformed artificial intelligence research.",
+   "exampleKo": "그 프레임워크는 2017년에 도입되었으며, 그 이후로 인공지능 연구를 완전히 탈바꿈시켰다.",
+   "paperExamples": [
+    {
+     "sentenceId": "1-2",
+     "en": "Numerous efforts have since continued to push the boundaries of recurrent language models and encoder-decoder architectures.",
+     "ko": "그 이후로 순환 언어 모델과 인코더-디코더 아키텍처의 한계를 넓히기 위한 수많은 연구와 시도들이 지속적으로 이어져 왔습니다."
+    },
+    {
+     "sentenceId": "3.2.1-10",
+     "en": "While the two are similar in theoretical complexity, dot-product attention is much faster and more space-efficient in practice, since it can be implemented using highly optimized matrix multiplication code. While.",
+     "ko": "이론적 복잡도(theoretical complexity) 측면에서는 두 방식이 유사하지만, 실제(in practice)로는 점곱 어텐션(dot-productattention)이 훨씬 더 빠르고 메모리 공간 효율적입니다. 왜냐하면 고도로 최적화된 행렬 곱셈(matrix multiplication) 코드를 사용하여 구현할 수 있기 때문입니다."
+    }
+   ]
+  },
+  {
+   "id": "w043",
+   "part": 2,
+   "partTitle": "Part 2. Introduction: 순환 구조의 본질적 한계 규명",
+   "no": 43,
+   "word": "boundary",
+   "pos": "명",
+   "meaning": "경계, 한계, 지평",
+   "context": "push the boundaries: 순환 언어 모델의 한계를 극복하고 성능 지평을 넓히다.",
+   "exampleEn": "Pioneering technology firms continuously push the boundaries of neural network design.",
+   "exampleKo": "선구적인 기술 기업들은 신경망 설계의 한계를 끊임없이 확장해 나간다.",
+   "paperExamples": []
+  },
+  {
+   "id": "w044",
+   "part": 2,
+   "partTitle": "Part 2. Introduction: 순환 구조의 본질적 한계 규명",
+   "no": 44,
+   "word": "typically",
+   "pos": "부",
+   "meaning": "일반적으로, 전형적으로",
+   "context": "순환 신경망 모델들이 공통적으로 취하는 표준적인 계산 분해 방식을 기술.",
+   "exampleEn": "Production databases typically undergo scheduled maintenance during off-peak hours.",
+   "exampleKo": "프로덕션 데이터베이스는 일반적으로 트래픽이 적은 시간대에 정기 유지보수를 거친다.",
+   "paperExamples": [
+    {
+     "sentenceId": "1-3",
+     "en": "Recurrent models typically factor computation along the symbol positions of the input and output sequences.",
+     "ko": "순환(RNN 계열) 모델들은 일반적으로 입력 및 출력 시퀀스 내 각 심볼(단어/토큰)의 위치를 따라 계산을 순차적으로 분해하여 수행합니다."
+    },
+    {
+     "sentenceId": "3.2.3-4",
+     "en": "This mimics the typical encoder-decoder attention mechanisms in sequence-to-sequence models such as.",
+     "ko": "이는 [38, 2, 9] 등의 시퀀스-투-시퀀스(sequence-to-sequence) 모델들에서 사용되던 전형적인 인코더-디코더 어텐션 메커니즘을그대로 모방(계승)한 것입니다."
+    }
+   ]
+  },
+  {
+   "id": "w045",
+   "part": 2,
+   "partTitle": "Part 2. Introduction: 순환 구조의 본질적 한계 규명",
+   "no": 45,
+   "word": "factor",
+   "pos": "동",
+   "meaning": "분해하다, 인수분해하다",
+   "context": "factor computation: 토큰 위치(시간 축 t)를 따라 연산을 순차적 단계로 쪼개어 처리함.",
+   "exampleEn": "Recurrent models typically factor computation along the symbol positions of the sequence.",
+   "exampleKo": "순환 모델들은 일반적으로 시퀀스의 심볼 위치를 따라 연산을 순차적으로 분해하여 처리합니다.",
+   "paperExamples": [
+    {
+     "sentenceId": "1-3",
+     "en": "Recurrent models typically factor computation along the symbol positions of the input and output sequences.",
+     "ko": "순환(RNN 계열) 모델들은 일반적으로 입력 및 출력 시퀀스 내 각 심볼(단어/토큰)의 위치를 따라 계산을 순차적으로 분해하여 수행합니다."
+    },
+    {
+     "sentenceId": "1-6",
+     "en": "Recent work has achieved significant improvements in computational efficiency through factorization tricks and conditional computation, while also improving model performance in case of the latter.",
+     "ko": "최근 연구들은 인수분해 기법(factorization tricks)과 조건부 연산(conditional computation)을 통해 연산 효율성을 크게 향상시켰으며, 후자(조건부 연산)의 경우에는 모델 성능까지 동시에 끌어올렸습니다."
+    }
+   ]
+  },
+  {
+   "id": "w046",
+   "part": 2,
+   "partTitle": "Part 2. Introduction: 순환 구조의 본질적 한계 규명",
+   "no": 46,
+   "word": "computation",
+   "pos": "명",
+   "meaning": "계산, 연산",
+   "context": "신경망 내부의 텐서 및 은닉 상태를 산출하는 수학적 처리 과정.",
+   "exampleEn": "Distributed computing architectures accelerate matrix computation across GPU clusters.",
+   "exampleKo": "분산 컴퓨팅 아키텍처는 GPU 클러스터 전반에서 행렬 연산을 가속한다.",
+   "paperExamples": [
+    {
+     "sentenceId": "1-3",
+     "en": "Recurrent models typically factor computation along the symbol positions of the input and output sequences.",
+     "ko": "순환(RNN 계열) 모델들은 일반적으로 입력 및 출력 시퀀스 내 각 심볼(단어/토큰)의 위치를 따라 계산을 순차적으로 분해하여 수행합니다."
+    },
+    {
+     "sentenceId": "1-4",
+     "en": "Aligning the positions to steps in computation time, they generate a sequence of hidden states ht, as a function of the previous hidden state ht-1 and the input for position.",
+     "ko": "(입력 심볼의) 위치를 계산 시간의 단계(스텝)와 일치시킴으로써, 순환 모델들은 이전 은닉 상태 hₜ₋₁과 현재 위치 t의 입력값 xₜ에 대한 함수로서 일련의 은닉 상태 hₜ 시퀀스를 생성합니다."
+    }
+   ]
+  },
+  {
+   "id": "w047",
+   "part": 2,
+   "partTitle": "Part 2. Introduction: 순환 구조의 본질적 한계 규명",
+   "no": 47,
+   "word": "along",
+   "pos": "전",
+   "meaning": "~을 따라, ~에 걸쳐",
+   "context": "입력 및 출력 시퀀스 내 토큰 심볼들의 위치 순서를 따라 계산이 진행됨을 의미.",
+   "exampleEn": "Data packets flow along optimized network paths to minimize transit latency.",
+   "exampleKo": "데이터 패킷은 전송 지연을 최소화하기 위해 최적화된 네트워크 경로를 따라 흐른다.",
+   "paperExamples": [
+    {
+     "sentenceId": "1-3",
+     "en": "Recurrent models typically factor computation along the symbol positions of the input and output sequences.",
+     "ko": "순환(RNN 계열) 모델들은 일반적으로 입력 및 출력 시퀀스 내 각 심볼(단어/토큰)의 위치를 따라 계산을 순차적으로 분해하여 수행합니다."
+    }
+   ]
+  },
+  {
+   "id": "w048",
+   "part": 2,
+   "partTitle": "Part 2. Introduction: 순환 구조의 본질적 한계 규명",
+   "no": 48,
+   "word": "symbol",
+   "pos": "명",
+   "meaning": "심볼, 기호, 토큰",
+   "context": "자연어 처리에서 문장을 구성하는 개별 단어, 형태소, 서브워드 단위의 이산적 토큰.",
+   "exampleEn": "The tokenizer maps each text symbol to a unique categorical index in vocabulary.",
+   "exampleKo": "토크나이저는 각 텍스트 심볼을 어휘 사전 내의 고유한 범주형 인덱스에 매핑한다.",
+   "paperExamples": [
+    {
+     "sentenceId": "1-3",
+     "en": "Recurrent models typically factor computation along the symbol positions of the input and output sequences.",
+     "ko": "순환(RNN 계열) 모델들은 일반적으로 입력 및 출력 시퀀스 내 각 심볼(단어/토큰)의 위치를 따라 계산을 순차적으로 분해하여 수행합니다."
+    },
+    {
+     "sentenceId": "3-2",
+     "en": "Here, the encoder maps an input sequence of symbol representations (x₁, ..., xₙ) to a sequence of continuous representations z = (z₁, ..., zₙ).",
+     "ko": "여기서 인코더는 심볼(토큰) 표현으로 이루어진 입력 시퀀스 (x₁, …, xₙ)을 연속적인 벡터 표현의 시퀀스 z =(z₁, …, zₙ)으로 변환(매핑)합니다."
+    }
+   ]
+  },
+  {
+   "id": "w049",
+   "part": 2,
+   "partTitle": "Part 2. Introduction: 순환 구조의 본질적 한계 규명",
+   "no": 49,
+   "word": "align",
+   "pos": "동",
+   "meaning": "정렬시키다, 일치시키다",
+   "context": "토큰의 물리적 위치(position)를 연산 시간의 단계(time step t)에 1:1로 맞물리게 함.",
+   "exampleEn": "Aligning the positions to steps in computation time generates a sequence of hidden states.",
+   "exampleKo": "위치들을 계산 시간의 단계에 일치시킴으로써 일련의 은닉 상태 시퀀스를 생성합니다.",
+   "paperExamples": [
+    {
+     "sentenceId": "1-4",
+     "en": "Aligning the positions to steps in computation time, they generate a sequence of hidden states ht, as a function of the previous hidden state ht-1 and the input for position.",
+     "ko": "(입력 심볼의) 위치를 계산 시간의 단계(스텝)와 일치시킴으로써, 순환 모델들은 이전 은닉 상태 hₜ₋₁과 현재 위치 t의 입력값 xₜ에 대한 함수로서 일련의 은닉 상태 hₜ 시퀀스를 생성합니다."
+    }
+   ]
+  },
+  {
+   "id": "w050",
+   "part": 2,
+   "partTitle": "Part 2. Introduction: 순환 구조의 본질적 한계 규명",
+   "no": 50,
+   "word": "generate",
+   "pos": "동",
+   "meaning": "생성하다, 만들어내다",
+   "context": "이전 은닉 상태와 현재 입력을 결합하여 새로운 은닉 상태 h_t를 산출함.",
+   "exampleEn": "The generator module creates realistic synthetic data to augment training sets.",
+   "exampleKo": "생성기 모듈은 훈련 데이터셋을 증강하기 위해 현실적인 합성 데이터를 생성한다.",
+   "paperExamples": [
+    {
+     "sentenceId": "1-4",
+     "en": "Aligning the positions to steps in computation time, they generate a sequence of hidden states ht, as a function of the previous hidden state ht-1 and the input for position.",
+     "ko": "(입력 심볼의) 위치를 계산 시간의 단계(스텝)와 일치시킴으로써, 순환 모델들은 이전 은닉 상태 hₜ₋₁과 현재 위치 t의 입력값 xₜ에 대한 함수로서 일련의 은닉 상태 hₜ 시퀀스를 생성합니다."
+    },
+    {
+     "sentenceId": "3-3",
+     "en": "Given z, the decoder then generates an output sequence (y₁, ..., yₘ) of symbols one element at a time.",
+     "ko": "(인코더의 출력인) z가 주어지면, 디코더는 이를 바탕으로 출력 심볼 시퀀스 (y₁, …, yₘ)을 한 번에 하나씩(순차적으로) 생성합니다."
+    }
+   ]
+  },
+  {
+   "id": "w051",
+   "part": 2,
+   "partTitle": "Part 2. Introduction: 순환 구조의 본질적 한계 규명",
+   "no": 51,
+   "word": "as a function of",
+   "pos": "표현",
+   "meaning": "~의 함수로서, ~에 좌우되어",
+   "context": "h_t = f(h_{t-1}, x_t)라는 수학적 인과 종속 관계를 완벽하게 표현한 학술 구문.",
+   "exampleEn": "System operating performance varies as a function of server temperature and workload.",
+   "exampleKo": "시스템 운영 성능은 서버 온도와 워크로드에 따른 함수로서 변화한다.",
+   "paperExamples": [
+    {
+     "sentenceId": "1-4",
+     "en": "Aligning the positions to steps in computation time, they generate a sequence of hidden states ht, as a function of the previous hidden state ht-1 and the input for position.",
+     "ko": "(입력 심볼의) 위치를 계산 시간의 단계(스텝)와 일치시킴으로써, 순환 모델들은 이전 은닉 상태 hₜ₋₁과 현재 위치 t의 입력값 xₜ에 대한 함수로서 일련의 은닉 상태 hₜ 시퀀스를 생성합니다."
+    },
+    {
+     "sentenceId": "3.1-4",
+     "en": "That is, the output of each sub-layer is LayerNorm(x + Sublayer(x)), where Sublayer(x) is the function implemented by the sub-layer itself.",
+     "ko": "즉, 각 서브 레이어의 최종 출력은 LayerNorm(x + SubLayer(x))이며, 여기서 SubLayer(x)는 해당 서브 레이어 자체가 구현하는 고유 연산 함수를 의미합니다."
+    }
+   ]
+  },
+  {
+   "id": "w052",
+   "part": 2,
+   "partTitle": "Part 2. Introduction: 순환 구조의 본질적 한계 규명",
+   "no": 52,
+   "word": "previous",
+   "pos": "형",
+   "meaning": "이전의, 앞선 (=prior)",
+   "context": "직전 타임스텝의 은닉 상태(previous hidden state h_{t-1})를 지칭.",
+   "exampleEn": "Applicants must possess previous professional experience in large-scale system operations.",
+   "exampleKo": "지원자는 대규모 시스템 운영 분야의 이전 실무 경험을 보유해야 합니다.",
+   "paperExamples": [
+    {
+     "sentenceId": "1-4",
+     "en": "Aligning the positions to steps in computation time, they generate a sequence of hidden states ht, as a function of the previous hidden state ht-1 and the input for position.",
+     "ko": "(입력 심볼의) 위치를 계산 시간의 단계(스텝)와 일치시킴으로써, 순환 모델들은 이전 은닉 상태 hₜ₋₁과 현재 위치 t의 입력값 xₜ에 대한 함수로서 일련의 은닉 상태 hₜ 시퀀스를 생성합니다."
+    },
+    {
+     "sentenceId": "3-4",
+     "en": "At each step the model is auto-regressive, consuming the previously generated symbols as additional input when generating the next.",
+     "ko": "매 단계(스텝)마다 모델은 자기회귀적(auto-regressive [10])으로 동작하며, 다음 심볼을 생성할 때 이전에 자신이 생성했던 심볼들을 추가 입력으로 취합니다."
+    }
+   ]
+  },
+  {
+   "id": "w053",
+   "part": 2,
+   "partTitle": "Part 2. Introduction: 순환 구조의 본질적 한계 규명",
+   "no": 53,
+   "word": "hidden state",
+   "pos": "명",
+   "meaning": "은닉 상태 (히든 스테이트)",
+   "context": "순환 신경망에서 과거 시점까지의 문맥 정보를 압축하여 저장하는 내부 은닉 벡터 h_t.",
+   "exampleEn": "Recurrent networks maintain an internal hidden state that is updated at each token step.",
+   "exampleKo": "순환 신경망은 각 토큰 단계마다 업데이트되는 내부 은닉 상태를 유지한다.",
+   "paperExamples": [
+    {
+     "sentenceId": "1-4",
+     "en": "Aligning the positions to steps in computation time, they generate a sequence of hidden states ht, as a function of the previous hidden state ht-1 and the input for position.",
+     "ko": "(입력 심볼의) 위치를 계산 시간의 단계(스텝)와 일치시킴으로써, 순환 모델들은 이전 은닉 상태 hₜ₋₁과 현재 위치 t의 입력값 xₜ에 대한 함수로서 일련의 은닉 상태 hₜ 시퀀스를 생성합니다."
+    }
+   ]
+  },
+  {
+   "id": "w054",
+   "part": 2,
+   "partTitle": "Part 2. Introduction: 순환 구조의 본질적 한계 규명",
+   "no": 54,
+   "word": "inherently",
+   "pos": "부",
+   "meaning": "본질적으로, 태생적으로",
+   "context": "RNN의 순차적 특성이 외부 결함이 아닌 구조 자체의 본질적 한계임을 밝힘.",
+   "exampleEn": "Managing legacy monolithic infrastructure is inherently resource-intensive and error-prone.",
+   "exampleKo": "레거시 모놀리식 인프라를 관리하는 것은 본질적으로 자원 소모가 크고 오류가 발생하기 쉽다.",
+   "paperExamples": [
+    {
+     "sentenceId": "1-5",
+     "en": "This inherently sequential nature precludes parallelization within training examples, which becomes critical at longer sequence lengths, as memory constraints limit batching across examples.",
+     "ko": "이러한 본질적으로 순차적인 구조적 특성은 단일 훈련 예제 내부에서의 병렬 처리를 원천적으로 가로막으며, 이는 메모리 제약으로인해 여러 예제 간의 배치(batch) 크기가 제한되는 긴 시퀀스 환경에서 대단히 치명적인 문제가 됩니다."
+    }
+   ]
+  },
+  {
+   "id": "w055",
+   "part": 2,
+   "partTitle": "Part 2. Introduction: 순환 구조의 본질적 한계 규명",
+   "no": 55,
+   "word": "preclude",
+   "pos": "동",
+   "meaning": "못하게 하다, 원천 차단하다",
+   "context": "RNN의 순차적 종속성이 단일 훈련 예제 내부에서의 병렬화를 물리적으로 불가능하게 만듦.",
+   "exampleEn": "This inherently sequential nature precludes parallelization within training examples.",
+   "exampleKo": "이러한 본질적으로 순차적인 특성은 단일 훈련 예제 내부에서의 병렬 처리를 원천적으로 가로막습니다.",
+   "paperExamples": [
+    {
+     "sentenceId": "1-5",
+     "en": "This inherently sequential nature precludes parallelization within training examples, which becomes critical at longer sequence lengths, as memory constraints limit batching across examples.",
+     "ko": "이러한 본질적으로 순차적인 구조적 특성은 단일 훈련 예제 내부에서의 병렬 처리를 원천적으로 가로막으며, 이는 메모리 제약으로인해 여러 예제 간의 배치(batch) 크기가 제한되는 긴 시퀀스 환경에서 대단히 치명적인 문제가 됩니다."
+    }
+   ]
+  },
+  {
+   "id": "w056",
+   "part": 2,
+   "partTitle": "Part 2. Introduction: 순환 구조의 본질적 한계 규명",
+   "no": 56,
+   "word": "critical",
+   "pos": "형",
+   "meaning": "대단히 중요한, 치명적인",
+   "context": "시퀀스 길이가 길어질수록 메모리 제약과 결합하여 병목 문제가 치명적이 됨을 서술.",
+   "exampleEn": "Rigorous memory management becomes critical when fine-tuning billion-parameter models.",
+   "exampleKo": "수십억 파라미터 모델을 파인튜닝할 때는 엄격한 메모리 관리가 대단히 중요해진다.",
+   "paperExamples": [
+    {
+     "sentenceId": "1-5",
+     "en": "This inherently sequential nature precludes parallelization within training examples, which becomes critical at longer sequence lengths, as memory constraints limit batching across examples.",
+     "ko": "이러한 본질적으로 순차적인 구조적 특성은 단일 훈련 예제 내부에서의 병렬 처리를 원천적으로 가로막으며, 이는 메모리 제약으로인해 여러 예제 간의 배치(batch) 크기가 제한되는 긴 시퀀스 환경에서 대단히 치명적인 문제가 됩니다."
+    }
+   ]
+  },
+  {
+   "id": "w057",
+   "part": 2,
+   "partTitle": "Part 2. Introduction: 순환 구조의 본질적 한계 규명",
+   "no": 57,
+   "word": "constraint",
+   "pos": "명",
+   "meaning": "제약, 제한 (=limitation)",
+   "context": "GPU 하드웨어 메모리의 물리적 한계(memory constraints)로 인한 배치 크기 제약.",
+   "exampleEn": "Stringent budgetary constraints forced the engineering team to optimize cloud compute costs.",
+   "exampleKo": "엄격한 예산 제약으로 인해 엔지니어링 팀은 클라우드 컴퓨팅 비용을 최적화해야 했다.",
+   "paperExamples": [
+    {
+     "sentenceId": "1-5",
+     "en": "This inherently sequential nature precludes parallelization within training examples, which becomes critical at longer sequence lengths, as memory constraints limit batching across examples.",
+     "ko": "이러한 본질적으로 순차적인 구조적 특성은 단일 훈련 예제 내부에서의 병렬 처리를 원천적으로 가로막으며, 이는 메모리 제약으로인해 여러 예제 간의 배치(batch) 크기가 제한되는 긴 시퀀스 환경에서 대단히 치명적인 문제가 됩니다."
+    },
+    {
+     "sentenceId": "1-7",
+     "en": "The fundamental constraint of sequential computation, however, remains.",
+     "ko": "그러나 순차적 연산이 지닌 근본적인 제약은 여전히 그대로 남아 있습니다."
+    }
+   ]
+  },
+  {
+   "id": "w058",
+   "part": 2,
+   "partTitle": "Part 2. Introduction: 순환 구조의 본질적 한계 규명",
+   "no": 58,
+   "word": "limit",
+   "pos": "동/명",
+   "meaning": "(동) 제한하다 / (명) 한도",
+   "context": "메모리 부족으로 인해 문장 간의 배치(batching across examples) 크기가 제한됨.",
+   "exampleEn": "Hardware memory capacity limits the maximum batch size during deep neural network training.",
+   "exampleKo": "하드웨어 메모리 용량은 심층 신경망 훈련 중 최대 배치 크기를 제한한다.",
+   "paperExamples": [
+    {
+     "sentenceId": "1-5",
+     "en": "This inherently sequential nature precludes parallelization within training examples, which becomes critical at longer sequence lengths, as memory constraints limit batching across examples.",
+     "ko": "이러한 본질적으로 순차적인 구조적 특성은 단일 훈련 예제 내부에서의 병렬 처리를 원천적으로 가로막으며, 이는 메모리 제약으로인해 여러 예제 간의 배치(batch) 크기가 제한되는 긴 시퀀스 환경에서 대단히 치명적인 문제가 됩니다."
+    },
+    {
+     "sentenceId": "abstract-7",
+     "en": "We show that the Transformer generalizes well to other tasks by applying it successfully to English constituency parsing both with large and limited training data.",
+     "ko": "우리는 대규모 훈련 데이터뿐만 아니라 제한된 훈련 데이터 환경에서도 Transformer를 영어 구 구조 구문 분석(constituencyparsing)에 성공적으로 적용함으로써, 이 모델이 다른 자연어 처리 과제에도 훌륭하게 일반화(확장)된다는 점을 증명합니다."
+    }
+   ]
+  },
+  {
+   "id": "w059",
+   "part": 2,
+   "partTitle": "Part 2. Introduction: 순환 구조의 본질적 한계 규명",
+   "no": 59,
+   "word": "efficiency",
+   "pos": "명",
+   "meaning": "효율성, 능률 (형: efficient)",
+   "context": "연산 효율성(computational efficiency): 주어진 하드웨어 자원 대비 처리 속도 및 처리량.",
+   "exampleEn": "Adopting asynchronous processing significantly enhanced backend operational efficiency.",
+   "exampleKo": "비동기식 처리를 채택함으로써 백엔드 운영 효율성이 대폭 향상되었다.",
+   "paperExamples": [
+    {
+     "sentenceId": "1-6",
+     "en": "Recent work has achieved significant improvements in computational efficiency through factorization tricks and conditional computation, while also improving model performance in case of the latter.",
+     "ko": "최근 연구들은 인수분해 기법(factorization tricks)과 조건부 연산(conditional computation)을 통해 연산 효율성을 크게 향상시켰으며, 후자(조건부 연산)의 경우에는 모델 성능까지 동시에 끌어올렸습니다."
+    }
+   ]
+  },
+  {
+   "id": "w060",
+   "part": 2,
+   "partTitle": "Part 2. Introduction: 순환 구조의 본질적 한계 규명",
+   "no": 60,
+   "word": "factorization",
+   "pos": "명",
+   "meaning": "인수분해, 행렬 분해",
+   "context": "거대 가중치 행렬을 저차원 행렬들의 곱으로 근사 분해하여 연산량을 줄이는 최적화 기법.",
+   "exampleEn": "Matrix factorization is widely applied in collaborative filtering and recommendation systems.",
+   "exampleKo": "행렬 분해는 협업 필터링 및 추천 시스템에 널리 응용된다.",
+   "paperExamples": [
+    {
+     "sentenceId": "1-6",
+     "en": "Recent work has achieved significant improvements in computational efficiency through factorization tricks and conditional computation, while also improving model performance in case of the latter.",
+     "ko": "최근 연구들은 인수분해 기법(factorization tricks)과 조건부 연산(conditional computation)을 통해 연산 효율성을 크게 향상시켰으며, 후자(조건부 연산)의 경우에는 모델 성능까지 동시에 끌어올렸습니다."
+    }
+   ]
+  },
+  {
+   "id": "w061",
+   "part": 2,
+   "partTitle": "Part 2. Introduction: 순환 구조의 본질적 한계 규명",
+   "no": 61,
+   "word": "conditional",
+   "pos": "형",
+   "meaning": "조건부의, 상황에 따른",
+   "context": "conditional computation: 입력에 따라 네트워크의 일부만 선택적으로 활성화(MoE 구조 등).",
+   "exampleEn": "The employment offer remains conditional upon the successful completion of background checks.",
+   "exampleKo": "채용 제안은 신원 조회의 성공적인 완료를 조건으로 유지됩니다.",
+   "paperExamples": [
+    {
+     "sentenceId": "1-6",
+     "en": "Recent work has achieved significant improvements in computational efficiency through factorization tricks and conditional computation, while also improving model performance in case of the latter.",
+     "ko": "최근 연구들은 인수분해 기법(factorization tricks)과 조건부 연산(conditional computation)을 통해 연산 효율성을 크게 향상시켰으며, 후자(조건부 연산)의 경우에는 모델 성능까지 동시에 끌어올렸습니다."
+    }
+   ]
+  },
+  {
+   "id": "w062",
+   "part": 2,
+   "partTitle": "Part 2. Introduction: 순환 구조의 본질적 한계 규명",
+   "no": 62,
+   "word": "the latter",
+   "pos": "대명사",
+   "meaning": "(둘 중) 후자 (반: the former)",
+   "context": "앞서 언급된 행렬 분해와 조건부 연산 중 뒤에 나온 '조건부 연산'을 명확히 지칭.",
+   "exampleEn": "The committee reviewed proposals A and B, ultimately recommending the latter for execution.",
+   "exampleKo": "위원회는 제안서 A와 B를 검토하였고, 궁극적으로 후자를 실행할 것을 권고했다.",
+   "paperExamples": [
+    {
+     "sentenceId": "1-6",
+     "en": "Recent work has achieved significant improvements in computational efficiency through factorization tricks and conditional computation, while also improving model performance in case of the latter.",
+     "ko": "최근 연구들은 인수분해 기법(factorization tricks)과 조건부 연산(conditional computation)을 통해 연산 효율성을 크게 향상시켰으며, 후자(조건부 연산)의 경우에는 모델 성능까지 동시에 끌어올렸습니다."
+    }
+   ]
+  },
+  {
+   "id": "w063",
+   "part": 2,
+   "partTitle": "Part 2. Introduction: 순환 구조의 본질적 한계 규명",
+   "no": 63,
+   "word": "fundamental",
+   "pos": "형",
+   "meaning": "근본적인, 핵심적인",
+   "context": "아무리 기법을 덧대어도 순차 계산이 지닌 근본적 제약(fundamental constraint)은 남음을 지적.",
+   "exampleEn": "Ensuring data integrity is a fundamental requirement of secure distributed storage.",
+   "exampleKo": "데이터 무결성을 보장하는 것은 안전한 분산 스토리지의 근본적인 요구 사항이다.",
+   "paperExamples": [
+    {
+     "sentenceId": "1-7",
+     "en": "The fundamental constraint of sequential computation, however, remains.",
+     "ko": "그러나 순차적 연산이 지닌 근본적인 제약은 여전히 그대로 남아 있습니다."
+    }
+   ]
+  },
+  {
+   "id": "w064",
+   "part": 2,
+   "partTitle": "Part 2. Introduction: 순환 구조의 본질적 한계 규명",
+   "no": 64,
+   "word": "remain",
+   "pos": "동",
+   "meaning": "여전히 남아있다 (1형식 자동사)",
+   "context": "The fundamental constraint of sequential computation, however, remains. (강렬한 전환점)",
+   "exampleEn": "Several core technical challenges remain unresolved despite intensive optimization efforts.",
+   "exampleKo": "집중적인 최적화 노력에도 불구하고 몇 가지 핵심 기술 과제들이 여전히 미해결 상태로 남아있다.",
+   "paperExamples": [
+    {
+     "sentenceId": "1-7",
+     "en": "The fundamental constraint of sequential computation, however, remains.",
+     "ko": "그러나 순차적 연산이 지닌 근본적인 제약은 여전히 그대로 남아 있습니다."
+    },
+    {
+     "sentenceId": "6.3-7",
+     "en": "We performed only a small number of experiments to select the dropout, both attention and residual (section 5.4), learning rates and beam size on the Section 22 development set, all other parameters remained unchanged from the English-to-German base translation model.",
+     "ko": "우리는 섹션 22 개발 세트(development set)에서 드롭아웃(어텐션 및 잔차 드롭아웃 모두, 5.4절 참조), 학습률(learning rates),L2 정규화(L2 regularization)를 선택하기 위해 아주 적은 횟수의 실험만을 수행했으며, 그 외의 다른 모든 파라미터는 영어-독일어 기본 번역 모델(base translation model)의 설정을 그대로 유지했습니다."
+    }
+   ]
+  },
+  {
+   "id": "w065",
+   "part": 2,
+   "partTitle": "Part 2. Introduction: 순환 구조의 본질적 한계 규명",
+   "no": 65,
+   "word": "integral",
+   "pos": "형",
+   "meaning": "필수적인, 불가결한 (=essential)",
+   "context": "어텐션 메커니즘이 고성능 시퀀스 모델링에서 결코 뺄 수 없는 핵심 요소임을 명시.",
+   "exampleEn": "Attention mechanisms have become an integral part of compelling sequence modeling architectures.",
+   "exampleKo": "어텐션 메커니즘은 강력한 시퀀스 모델링 아키텍처들의 필수적인 일부분이 되었습니다.",
+   "paperExamples": [
+    {
+     "sentenceId": "1-8",
+     "en": "Attention mechanisms have become an integral part of compelling sequence modeling and transduction models in various tasks, allowing modeling of dependencies without regard to their distance in the input or output sequences.",
+     "ko": "어텐션 메커니즘은 다양한 자연어 처리 과제에서 강력한 성능을 내는 시퀀스 모델링 및 변환 모델의 필수적인 요소로 자리 잡아 왔으며, 이는 입력 또는 출력 시퀀스 내에서의 거리에 상관없이 단어 간의 상호 의존성을 모델링할 수 있게 해 주었습니다. t t-1"
+    }
+   ]
+  },
+  {
+   "id": "w066",
+   "part": 2,
+   "partTitle": "Part 2. Introduction: 순환 구조의 본질적 한계 규명",
+   "no": 66,
+   "word": "compelling",
+   "pos": "형",
+   "meaning": "설득력 있는, 매우 강력한",
+   "context": "뛰어난 번역 및 언어 생성 품질을 입증해 내는 강력한 시퀀스 모델들을 수식.",
+   "exampleEn": "The engineering team presented a compelling case for migrating legacy infrastructure.",
+   "exampleKo": "엔지니어링 팀은 레거시 인프라 이전을 위한 설득력 있는 논거를 제시했다.",
+   "paperExamples": [
+    {
+     "sentenceId": "1-8",
+     "en": "Attention mechanisms have become an integral part of compelling sequence modeling and transduction models in various tasks, allowing modeling of dependencies without regard to their distance in the input or output sequences.",
+     "ko": "어텐션 메커니즘은 다양한 자연어 처리 과제에서 강력한 성능을 내는 시퀀스 모델링 및 변환 모델의 필수적인 요소로 자리 잡아 왔으며, 이는 입력 또는 출력 시퀀스 내에서의 거리에 상관없이 단어 간의 상호 의존성을 모델링할 수 있게 해 주었습니다. t t-1"
+    }
+   ]
+  },
+  {
+   "id": "w067",
+   "part": 2,
+   "partTitle": "Part 2. Introduction: 순환 구조의 본질적 한계 규명",
+   "no": 67,
+   "word": "dependency",
+   "pos": "명",
+   "meaning": "의존성, 상관관계",
+   "context": "문장 내에서 멀리 떨어진 단어들 간의 문법적·의미론적 상호 참조 관계(dependencies).",
+   "exampleEn": "Resolving complex package dependencies is essential before initiating the build pipeline.",
+   "exampleKo": "빌드 파이프라인을 시작하기 전에 복잡한 패키지 의존성을 해결하는 것이 필수적이다.",
+   "paperExamples": []
+  },
+  {
+   "id": "w068",
+   "part": 2,
+   "partTitle": "Part 2. Introduction: 순환 구조의 본질적 한계 규명",
+   "no": 68,
+   "word": "without regard to",
+   "pos": "전치사구",
+   "meaning": "~에 구애받지 않고, 상관없이",
+   "context": "단어 사이의 물리적 거리가 1칸이든 100칸이든 상관없이 직접 연결(Direct connection)하여 참조.",
+   "exampleEn": "Attention allows modeling of dependencies without regard to their distance in sequence.",
+   "exampleKo": "어텐션은 시퀀스 내에서의 거리에 상관없이 단어 간의 상호 의존성을 모델링할 수 있게 해줍니다.",
+   "paperExamples": [
+    {
+     "sentenceId": "1-8",
+     "en": "Attention mechanisms have become an integral part of compelling sequence modeling and transduction models in various tasks, allowing modeling of dependencies without regard to their distance in the input or output sequences.",
+     "ko": "어텐션 메커니즘은 다양한 자연어 처리 과제에서 강력한 성능을 내는 시퀀스 모델링 및 변환 모델의 필수적인 요소로 자리 잡아 왔으며, 이는 입력 또는 출력 시퀀스 내에서의 거리에 상관없이 단어 간의 상호 의존성을 모델링할 수 있게 해 주었습니다. t t-1"
+    }
+   ]
+  },
+  {
+   "id": "w069",
+   "part": 2,
+   "partTitle": "Part 2. Introduction: 순환 구조의 본질적 한계 규명",
+   "no": 69,
+   "word": "in conjunction with",
+   "pos": "전치사구",
+   "meaning": "~와 결합하여, 함께",
+   "context": "기존 연구들이 어텐션을 독립 메커니즘이 아니라 RNN의 보조 모듈로만 붙여 썼음을 비판.",
+   "exampleEn": "Attention mechanisms were traditionally used in conjunction with a recurrent network.",
+   "exampleKo": "어텐션 메커니즘은 전통적으로 순환 신경망과 결합된 형태로만 사용되었습니다.",
+   "paperExamples": [
+    {
+     "sentenceId": "1-9",
+     "en": "In all but a few cases, however, such attention mechanisms are used in conjunction with a recurrent network.",
+     "ko": "그러나 극히 드문 몇몇 사례를 제외하면, 이러한 어텐션 메커니즘은 여전히 순환 신경망(RNN)과 결합된 형태로 사용되고 있습니다."
+    }
+   ]
+  },
+  {
+   "id": "w070",
+   "part": 2,
+   "partTitle": "Part 2. Introduction: 순환 구조의 본질적 한계 규명",
+   "no": 70,
+   "word": "eschew",
+   "pos": "동",
+   "meaning": "피하다, 삼가다, 배제하다",
+   "context": "순환(recurrence)을 어쩔 수 없이 뺀 것이 아니라 의도적으로 과감히 배제했음을 강조하는 고급 어휘.",
+   "exampleEn": "We propose the Transformer, a model architecture eschewing recurrence entirely.",
+   "exampleKo": "우리는 순환 구조를 완전히 배제한 모델 아키텍처인 트랜스포머를 제안합니다.",
+   "paperExamples": [
+    {
+     "sentenceId": "1-10",
+     "en": "In this work we propose the Transformer, a model architecture eschewing recurrence and instead relying entirely on an attention mechanism to draw global dependencies between input and output.",
+     "ko": "본 연구에서 우리는 순환(RNN) 구조를 완전히 배제하고, 입력과 출력 사이의 전역적 의존성(global dependencies)을 학습하기 위해 전적으로 어텐션 메커니즘에만 의존하는 모델 아키텍처인 '트랜스포머(Transformer)'를 제안합니다."
+    }
+   ]
+  },
+  {
+   "id": "w071",
+   "part": 2,
+   "partTitle": "Part 2. Introduction: 순환 구조의 본질적 한계 규명",
+   "no": 71,
+   "word": "rely on",
+   "pos": "구동사",
+   "meaning": "~에 의존하다, 기대다",
+   "context": "순환 대신 오직 어텐션 메커니즘 하나에만 전적으로 의존하여 전역 의존성을 학습함.",
+   "exampleEn": "The autonomous vehicle relies on redundant sensor arrays to navigate hazardous terrain.",
+   "exampleKo": "자율주행 차량은 위험한 지형을 운행하기 위해 다중 센서 배열에 의존한다.",
+   "paperExamples": [
+    {
+     "sentenceId": "1-10",
+     "en": "In this work we propose the Transformer, a model architecture eschewing recurrence and instead relying entirely on an attention mechanism to draw global dependencies between input and output.",
+     "ko": "본 연구에서 우리는 순환(RNN) 구조를 완전히 배제하고, 입력과 출력 사이의 전역적 의존성(global dependencies)을 학습하기 위해 전적으로 어텐션 메커니즘에만 의존하는 모델 아키텍처인 '트랜스포머(Transformer)'를 제안합니다."
+    },
+    {
+     "sentenceId": "2-8",
+     "en": "To the best of our knowledge, however, the Transformer is the first transduction model relying entirely on self-attention to compute representations of its input and output without using sequencealigned RNNs or convolution.",
+     "ko": "그러나 우리가 아는 한, 트랜스포머(Transformer)는 시퀀스 정렬된 RNN이나 합성곱(CNN)을 일절 사용하지 않고 입력과 출력의표현을 계산하기 위해 전적으로 셀프 어텐션(self-attention)에만 의존하는 최초의 시퀀스 변환 모델입니다."
+    }
+   ]
+  },
+  {
+   "id": "w072",
+   "part": 2,
+   "partTitle": "Part 2. Introduction: 순환 구조의 본질적 한계 규명",
+   "no": 72,
+   "word": "draw",
+   "pos": "동",
+   "meaning": "도출하다, 이끌어내다",
+   "context": "to draw global dependencies: 입력과 출력 사이의 전역적 의존 관계를 파악/도출하다.",
+   "exampleEn": "Data analysts draw meaningful insights from massive user interaction logs.",
+   "exampleKo": "데이터 분석가들은 방대한 사용자 상호작용 로그로부터 의미 있는 통찰을 도출한다.",
+   "paperExamples": [
+    {
+     "sentenceId": "1-10",
+     "en": "In this work we propose the Transformer, a model architecture eschewing recurrence and instead relying entirely on an attention mechanism to draw global dependencies between input and output.",
+     "ko": "본 연구에서 우리는 순환(RNN) 구조를 완전히 배제하고, 입력과 출력 사이의 전역적 의존성(global dependencies)을 학습하기 위해 전적으로 어텐션 메커니즘에만 의존하는 모델 아키텍처인 '트랜스포머(Transformer)'를 제안합니다."
+    }
+   ]
+  },
+  {
+   "id": "w073",
+   "part": 2,
+   "partTitle": "Part 2. Introduction: 순환 구조의 본질적 한계 규명",
+   "no": 73,
+   "word": "global",
+   "pos": "형",
+   "meaning": "전역적인, 전체를 아우르는",
+   "context": "국소 영역(local)에 갇히지 않고 시퀀스 전체 토큰을 한 번에 조망하는 전역적(global) 범위.",
+   "exampleEn": "The platform maintains a global view of all distributed transactions across the network.",
+   "exampleKo": "그 플랫폼은 네트워크상의 모든 분산 트랜잭션에 대한 전역적 뷰를 유지한다.",
+   "paperExamples": [
+    {
+     "sentenceId": "1-10",
+     "en": "In this work we propose the Transformer, a model architecture eschewing recurrence and instead relying entirely on an attention mechanism to draw global dependencies between input and output.",
+     "ko": "본 연구에서 우리는 순환(RNN) 구조를 완전히 배제하고, 입력과 출력 사이의 전역적 의존성(global dependencies)을 학습하기 위해 전적으로 어텐션 메커니즘에만 의존하는 모델 아키텍처인 '트랜스포머(Transformer)'를 제안합니다."
+    }
+   ]
+  },
+  {
+   "id": "w074",
+   "part": 2,
+   "partTitle": "Part 2. Introduction: 순환 구조의 본질적 한계 규명",
+   "no": 74,
+   "word": "allow for",
+   "pos": "구동사",
+   "meaning": "~을 가능하게 하다, 감안하다",
+   "context": "트랜스포머가 비약적으로 향상된 병렬 처리를 가능하게 함을 서술.",
+   "exampleEn": "The modular software architecture allows for seamless feature additions in future releases.",
+   "exampleKo": "모듈형 소프트웨어 아키텍처는 향후 릴리스에서 원활한 기능 추가를 가능하게 한다.",
+   "paperExamples": [
+    {
+     "sentenceId": "1-8",
+     "en": "Attention mechanisms have become an integral part of compelling sequence modeling and transduction models in various tasks, allowing modeling of dependencies without regard to their distance in the input or output sequences.",
+     "ko": "어텐션 메커니즘은 다양한 자연어 처리 과제에서 강력한 성능을 내는 시퀀스 모델링 및 변환 모델의 필수적인 요소로 자리 잡아 왔으며, 이는 입력 또는 출력 시퀀스 내에서의 거리에 상관없이 단어 간의 상호 의존성을 모델링할 수 있게 해 주었습니다. t t-1"
+    },
+    {
+     "sentenceId": "1-11",
+     "en": "The Transformer allows for significantly more parallelization and can reach a new state of the art in translation quality after being trained for as little as twelve hours on eight P100 GPUs.",
+     "ko": "트랜스포머는 비약적으로 향상된 병렬 처리를 가능하게 하며, 단 8대의 P100 GPU로 12시간이라는 매우 짧은 시간 동안 학습한 후에도 번역 품질에서 새로운 최고 수준(SOTA)에 도달할 수 있습니다."
+    }
+   ]
+  },
+  {
+   "id": "w075",
+   "part": 2,
+   "partTitle": "Part 2. Introduction: 순환 구조의 본질적 한계 규명",
+   "no": 75,
+   "word": "as little as",
+   "pos": "원급비교",
+   "meaning": "겨우 ~에 불과한, 단 ~만에",
+   "context": "단 8대의 P100 GPU로 12시간이라는 극히 짧은 시간 학습만으로 SOTA에 도달했음을 부각.",
+   "exampleEn": "The Transformer reaches SOTA translation quality after being trained for as little as twelve hours.",
+   "exampleKo": "트랜스포머는 단 12시간 동안 훈련된 후에도 최고 수준의 번역 품질에 도달할 수 있습니다.",
+   "paperExamples": [
+    {
+     "sentenceId": "1-11",
+     "en": "The Transformer allows for significantly more parallelization and can reach a new state of the art in translation quality after being trained for as little as twelve hours on eight P100 GPUs.",
+     "ko": "트랜스포머는 비약적으로 향상된 병렬 처리를 가능하게 하며, 단 8대의 P100 GPU로 12시간이라는 매우 짧은 시간 동안 학습한 후에도 번역 품질에서 새로운 최고 수준(SOTA)에 도달할 수 있습니다."
+    }
+   ]
+  },
+  {
+   "id": "w076",
+   "part": 3,
+   "partTitle": "Part 3. Background: 선행 연구 분석 및 이론적 복잡도 대조",
+   "no": 76,
+   "word": "foundation",
+   "pos": "명",
+   "meaning": "기초, 토대 (동: found)",
+   "context": "순차적 연산을 줄이려는 문제의식이 Extended Neural GPU, ByteNet, ConvS2S의 기초가 됨.",
+   "exampleEn": "Empirical market research forms the solid foundation of our long-term investment strategy.",
+   "exampleKo": "실증적인 시장 조사는 우리의 장기 투자 전략의 견고한 기초를 형성한다.",
+   "paperExamples": [
+    {
+     "sentenceId": "2-1",
+     "en": "The goal of reducing sequential computation also forms the foundation of the Extended Neural GPU, ByteNet and ConvS2S, all of which use convolutional neural networks as basic building block, computing hidden representations in parallel for all input and output positions. In.",
+     "ko": "순차적 연산을 줄이려는 목표는 Extended Neural GPU, ByteNet, ConvS2S의 기반이 되기도 하였는데, 이 모델들은 모두 합성곱신경망(CNN)을 기본 구성 단위(building block)로 사용하여 모든 입력 및 출력 위치에 대한 은닉 표현을 병렬로 계산합니다."
+    }
+   ]
+  },
+  {
+   "id": "w077",
+   "part": 3,
+   "partTitle": "Part 3. Background: 선행 연구 분석 및 이론적 복잡도 대조",
+   "no": 77,
+   "word": "building block",
+   "pos": "명",
+   "meaning": "기본 구성 단위, 핵심 블록",
+   "context": "선행 CNN 모델들이 합성곱 계층을 기본 빌딩 블록으로 삼아 병렬화를 시도했음을 서술.",
+   "exampleEn": "Standardized software components serve as interchangeable building blocks in modern systems.",
+   "exampleKo": "표준화된 소프트웨어 컴포넌트들은 현대 시스템에서 교체 가능한 기본 구성 블록 역할을 한다.",
+   "paperExamples": [
+    {
+     "sentenceId": "2-1",
+     "en": "The goal of reducing sequential computation also forms the foundation of the Extended Neural GPU, ByteNet and ConvS2S, all of which use convolutional neural networks as basic building block, computing hidden representations in parallel for all input and output positions. In.",
+     "ko": "순차적 연산을 줄이려는 목표는 Extended Neural GPU, ByteNet, ConvS2S의 기반이 되기도 하였는데, 이 모델들은 모두 합성곱신경망(CNN)을 기본 구성 단위(building block)로 사용하여 모든 입력 및 출력 위치에 대한 은닉 표현을 병렬로 계산합니다."
+    }
+   ]
+  },
+  {
+   "id": "w078",
+   "part": 3,
+   "partTitle": "Part 3. Background: 선행 연구 분석 및 이론적 복잡도 대조",
+   "no": 78,
+   "word": "representation",
+   "pos": "명",
+   "meaning": "표현, 특징 벡터, 표상",
+   "context": "모든 입력과 출력 위치에 대한 잠재 은닉 표현(hidden representations)을 뜻함.",
+   "exampleEn": "Deep neural networks transform raw sensory signals into rich semantic representations.",
+   "exampleKo": "심층 신경망은 원시 감각 신호를 풍부한 의미론적 표현으로 변환한다.",
+   "paperExamples": [
+    {
+     "sentenceId": "2-1",
+     "en": "The goal of reducing sequential computation also forms the foundation of the Extended Neural GPU, ByteNet and ConvS2S, all of which use convolutional neural networks as basic building block, computing hidden representations in parallel for all input and output positions. In.",
+     "ko": "순차적 연산을 줄이려는 목표는 Extended Neural GPU, ByteNet, ConvS2S의 기반이 되기도 하였는데, 이 모델들은 모두 합성곱신경망(CNN)을 기본 구성 단위(building block)로 사용하여 모든 입력 및 출력 위치에 대한 은닉 표현을 병렬로 계산합니다."
+    },
+    {
+     "sentenceId": "2-5",
+     "en": "Self-attention, sometimes called intra-attention is an attention mechanism relating different positions of a single sequence in order to compute a representation of the sequence.",
+     "ko": "때로는 '인트라 어텐션(intra-attention)'이라고도 불리는 셀프 어텐션(Self-attention)은 단일 시퀀스의 표현(representation)을계산하기 위해 해당 시퀀스 내 서로 다른 위치들을 상호 연결하는 어텐션 메커니즘입니다."
+    }
+   ]
+  },
+  {
+   "id": "w079",
+   "part": 3,
+   "partTitle": "Part 3. Background: 선행 연구 분석 및 이론적 복잡도 대조",
+   "no": 79,
+   "word": "in parallel",
+   "pos": "부사구",
+   "meaning": "병렬로, 동시에 (=concurrently)",
+   "context": "CNN 필터가 시퀀스의 모든 위치에 동시에 적용되어 병렬로 은닉 벡터를 계산함을 서술.",
+   "exampleEn": "Multiple worker nodes process data partitions in parallel to accelerate batch ingestion.",
+   "exampleKo": "여러 워커 노드가 배치 수집을 가속하기 위해 데이터 파티션을 병렬로 처리한다.",
+   "paperExamples": [
+    {
+     "sentenceId": "2-1",
+     "en": "The goal of reducing sequential computation also forms the foundation of the Extended Neural GPU, ByteNet and ConvS2S, all of which use convolutional neural networks as basic building block, computing hidden representations in parallel for all input and output positions. In.",
+     "ko": "순차적 연산을 줄이려는 목표는 Extended Neural GPU, ByteNet, ConvS2S의 기반이 되기도 하였는데, 이 모델들은 모두 합성곱신경망(CNN)을 기본 구성 단위(building block)로 사용하여 모든 입력 및 출력 위치에 대한 은닉 표현을 병렬로 계산합니다."
+    },
+    {
+     "sentenceId": "abstract-4",
+     "en": "Experiments on two machine translation tasks show these models to be superior in quality while being more parallelizable and requiring significantly less time to train.",
+     "ko": "두 가지 기계 번역 과제에 대한 실험 결과, 이 모델(Transformer)은 더 뛰어난 병렬화가 가능하고 학습 시간을 대폭 단축시키면서도번역 품질 면에서 우수한 성능을 보여줍니다."
+    }
+   ]
+  },
+  {
+   "id": "w080",
+   "part": 3,
+   "partTitle": "Part 3. Background: 선행 연구 분석 및 이론적 복잡도 대조",
+   "no": 80,
+   "word": "arbitrary",
+   "pos": "형",
+   "meaning": "임의의, 무작위의",
+   "context": "시퀀스 상에서 무작위로 선택된 임의의 두 단어 위치(two arbitrary positions)를 지칭.",
+   "exampleEn": "The testing script generates arbitrary input strings to test edge-case error handling.",
+   "exampleKo": "테스트 스크립트는 엣지 케이스 오류 처리를 테스트하기 위해 임의의 입력 문자열을 생성한다.",
+   "paperExamples": [
+    {
+     "sentenceId": "2-2",
+     "en": "In these models, the number of operations required to relate signals from two arbitrary input or output positions grows in the distance between positions, linearly for ConvS2S and logarithmically for ByteNet.",
+     "ko": "이러한 (CNN 기반) 모델들에서는 임의의 두 입력 또는 출력 위치의 신호를 서로 연결하는 데 필요한 연산 횟수가 두 위치 사이의 거리에 비례하여 증가하는데, ConvS2S의 경우에는 선형적(linear)으로, ByteNet의 경우에는 로그(logarithmic) 함수 형태로 증가합니다."
+    }
+   ]
+  },
+  {
+   "id": "w081",
+   "part": 3,
+   "partTitle": "Part 3. Background: 선행 연구 분석 및 이론적 복잡도 대조",
+   "no": 81,
+   "word": "linearly",
+   "pos": "부사",
+   "meaning": "선형적으로, 직선 형태로",
+   "context": "ConvS2S에서 두 단어 간 거리가 멀어질수록 연결에 필요한 연산 층 수가 1차 선형 비례로 증가함.",
+   "exampleEn": "Cloud hosting expenses scale linearly with the total volume of processed transactions.",
+   "exampleKo": "클라우드 호스팅 비용은 처리된 트랜잭션의 총량에 비례하여 선형적으로 증가한다.",
+   "paperExamples": [
+    {
+     "sentenceId": "2-2",
+     "en": "In these models, the number of operations required to relate signals from two arbitrary input or output positions grows in the distance between positions, linearly for ConvS2S and logarithmically for ByteNet.",
+     "ko": "이러한 (CNN 기반) 모델들에서는 임의의 두 입력 또는 출력 위치의 신호를 서로 연결하는 데 필요한 연산 횟수가 두 위치 사이의 거리에 비례하여 증가하는데, ConvS2S의 경우에는 선형적(linear)으로, ByteNet의 경우에는 로그(logarithmic) 함수 형태로 증가합니다."
+    },
+    {
+     "sentenceId": "3.2.2-1",
+     "en": "Instead of performing a single attention function with d_model-dimensional keys, values and queries, we found it beneficial to linearly project the queries, keys and values h times with different, learned linear projections to dₖ, dₖ and dᵥ dimensions, respectively.",
+     "ko": "d_model 차원의 키, 값, 쿼리로 단일 어텐션 함수를 한 번만 수행하는 대신, 서로 다르게 학습된 선형 사영(linear projections)을 사 용해 쿼리, 키, 값을 각각 dₖ, dₖ, dᵥ 차원으로 h번 선형 사영(projection)하는 것이 훨씬 유익하다는 사실을 알아냈습니다."
+    }
+   ]
+  },
+  {
+   "id": "w082",
+   "part": 3,
+   "partTitle": "Part 3. Background: 선행 연구 분석 및 이론적 복잡도 대조",
+   "no": 82,
+   "word": "logarithmically",
+   "pos": "부사",
+   "meaning": "로그 함수적으로",
+   "context": "ByteNet에서 팽창 합성곱(Dilated Conv)을 통해 거리 대비 연산 계층 수를 O(log d)로 억제함.",
+   "exampleEn": "Binary search algorithms reduce query search latency logarithmically relative to array size.",
+   "exampleKo": "이진 검색 알고리즘은 배열 크기에 비례하여 쿼리 탐색 지연을 로그 함수 비율로 단축시킨다.",
+   "paperExamples": [
+    {
+     "sentenceId": "2-2",
+     "en": "In these models, the number of operations required to relate signals from two arbitrary input or output positions grows in the distance between positions, linearly for ConvS2S and logarithmically for ByteNet.",
+     "ko": "이러한 (CNN 기반) 모델들에서는 임의의 두 입력 또는 출력 위치의 신호를 서로 연결하는 데 필요한 연산 횟수가 두 위치 사이의 거리에 비례하여 증가하는데, ConvS2S의 경우에는 선형적(linear)으로, ByteNet의 경우에는 로그(logarithmic) 함수 형태로 증가합니다."
+    }
+   ]
+  },
+  {
+   "id": "w083",
+   "part": 3,
+   "partTitle": "Part 3. Background: 선행 연구 분석 및 이론적 복잡도 대조",
+   "no": 83,
+   "word": "relate",
+   "pos": "동",
+   "meaning": "관련짓다, 신호를 연결하다",
+   "context": "멀리 떨어진 두 위치의 신호를 상호작용하도록 연결(to relate signals)하는 연산.",
+   "exampleEn": "The epidemiological study attempts to relate dietary habits to long-term health outcomes.",
+   "exampleKo": "그 역학 조사는 식습관을 장기적인 건강 결과와 연관지어 설명하고자 한다.",
+   "paperExamples": [
+    {
+     "sentenceId": "2-2",
+     "en": "In these models, the number of operations required to relate signals from two arbitrary input or output positions grows in the distance between positions, linearly for ConvS2S and logarithmically for ByteNet.",
+     "ko": "이러한 (CNN 기반) 모델들에서는 임의의 두 입력 또는 출력 위치의 신호를 서로 연결하는 데 필요한 연산 횟수가 두 위치 사이의 거리에 비례하여 증가하는데, ConvS2S의 경우에는 선형적(linear)으로, ByteNet의 경우에는 로그(logarithmic) 함수 형태로 증가합니다."
+    }
+   ]
+  },
+  {
+   "id": "w084",
+   "part": 3,
+   "partTitle": "Part 3. Background: 선행 연구 분석 및 이론적 복잡도 대조",
+   "no": 84,
+   "word": "distant",
+   "pos": "형",
+   "meaning": "멀리 떨어진, 원격의 (명: distance)",
+   "context": "문장 내에서 물리적으로 멀리 떨어진 위치(distant positions) 간의 관계 학습의 어려움 지적.",
+   "exampleEn": "The monitoring station maintains real-time communication with distant oceanic buoys.",
+   "exampleKo": "그 관측소는 멀리 떨어진 해양 부표들과 실시간 통신을 유지한다.",
+   "paperExamples": [
+    {
+     "sentenceId": "2-3",
+     "en": "This makes it more difficult to learn dependencies between distant positions.",
+     "ko": "이는 서로 멀리 떨어진 위치들 간의 상호 의존성을 학습하는 것을 더욱 어렵게 만듭니다."
+    }
+   ]
+  },
+  {
+   "id": "w085",
+   "part": 3,
+   "partTitle": "Part 3. Background: 선행 연구 분석 및 이론적 복잡도 대조",
+   "no": 85,
+   "word": "constant",
+   "pos": "형/명",
+   "meaning": "(형) 일정한, 상수의 / (명) 상수",
+   "context": "트랜스포머는 거리에 상관없이 단 한 번의 어텐션 행렬 곱 O(1) 상수 횟수로 연결함을 선언.",
+   "exampleEn": "In the Transformer this is reduced to a constant number of operations.",
+   "exampleKo": "트랜스포머에서는 이 연산 횟수가 상수 횟수로 줄어듭니다.",
+   "paperExamples": [
+    {
+     "sentenceId": "2-4",
+     "en": "In the Transformer this is reduced to a constant number of operations, albeit at the cost of reduced effective resolution due to averaging attention-weighted positions, an effect we counteract with Multi-Head Attention as described in section 3.2.",
+     "ko": "트랜스포머에서는 이(임의의 두 위치를 연결하는 데 필요한) 연산 횟수가 상수(constant number) 횟수로 줄어듭니다. 비록 어텐션가중치가 적용된 위치들을 평균 내는 과정에서 유효 해상도(effective resolution)가 감소하는 대가를 치르기는 하지만, 이는 3.2절에서 설명할 '멀티헤드 어텐션(Multi-Head Attention)'을 통해 상쇄할 수 있습니다."
+    },
+    {
+     "sentenceId": "4-10",
+     "en": "As noted in Table 1, a self-attention layer connects all positions with a constant number of sequentially executed operations, whereas a recurrent layer requires O(n) sequential operations.",
+     "ko": "표 1에 명시된 바와 같이, 셀프 어텐션(self-attention) 계층은 일정하게 고정된 횟수(상수 횟수, )의 순차 실행 연산만으로 모든 위치를 연결하는 반면, 순환(recurrent) 계층은 O(n)개의 순차 연산을 필요로 합니다."
+    }
+   ]
+  },
+  {
+   "id": "w086",
+   "part": 3,
+   "partTitle": "Part 3. Background: 선행 연구 분석 및 이론적 복잡도 대조",
+   "no": 86,
+   "word": "albeit",
+   "pos": "접",
+   "meaning": "비록 ~일지라도 (=although)",
+   "context": "비록 어텐션 가중치 평균화로 유효 해상도가 감소하는 대가를 치르지만 멀티헤드로 해결함을 기술.",
+   "exampleEn": "The software upgrade was completed successfully, albeit slightly behind the projected schedule.",
+   "exampleKo": "소프트웨어 업그레이드는 예상 일정보다 약간 늦어지기는 했지만 성공적으로 완료되었다.",
+   "paperExamples": [
+    {
+     "sentenceId": "2-4",
+     "en": "In the Transformer this is reduced to a constant number of operations, albeit at the cost of reduced effective resolution due to averaging attention-weighted positions, an effect we counteract with Multi-Head Attention as described in section 3.2.",
+     "ko": "트랜스포머에서는 이(임의의 두 위치를 연결하는 데 필요한) 연산 횟수가 상수(constant number) 횟수로 줄어듭니다. 비록 어텐션가중치가 적용된 위치들을 평균 내는 과정에서 유효 해상도(effective resolution)가 감소하는 대가를 치르기는 하지만, 이는 3.2절에서 설명할 '멀티헤드 어텐션(Multi-Head Attention)'을 통해 상쇄할 수 있습니다."
+    }
+   ]
+  },
+  {
+   "id": "w087",
+   "part": 3,
+   "partTitle": "Part 3. Background: 선행 연구 분석 및 이론적 복잡도 대조",
+   "no": 87,
+   "word": "at the cost of",
+   "pos": "숙어",
+   "meaning": "~을 희생하여, ~의 대가로",
+   "context": "연산 경로 단축이라는 거대한 이득을 얻는 대신 단일 어텐션의 해상도 저하라는 대가를 치름.",
+   "exampleEn": "Rapid technical expansion must never be pursued at the cost of software security.",
+   "exampleKo": "급격한 기술적 확장이 소프트웨어 보안을 희생하면서 추진되어서는 결코 안 된다.",
+   "paperExamples": [
+    {
+     "sentenceId": "2-4",
+     "en": "In the Transformer this is reduced to a constant number of operations, albeit at the cost of reduced effective resolution due to averaging attention-weighted positions, an effect we counteract with Multi-Head Attention as described in section 3.2.",
+     "ko": "트랜스포머에서는 이(임의의 두 위치를 연결하는 데 필요한) 연산 횟수가 상수(constant number) 횟수로 줄어듭니다. 비록 어텐션가중치가 적용된 위치들을 평균 내는 과정에서 유효 해상도(effective resolution)가 감소하는 대가를 치르기는 하지만, 이는 3.2절에서 설명할 '멀티헤드 어텐션(Multi-Head Attention)'을 통해 상쇄할 수 있습니다."
+    },
+    {
+     "sentenceId": "abstract-6",
+     "en": "On the WMT 2014 English-to-French translation task, our model establishes a new single-model state-of-the-art BLEU score of 41.8 after training for 3.5 days on eight GPUs, a small fraction of the training costs of the best models from the literature.",
+     "ko": "WMT 2014 영어-프랑스어 번역 과제에서도 우리 모델은 8개의 GPU로 단 3.5일 동안 학습한 후 41.8 BLEU라는 새로운 단일 모델최고 기록(SOTA)을 달성하였는데, 이는 기존 문헌의 최고 모델들이 소모한 훈련 비용의 극히 일부에 불과한 수준입니다."
+    }
+   ]
+  },
+  {
+   "id": "w088",
+   "part": 3,
+   "partTitle": "Part 3. Background: 선행 연구 분석 및 이론적 복잡도 대조",
+   "no": 88,
+   "word": "counteract",
+   "pos": "동",
+   "meaning": "상쇄하다, 무력화하다 (=offset)",
+   "context": "단일 헤드의 정보 뭉개짐(해상도 저하) 부작용을 Multi-Head Attention 도입으로 완벽히 상쇄함.",
+   "exampleEn": "An effect we counteract with Multi-Head Attention as described in section 3.2.",
+   "exampleKo": "이는 3.2절에 기술된 바와 같이 우리가 멀티헤드 어텐션으로 상쇄하는 효과입니다.",
+   "paperExamples": [
+    {
+     "sentenceId": "2-4",
+     "en": "In the Transformer this is reduced to a constant number of operations, albeit at the cost of reduced effective resolution due to averaging attention-weighted positions, an effect we counteract with Multi-Head Attention as described in section 3.2.",
+     "ko": "트랜스포머에서는 이(임의의 두 위치를 연결하는 데 필요한) 연산 횟수가 상수(constant number) 횟수로 줄어듭니다. 비록 어텐션가중치가 적용된 위치들을 평균 내는 과정에서 유효 해상도(effective resolution)가 감소하는 대가를 치르기는 하지만, 이는 3.2절에서 설명할 '멀티헤드 어텐션(Multi-Head Attention)'을 통해 상쇄할 수 있습니다."
+    },
+    {
+     "sentenceId": "3.2.1-13",
+     "en": "To counteract this effect, we scale the dot products by 1/√dₖ.",
+     "ko": "이러한 현상(소프트맥스 포화 및 기울기 소실)을 상쇄하기 위해, 우리는 점곱 결과값에 1/√dₖ을 곱하여 크기를 조절(스케일링)합니다."
+    }
+   ]
+  },
+  {
+   "id": "w089",
+   "part": 3,
+   "partTitle": "Part 3. Background: 선행 연구 분석 및 이론적 복잡도 대조",
+   "no": 89,
+   "word": "resolution",
+   "pos": "명",
+   "meaning": "해상도, 선명도, 분해능",
+   "context": "어텐션에서 단어 간의 다양한 문법적·의미적 관계를 뭉개지지 않고 선명하게 분리하여 포착하는 능력.",
+   "exampleEn": "High-resolution telemetry data enables engineers to detect micro-vibrations in turbines.",
+   "exampleKo": "고해상도 원격 측정 데이터는 엔지니어들이 터빈의 미세 진동을 감지할 수 있게 해준다.",
+   "paperExamples": [
+    {
+     "sentenceId": "2-4",
+     "en": "In the Transformer this is reduced to a constant number of operations, albeit at the cost of reduced effective resolution due to averaging attention-weighted positions, an effect we counteract with Multi-Head Attention as described in section 3.2.",
+     "ko": "트랜스포머에서는 이(임의의 두 위치를 연결하는 데 필요한) 연산 횟수가 상수(constant number) 횟수로 줄어듭니다. 비록 어텐션가중치가 적용된 위치들을 평균 내는 과정에서 유효 해상도(effective resolution)가 감소하는 대가를 치르기는 하지만, 이는 3.2절에서 설명할 '멀티헤드 어텐션(Multi-Head Attention)'을 통해 상쇄할 수 있습니다."
+    }
+   ]
+  },
+  {
+   "id": "w090",
+   "part": 3,
+   "partTitle": "Part 3. Background: 선행 연구 분석 및 이론적 복잡도 대조",
+   "no": 90,
+   "word": "intra-attention",
+   "pos": "명",
+   "meaning": "인트라 어텐션 (내부 어텐션)",
+   "context": "외부 시퀀스를 참조하지 않고 단일 시퀀스 내부 토큰끼리 상호작용하는 Self-attention의 동의어.",
+   "exampleEn": "Self-attention, sometimes called intra-attention, relates different positions of a single sequence.",
+   "exampleKo": "때로는 인트라 어텐션이라 불리는 셀프 어텐션은 단일 시퀀스의 서로 다른 위치들을 상호 연결합니다.",
+   "paperExamples": [
+    {
+     "sentenceId": "2-5",
+     "en": "Self-attention, sometimes called intra-attention is an attention mechanism relating different positions of a single sequence in order to compute a representation of the sequence.",
+     "ko": "때로는 '인트라 어텐션(intra-attention)'이라고도 불리는 셀프 어텐션(Self-attention)은 단일 시퀀스의 표현(representation)을계산하기 위해 해당 시퀀스 내 서로 다른 위치들을 상호 연결하는 어텐션 메커니즘입니다."
+    }
+   ]
+  },
+  {
+   "id": "w091",
+   "part": 3,
+   "partTitle": "Part 3. Background: 선행 연구 분석 및 이론적 복잡도 대조",
+   "no": 91,
+   "word": "comprehension",
+   "pos": "명",
+   "meaning": "이해, 독해 (동: comprehend)",
+   "context": "기계 독해(Reading Comprehension) 등 셀프 어텐션이 선행 연구에서 성공적으로 쓰였던 분야.",
+   "exampleEn": "The corporate assessment includes a complex reading comprehension section for managers.",
+   "exampleKo": "기업 평가는 관리자들을 위한 복잡한 독해 영역을 포함하고 있다.",
+   "paperExamples": [
+    {
+     "sentenceId": "2-6",
+     "en": "Self-attention has been used successfully in a variety of tasks including reading comprehension, abstractive summarization, textual entailment and learning task-independent sentence representations.",
+     "ko": "셀프 어텐션(Self-attention)은 기계 독해(reading comprehension), 생성 요약(abstractive summarization), 텍스트 함의(textual entailment), 과제 독립적 문장 표현 학습 등 다양한 자연어 처리 분야에서 성공적으로 활용되어 왔습니다."
+    }
+   ]
+  },
+  {
+   "id": "w092",
+   "part": 3,
+   "partTitle": "Part 3. Background: 선행 연구 분석 및 이론적 복잡도 대조",
+   "no": 92,
+   "word": "abstractive",
+   "pos": "형",
+   "meaning": "추상적인, 생성 요약의",
+   "context": "원문 단어를 그대로 발췌(Extractive)하지 않고 문맥을 재구성하여 새 문장으로 쓰는 생성적 요약.",
+   "exampleEn": "Modern generative language models excel at abstractive summarization of long legal documents.",
+   "exampleKo": "현대 생성 언어 모델들은 긴 법률 문서의 생성 요약에 뛰어난 성능을 보인다.",
+   "paperExamples": [
+    {
+     "sentenceId": "2-6",
+     "en": "Self-attention has been used successfully in a variety of tasks including reading comprehension, abstractive summarization, textual entailment and learning task-independent sentence representations.",
+     "ko": "셀프 어텐션(Self-attention)은 기계 독해(reading comprehension), 생성 요약(abstractive summarization), 텍스트 함의(textual entailment), 과제 독립적 문장 표현 학습 등 다양한 자연어 처리 분야에서 성공적으로 활용되어 왔습니다."
+    }
+   ]
+  },
+  {
+   "id": "w093",
+   "part": 3,
+   "partTitle": "Part 3. Background: 선행 연구 분석 및 이론적 복잡도 대조",
+   "no": 93,
+   "word": "entailment",
+   "pos": "명",
+   "meaning": "함의, 수반 (동: entail)",
+   "context": "텍스트 함의 인식(Textual Entailment/NLI): 전제 문장이 참일 때 가설 문장도 참인지 논리 검증.",
+   "exampleEn": "Natural language inference benchmarks test whether model predictions preserve logical entailment.",
+   "exampleKo": "자연어 추론 벤치마크는 모델 예측이 논리적 함의 관계를 보존하는지 테스트한다.",
+   "paperExamples": [
+    {
+     "sentenceId": "2-6",
+     "en": "Self-attention has been used successfully in a variety of tasks including reading comprehension, abstractive summarization, textual entailment and learning task-independent sentence representations.",
+     "ko": "셀프 어텐션(Self-attention)은 기계 독해(reading comprehension), 생성 요약(abstractive summarization), 텍스트 함의(textual entailment), 과제 독립적 문장 표현 학습 등 다양한 자연어 처리 분야에서 성공적으로 활용되어 왔습니다."
+    }
+   ]
+  },
+  {
+   "id": "w094",
+   "part": 3,
+   "partTitle": "Part 3. Background: 선행 연구 분석 및 이론적 복잡도 대조",
+   "no": 94,
+   "word": "independent",
+   "pos": "형",
+   "meaning": "독립적인, 독자적인",
+   "context": "task-independent sentence representations: 특정 태스크에 얽매이지 않는 범용 문장 임베딩.",
+   "exampleEn": "The company hired an independent auditor to perform a thorough examination of its financials.",
+   "exampleKo": "회사는 재무제표에 대한 철저한 조사를 수행하기 위해 독립 감사인을 고용했다.",
+   "paperExamples": [
+    {
+     "sentenceId": "2-6",
+     "en": "Self-attention has been used successfully in a variety of tasks including reading comprehension, abstractive summarization, textual entailment and learning task-independent sentence representations.",
+     "ko": "셀프 어텐션(Self-attention)은 기계 독해(reading comprehension), 생성 요약(abstractive summarization), 텍스트 함의(textual entailment), 과제 독립적 문장 표현 학습 등 다양한 자연어 처리 분야에서 성공적으로 활용되어 왔습니다."
+    }
+   ]
+  },
+  {
+   "id": "w095",
+   "part": 3,
+   "partTitle": "Part 3. Background: 선행 연구 분석 및 이론적 복잡도 대조",
+   "no": 95,
+   "word": "end-to-end",
+   "pos": "형",
+   "meaning": "종단 간의, 전 과정 통합의",
+   "context": "복잡한 수작업 전처리 없이 입력부터 최종 출력까지 하나의 통합 모델 역전파로 학습함.",
+   "exampleEn": "The logistics company offers an end-to-end freight forwarding solution for global clients.",
+   "exampleKo": "그 물류 회사는 글로벌 고객들을 위한 종단 간(통합) 화물 운송 솔루션을 제공한다.",
+   "paperExamples": [
+    {
+     "sentenceId": "2-7",
+     "en": "End-to-end memory networks are based on a recurrent attention mechanism instead of sequencealigned recurrence and have been shown to perform well on simple-language question answering and language modeling tasks.",
+     "ko": "엔드투엔드 메모리 네트워크(End-to-end memory networks)는 (기존 RNN처럼) 시퀀스에 정렬된 순환 구조 대신 '순환적 어텐션 메커니즘'을 기반으로 하며, 단순 언어 질의응답(QA) 및 언어 모델링 과제에서 우수한 성능을 발휘하는 것으로 입증되었습니다."
+    }
+   ]
+  },
+  {
+   "id": "w096",
+   "part": 3,
+   "partTitle": "Part 3. Background: 선행 연구 분석 및 이론적 복잡도 대조",
+   "no": 96,
+   "word": "aligned",
+   "pos": "형",
+   "meaning": "정렬된, 일치하는",
+   "context": "sequence-aligned recurrence: 단어 토큰 순서(t=1,2,...)에 맞물려 돌아가는 전통적 RNN 구조.",
+   "exampleEn": "Strategic initiatives must be fully aligned with overarching organizational objectives.",
+   "exampleKo": "전략적 이니셔티브는 조직의 핵심 목표와 완전히 일치해야 한다.",
+   "paperExamples": [
+    {
+     "sentenceId": "1-4",
+     "en": "Aligning the positions to steps in computation time, they generate a sequence of hidden states ht, as a function of the previous hidden state ht-1 and the input for position.",
+     "ko": "(입력 심볼의) 위치를 계산 시간의 단계(스텝)와 일치시킴으로써, 순환 모델들은 이전 은닉 상태 hₜ₋₁과 현재 위치 t의 입력값 xₜ에 대한 함수로서 일련의 은닉 상태 hₜ 시퀀스를 생성합니다."
+    }
+   ]
+  },
+  {
+   "id": "w097",
+   "part": 3,
+   "partTitle": "Part 3. Background: 선행 연구 분석 및 이론적 복잡도 대조",
+   "no": 97,
+   "word": "instead of",
+   "pos": "전치사구",
+   "meaning": "~ 대신에 (=rather than)",
+   "context": "시퀀스 정렬 순환 대신 순환적 어텐션 메커니즘을 기반으로 삼았던 메모리 네트워크 서술.",
+   "exampleEn": "We opted to deploy automated containers instead of maintaining physical bare-metal servers.",
+   "exampleKo": "우리는 물리적 베어메탈 서버를 유지하는 대신 자동화된 컨테이너를 배포하기로 결정했다.",
+   "paperExamples": [
+    {
+     "sentenceId": "2-7",
+     "en": "End-to-end memory networks are based on a recurrent attention mechanism instead of sequencealigned recurrence and have been shown to perform well on simple-language question answering and language modeling tasks.",
+     "ko": "엔드투엔드 메모리 네트워크(End-to-end memory networks)는 (기존 RNN처럼) 시퀀스에 정렬된 순환 구조 대신 '순환적 어텐션 메커니즘'을 기반으로 하며, 단순 언어 질의응답(QA) 및 언어 모델링 과제에서 우수한 성능을 발휘하는 것으로 입증되었습니다."
+    },
+    {
+     "sentenceId": "1-10",
+     "en": "In this work we propose the Transformer, a model architecture eschewing recurrence and instead relying entirely on an attention mechanism to draw global dependencies between input and output.",
+     "ko": "본 연구에서 우리는 순환(RNN) 구조를 완전히 배제하고, 입력과 출력 사이의 전역적 의존성(global dependencies)을 학습하기 위해 전적으로 어텐션 메커니즘에만 의존하는 모델 아키텍처인 '트랜스포머(Transformer)'를 제안합니다."
+    }
+   ]
+  },
+  {
+   "id": "w098",
+   "part": 3,
+   "partTitle": "Part 3. Background: 선행 연구 분석 및 이론적 복잡도 대조",
+   "no": 98,
+   "word": "to the best of one's knowledge",
+   "pos": "관용구",
+   "meaning": "~가 아는 한, 조사된 바로는",
+   "context": "순환과 합성곱을 일절 쓰지 않고 오직 셀프 어텐션만으로 시퀀스를 변환한 모델은 트랜스포머가 최초임을 못박음.",
+   "exampleEn": "To the best of our knowledge, the Transformer is the first transduction model relying entirely on self-attention.",
+   "exampleKo": "우리가 아는 한, 트랜스포머는 전적으로 셀프 어텐션에만 의존하는 최초의 시퀀스 변환 모델입니다.",
+   "paperExamples": []
+  },
+  {
+   "id": "w099",
+   "part": 3,
+   "partTitle": "Part 3. Background: 선행 연구 분석 및 이론적 복잡도 대조",
+   "no": 99,
+   "word": "without",
+   "pos": "전",
+   "meaning": "~ 없이, ~하지 않고",
+   "context": "without using sequence-aligned RNNs or convolution: 순환이나 합성곱을 일절 쓰지 않음을 강조.",
+   "exampleEn": "Critical infrastructure systems must not be updated without extensive prior staging tests.",
+   "exampleKo": "핵심 인프라 시스템은 광범위한 사전 스테이징 테스트 없이 업데이트되어서는 안 된다.",
+   "paperExamples": [
+    {
+     "sentenceId": "2-8",
+     "en": "To the best of our knowledge, however, the Transformer is the first transduction model relying entirely on self-attention to compute representations of its input and output without using sequencealigned RNNs or convolution.",
+     "ko": "그러나 우리가 아는 한, 트랜스포머(Transformer)는 시퀀스 정렬된 RNN이나 합성곱(CNN)을 일절 사용하지 않고 입력과 출력의표현을 계산하기 위해 전적으로 셀프 어텐션(self-attention)에만 의존하는 최초의 시퀀스 변환 모델입니다."
+    },
+    {
+     "sentenceId": "1-8",
+     "en": "Attention mechanisms have become an integral part of compelling sequence modeling and transduction models in various tasks, allowing modeling of dependencies without regard to their distance in the input or output sequences.",
+     "ko": "어텐션 메커니즘은 다양한 자연어 처리 과제에서 강력한 성능을 내는 시퀀스 모델링 및 변환 모델의 필수적인 요소로 자리 잡아 왔으며, 이는 입력 또는 출력 시퀀스 내에서의 거리에 상관없이 단어 간의 상호 의존성을 모델링할 수 있게 해 주었습니다. t t-1"
+    }
+   ]
+  },
+  {
+   "id": "w100",
+   "part": 4,
+   "partTitle": "Part 4. Model Architecture: 인코더-디코더 스택과 연결 구조",
+   "no": 100,
+   "word": "competitive",
+   "pos": "형",
+   "meaning": "경쟁력 있는, 유수의",
+   "context": "당대 가장 경쟁력 있는 신경망 변환 모델들이 인코더-디코더 구조를 표준으로 삼고 있음을 인정.",
+   "exampleEn": "The firm offers competitive compensation packages to attract premier software engineers.",
+   "exampleKo": "그 회사는 일류 소프트웨어 엔지니어를 유치하기 위해 경쟁력 있는 보상 패키지를 제공한다.",
+   "paperExamples": [
+    {
+     "sentenceId": "3-1",
+     "en": "Most competitive neural sequence transduction models have an encoder-decoder structure.",
+     "ko": "뛰어난 경쟁력을 갖춘 대부분의 신경망 시퀀스 변환(transduction) 모델들은 인코더-디코더(encoder-decoder) 구조를 갖추고 있습니다 [5, 2, 38]."
+    },
+    {
+     "sentenceId": "6.1-2",
+     "en": "Even our base model surpasses all previously published models and ensembles, at a fraction of the training cost of any of the competitive models.",
+     "ko": "심지어 우리의 기본 모델(base model)조차도 그 어떤 경쟁 모델들의 훈련 비용의 극히 일부분(fraction)만으로 이전에 보고된 모든모델들과 앙상블(ensembles)의 성능을 능가합니다."
+    }
+   ]
+  },
+  {
+   "id": "w101",
+   "part": 4,
+   "partTitle": "Part 4. Model Architecture: 인코더-디코더 스택과 연결 구조",
+   "no": 101,
+   "word": "structure",
+   "pos": "명/동",
+   "meaning": "(명) 구조, 체계 / (동) 구조화하다",
+   "context": "인코더-디코더 구조(encoder-decoder structure)라는 기본 골격을 계승함을 명시.",
+   "exampleEn": "The engineering director restructured the organization to enhance operational agility.",
+   "exampleKo": "엔지니어링 디렉터는 운영의 민첩성을 향상시키기 위해 조직 구조를 개편했다.",
+   "paperExamples": [
+    {
+     "sentenceId": "3-1",
+     "en": "Most competitive neural sequence transduction models have an encoder-decoder structure.",
+     "ko": "뛰어난 경쟁력을 갖춘 대부분의 신경망 시퀀스 변환(transduction) 모델들은 인코더-디코더(encoder-decoder) 구조를 갖추고 있습니다 [5, 2, 38]."
+    }
+   ]
+  },
+  {
+   "id": "w102",
+   "part": 4,
+   "partTitle": "Part 4. Model Architecture: 인코더-디코더 스택과 연결 구조",
+   "no": 102,
+   "word": "map",
+   "pos": "동",
+   "meaning": "매핑하다, 대응시키다 (사상하다)",
+   "context": "인코더가 심볼 시퀀스 (x_1,...,x_n)을 연속 벡터 표현 z로 변환(매핑)함을 서술.",
+   "exampleEn": "The encoder maps an input sequence of symbol representations to continuous representations z.",
+   "exampleKo": "인코더는 심볼 표현들의 입력 시퀀스를 연속적인 벡터 표현 z의 시퀀스로 매핑합니다.",
+   "paperExamples": [
+    {
+     "sentenceId": "3-2",
+     "en": "Here, the encoder maps an input sequence of symbol representations (x₁, ..., xₙ) to a sequence of continuous representations z = (z₁, ..., zₙ).",
+     "ko": "여기서 인코더는 심볼(토큰) 표현으로 이루어진 입력 시퀀스 (x₁, …, xₙ)을 연속적인 벡터 표현의 시퀀스 z =(z₁, …, zₙ)으로 변환(매핑)합니다."
+    },
+    {
+     "sentenceId": "3.2-1",
+     "en": "An attention function can be described as mapping a query and a set of key-value pairs to an output, where the query, keys, values, and output are all vectors.",
+     "ko": "어텐션 함수는 하나의 쿼리(query)와 일련의 키-값(key-value) 쌍들을 어떤 출력으로 매핑(변환)하는 것으로 설명할 수 있으며, 여기서 쿼리, 키, 값, 그리고 출력은 모두 벡터(vector)입니다."
+    }
+   ]
+  },
+  {
+   "id": "w103",
+   "part": 4,
+   "partTitle": "Part 4. Model Architecture: 인코더-디코더 스택과 연결 구조",
+   "no": 103,
+   "word": "continuous",
+   "pos": "형",
+   "meaning": "연속적인 (반: discrete)",
+   "context": "이산적인 정수 토큰 ID가 실수 공간의 연속적인 은닉 벡터(continuous representations)로 바뀜.",
+   "exampleEn": "Total Quality Management requires continuous monitoring and improvement of assembly lines.",
+   "exampleKo": "전사적 품질 관리는 조립 라인에 대한 지속적인 모니터링과 개선을 요구한다.",
+   "paperExamples": [
+    {
+     "sentenceId": "3-2",
+     "en": "Here, the encoder maps an input sequence of symbol representations (x₁, ..., xₙ) to a sequence of continuous representations z = (z₁, ..., zₙ).",
+     "ko": "여기서 인코더는 심볼(토큰) 표현으로 이루어진 입력 시퀀스 (x₁, …, xₙ)을 연속적인 벡터 표현의 시퀀스 z =(z₁, …, zₙ)으로 변환(매핑)합니다."
+    }
+   ]
+  },
+  {
+   "id": "w104",
+   "part": 4,
+   "partTitle": "Part 4. Model Architecture: 인코더-디코더 스택과 연결 구조",
+   "no": 104,
+   "word": "given",
+   "pos": "전/접",
+   "meaning": "~이 주어지면, ~을 고려할 때",
+   "context": "Given z: 인코더의 최종 출력 벡터 표현 z가 주어지면 디코더가 출력을 생성하기 시작함.",
+   "exampleEn": "Given the tight project schedule, the delivery team performed remarkably well.",
+   "exampleKo": "촉박한 프로젝트 일정을 고려할 때, 딜리버리 팀은 대단히 훌륭하게 업무를 수행했다.",
+   "paperExamples": [
+    {
+     "sentenceId": "3-3",
+     "en": "Given z, the decoder then generates an output sequence (y₁, ..., yₘ) of symbols one element at a time.",
+     "ko": "(인코더의 출력인) z가 주어지면, 디코더는 이를 바탕으로 출력 심볼 시퀀스 (y₁, …, yₘ)을 한 번에 하나씩(순차적으로) 생성합니다."
+    }
+   ]
+  },
+  {
+   "id": "w105",
+   "part": 4,
+   "partTitle": "Part 4. Model Architecture: 인코더-디코더 스택과 연결 구조",
+   "no": 105,
+   "word": "one element at a time",
+   "pos": "부사구",
+   "meaning": "한 번에 하나의 요소씩",
+   "context": "디코더가 출력 심볼 (y_1,...,y_m)을 한 토큰씩 순차 생성하는 자기회귀적 동작 방식을 묘사.",
+   "exampleEn": "The automated inspection robot scans components one element at a time to prevent defects.",
+   "exampleKo": "자동 검사 로봇은 결함을 방지하기 위해 한 번에 하나의 부품씩 스캔한다.",
+   "paperExamples": [
+    {
+     "sentenceId": "3-3",
+     "en": "Given z, the decoder then generates an output sequence (y₁, ..., yₘ) of symbols one element at a time.",
+     "ko": "(인코더의 출력인) z가 주어지면, 디코더는 이를 바탕으로 출력 심볼 시퀀스 (y₁, …, yₘ)을 한 번에 하나씩(순차적으로) 생성합니다."
+    }
+   ]
+  },
+  {
+   "id": "w106",
+   "part": 4,
+   "partTitle": "Part 4. Model Architecture: 인코더-디코더 스택과 연결 구조",
+   "no": 106,
+   "word": "auto-regressive",
+   "pos": "형",
+   "meaning": "자기회귀적인 (오토리그레시브)",
+   "context": "디코더가 다음 토큰을 예측할 때 이전에 자신이 생성했던 과거 출력 심볼들을 추가 입력으로 취함.",
+   "exampleEn": "At each step the model is auto-regressive, consuming previously generated symbols as input.",
+   "exampleKo": "매 단계마다 모델은 자기회귀적이며, 이전에 생성된 심볼들을 추가적인 입력으로 취합니다.",
+   "paperExamples": [
+    {
+     "sentenceId": "3-4",
+     "en": "At each step the model is auto-regressive, consuming the previously generated symbols as additional input when generating the next.",
+     "ko": "매 단계(스텝)마다 모델은 자기회귀적(auto-regressive [10])으로 동작하며, 다음 심볼을 생성할 때 이전에 자신이 생성했던 심볼들을 추가 입력으로 취합니다."
+    },
+    {
+     "sentenceId": "3.2.3-9",
+     "en": "We need to prevent leftward information flow in the decoder to preserve the auto-regressive property.",
+     "ko": "자기회귀적(auto-regressive) 속성을 유지하기 위해서는 디코더 내부에서 미래 시점의 정보가 이전 시점으로 흘러 들어가는 것(leftward information flow)을 막아야 합니다."
+    }
+   ]
+  },
+  {
+   "id": "w107",
+   "part": 4,
+   "partTitle": "Part 4. Model Architecture: 인코더-디코더 스택과 연결 구조",
+   "no": 107,
+   "word": "consume",
+   "pos": "동",
+   "meaning": "소비하다, 입력으로 취하다",
+   "context": "이전 단계에서 생성된 토큰들을 다음 단계의 입력 데이터로 소비(수신/활용)함을 뜻함.",
+   "exampleEn": "The real-time streaming pipeline consumes gigabytes of sensor telemetry per second.",
+   "exampleKo": "실시간 스트리밍 파이프라인은 초당 수 기가바이트의 센서 원격 측정 데이터를 수신하여 소비한다.",
+   "paperExamples": []
+  },
+  {
+   "id": "w108",
+   "part": 4,
+   "partTitle": "Part 4. Model Architecture: 인코더-디코더 스택과 연결 구조",
+   "no": 108,
+   "word": "additional",
+   "pos": "형",
+   "meaning": "추가적인, 부가의 (명: addition)",
+   "context": "이전 생성 단어들이 다음 단어 예측을 위한 추가적인 입력(additional input)으로 들어감.",
+   "exampleEn": "Please provide additional documentation to substantiate the claimed business expenses.",
+   "exampleKo": "청구된 사업 경비를 입증하기 위해 추가 서류를 제출해 주십시오.",
+   "paperExamples": [
+    {
+     "sentenceId": "3-4",
+     "en": "At each step the model is auto-regressive, consuming the previously generated symbols as additional input when generating the next.",
+     "ko": "매 단계(스텝)마다 모델은 자기회귀적(auto-regressive [10])으로 동작하며, 다음 심볼을 생성할 때 이전에 자신이 생성했던 심볼들을 추가 입력으로 취합니다."
+    },
+    {
+     "sentenceId": "3.1-7",
+     "en": "In addition to the two sub-layers in each encoder layer, the decoder inserts a third sub-layer, which performs multi-head attention over the output of the encoder stack.",
+     "ko": "각 인코더 계층에 존재하는 두 개의 서브 레이어 외에도, 디코더는 인코더 스택의 최종 출력을 대상으로 멀티헤드 어텐션(multi-head attention)을 수행하는 세 번째 서브 레이어를 추가로 삽입합니다."
+    }
+   ]
+  },
+  {
+   "id": "w109",
+   "part": 4,
+   "partTitle": "Part 4. Model Architecture: 인코더-디코더 스택과 연결 구조",
+   "no": 109,
+   "word": "overall",
+   "pos": "형",
+   "meaning": "전반적인, 종합적인",
+   "context": "overall architecture: 인코더-디코더 스택 전체를 아우르는 포괄적인 모델 구조.",
+   "exampleEn": "The executive committee expressed overall satisfaction with annual operating performance.",
+   "exampleKo": "집행위원회는 연간 운영 실적에 대해 전반적인 만족감을 표명했다.",
+   "paperExamples": [
+    {
+     "sentenceId": "3-5",
+     "en": "The Transformer follows this overall architecture using stacked self-attention and point-wise, fully connected layers for both the encoder and decoder, shown in the left and right halves of Figure 1, respectively.",
+     "ko": "트랜스포머는 인코더와 디코더 모두에 쌓아 올린 셀프 어텐션(stacked self-attention)과 위치별 완전 연결 계층(point-wise, fullyconnected layers)을 사용하여 이러한 전반적인 아키텍처를 따르며, 이는 각각 그림 1의 왼쪽(인코더)과 오른쪽(디코더)에 나타나 있습니다."
+    }
+   ]
+  },
+  {
+   "id": "w110",
+   "part": 4,
+   "partTitle": "Part 4. Model Architecture: 인코더-디코더 스택과 연결 구조",
+   "no": 110,
+   "word": "stacked",
+   "pos": "형",
+   "meaning": "쌓아 올린, 다층의 (동: stack)",
+   "context": "인코더와 디코더 모두 Self-Attention과 FFN 계층을 여러 겹 수직으로 적층한 형태임을 기술.",
+   "exampleEn": "The architecture employs stacked neural network layers to build hierarchical representations.",
+   "exampleKo": "그 아키텍처는 계층적 표현을 구축하기 위해 쌓아 올린 신경망 계층들을 채택한다.",
+   "paperExamples": [
+    {
+     "sentenceId": "3-5",
+     "en": "The Transformer follows this overall architecture using stacked self-attention and point-wise, fully connected layers for both the encoder and decoder, shown in the left and right halves of Figure 1, respectively.",
+     "ko": "트랜스포머는 인코더와 디코더 모두에 쌓아 올린 셀프 어텐션(stacked self-attention)과 위치별 완전 연결 계층(point-wise, fullyconnected layers)을 사용하여 이러한 전반적인 아키텍처를 따르며, 이는 각각 그림 1의 왼쪽(인코더)과 오른쪽(디코더)에 나타나 있습니다."
+    },
+    {
+     "sentenceId": "3.1-1",
+     "en": "Encoder: The encoder is composed of a stack of N = 6 identical layers.",
+     "ko": "인코더: 인코더는 N = 6개의 동일한 층(layer)을 쌓아 올린 구조로 구성됩니다."
+    }
+   ]
+  },
+  {
+   "id": "w111",
+   "part": 4,
+   "partTitle": "Part 4. Model Architecture: 인코더-디코더 스택과 연결 구조",
+   "no": 111,
+   "word": "point-wise",
+   "pos": "형/부",
+   "meaning": "위치별로 개별 적용되는",
+   "context": "FFN이 시퀀스의 각 토큰 위치마다 다른 토큰과 섞이지 않고 독립적으로 적용됨을 뜻함.",
+   "exampleEn": "The non-linear activation is applied in a point-wise manner across the entire feature map.",
+   "exampleKo": "비선형 활성화 함수는 전체 특징 맵에 걸쳐 위치별 방식으로 적용된다.",
+   "paperExamples": [
+    {
+     "sentenceId": "3-5",
+     "en": "The Transformer follows this overall architecture using stacked self-attention and point-wise, fully connected layers for both the encoder and decoder, shown in the left and right halves of Figure 1, respectively.",
+     "ko": "트랜스포머는 인코더와 디코더 모두에 쌓아 올린 셀프 어텐션(stacked self-attention)과 위치별 완전 연결 계층(point-wise, fullyconnected layers)을 사용하여 이러한 전반적인 아키텍처를 따르며, 이는 각각 그림 1의 왼쪽(인코더)과 오른쪽(디코더)에 나타나 있습니다."
+    },
+    {
+     "sentenceId": "4-18",
+     "en": "Even with k = n, however, the complexity of a separable convolution is equal to the combination of a self-attention layer and a point-wise feed-forward layer, the approach we take in our model.",
+     "ko": "그러나 심지어 인 경우라 할지라도, 분리 합성곱(separable convolution)의 복잡도는 우리가 제안한 모델에서 취한 접근 방 식인 셀프 어텐션(self-attention) 계층과 점별 피드포워드(point-wise feed-forward) 계층의 조합과 동일할 뿐입니다."
+    }
+   ]
+  },
+  {
+   "id": "w112",
+   "part": 4,
+   "partTitle": "Part 4. Model Architecture: 인코더-디코더 스택과 연결 구조",
+   "no": 112,
+   "word": "fully connected",
+   "pos": "형",
+   "meaning": "완전 연결된 (Dense)",
+   "context": "한 계층의 모든 뉴런이 다음 계층의 모든 뉴런과 빠짐없이 가중치로 연결된 전통적 선형 계층.",
+   "exampleEn": "Dense neural networks rely on fully connected layers to map latent features to classes.",
+   "exampleKo": "밀집 신경망은 잠재 특징을 클래스에 매핑하기 위해 완전 연결 계층에 의존한다.",
+   "paperExamples": [
+    {
+     "sentenceId": "3-5",
+     "en": "The Transformer follows this overall architecture using stacked self-attention and point-wise, fully connected layers for both the encoder and decoder, shown in the left and right halves of Figure 1, respectively.",
+     "ko": "트랜스포머는 인코더와 디코더 모두에 쌓아 올린 셀프 어텐션(stacked self-attention)과 위치별 완전 연결 계층(point-wise, fullyconnected layers)을 사용하여 이러한 전반적인 아키텍처를 따르며, 이는 각각 그림 1의 왼쪽(인코더)과 오른쪽(디코더)에 나타나 있습니다."
+    },
+    {
+     "sentenceId": "3.1-2",
+     "en": "Each layer has two sub-layers. The first is a multi-head self-attention mechanism, and the second is a simple, positionwise fully connected feed-forward network.",
+     "ko": "각 층(layer)은 두 개의 서브 레이어로 구성됩니다. 첫 번째는 멀티헤드 셀프 어텐션(multi-head self-attention) 메커니즘이며, 두번째는 단순한 위치별 완전 연결 피드포워드 신경망(position-wise fully connected feed-forward network)입니다."
+    }
+   ]
+  },
+  {
+   "id": "w113",
+   "part": 4,
+   "partTitle": "Part 4. Model Architecture: 인코더-디코더 스택과 연결 구조",
+   "no": 113,
+   "word": "respectively",
+   "pos": "부",
+   "meaning": "각각, 제각기",
+   "context": "Figure 1의 좌측(인코더)과 우측(디코더)에 각각 표시되어 있음을 순서대로 대응 매칭.",
+   "exampleEn": "Revenues in domestic and international markets grew by 12% and 18%, respectively.",
+   "exampleKo": "국내 및 해외 시장에서의 매출은 각각 12%와 18%씩 성장했다.",
+   "paperExamples": [
+    {
+     "sentenceId": "3-5",
+     "en": "The Transformer follows this overall architecture using stacked self-attention and point-wise, fully connected layers for both the encoder and decoder, shown in the left and right halves of Figure 1, respectively.",
+     "ko": "트랜스포머는 인코더와 디코더 모두에 쌓아 올린 셀프 어텐션(stacked self-attention)과 위치별 완전 연결 계층(point-wise, fullyconnected layers)을 사용하여 이러한 전반적인 아키텍처를 따르며, 이는 각각 그림 1의 왼쪽(인코더)과 오른쪽(디코더)에 나타나 있습니다."
+    },
+    {
+     "sentenceId": "3.2.2-1",
+     "en": "Instead of performing a single attention function with d_model-dimensional keys, values and queries, we found it beneficial to linearly project the queries, keys and values h times with different, learned linear projections to dₖ, dₖ and dᵥ dimensions, respectively.",
+     "ko": "d_model 차원의 키, 값, 쿼리로 단일 어텐션 함수를 한 번만 수행하는 대신, 서로 다르게 학습된 선형 사영(linear projections)을 사 용해 쿼리, 키, 값을 각각 dₖ, dₖ, dᵥ 차원으로 h번 선형 사영(projection)하는 것이 훨씬 유익하다는 사실을 알아냈습니다."
+    }
+   ]
+  },
+  {
+   "id": "w114",
+   "part": 4,
+   "partTitle": "Part 4. Model Architecture: 인코더-디코더 스택과 연결 구조",
+   "no": 114,
+   "word": "be composed of",
+   "pos": "숙어",
+   "meaning": "~로 구성되다 (=consist of)",
+   "context": "인코더와 디코더가 각각 N=6개의 동일한 계층 스택으로 구성되어 있음을 서술.",
+   "exampleEn": "The arbitration panel is composed of three neutral legal professionals.",
+   "exampleKo": "중재 패널은 3명의 중립적인 법률 전문가로 구성된다.",
+   "paperExamples": [
+    {
+     "sentenceId": "3.1-1",
+     "en": "Encoder: The encoder is composed of a stack of N = 6 identical layers.",
+     "ko": "인코더: 인코더는 N = 6개의 동일한 층(layer)을 쌓아 올린 구조로 구성됩니다."
+    },
+    {
+     "sentenceId": "3.1-6",
+     "en": "Decoder: The decoder is also composed of a stack of N = 6 identical layers.",
+     "ko": "디코더: 디코더 역시 N = 6개의 동일한 층(layer)을 쌓아 올린 구조로 구성됩니다."
+    }
+   ]
+  },
+  {
+   "id": "w115",
+   "part": 4,
+   "partTitle": "Part 4. Model Architecture: 인코더-디코더 스택과 연결 구조",
+   "no": 115,
+   "word": "identical",
+   "pos": "형",
+   "meaning": "동일한, 똑같은",
+   "context": "N=6개의 층이 내부 연산 구조와 하이퍼파라미터 규격이 완전히 같음을 뜻함 (가중치는 독립 학습).",
+   "exampleEn": "The encoder is composed of a stack of N=6 identical layers.",
+   "exampleKo": "인코더는 N=6개의 동일한 층을 쌓아 올린 구조로 구성됩니다.",
+   "paperExamples": [
+    {
+     "sentenceId": "3.1-1",
+     "en": "Encoder: The encoder is composed of a stack of N = 6 identical layers.",
+     "ko": "인코더: 인코더는 N = 6개의 동일한 층(layer)을 쌓아 올린 구조로 구성됩니다."
+    },
+    {
+     "sentenceId": "3.1-6",
+     "en": "Decoder: The decoder is also composed of a stack of N = 6 identical layers.",
+     "ko": "디코더: 디코더 역시 N = 6개의 동일한 층(layer)을 쌓아 올린 구조로 구성됩니다."
+    }
+   ]
+  },
+  {
+   "id": "w116",
+   "part": 4,
+   "partTitle": "Part 4. Model Architecture: 인코더-디코더 스택과 연결 구조",
+   "no": 116,
+   "word": "sub-layer",
+   "pos": "명",
+   "meaning": "하위 계층, 서브 레이어",
+   "context": "1개 계층 블록을 구성하는 세부 모듈 단위 (Self-Attention 서브레이어, FFN 서브레이어).",
+   "exampleEn": "Each encoder layer contains two sub-layers: self-attention and a feed-forward network.",
+   "exampleKo": "각 인코더 계층은 셀프 어텐션과 피드포워드 신경망이라는 두 개의 서브 레이어를 포함합니다.",
+   "paperExamples": [
+    {
+     "sentenceId": "3.1-2",
+     "en": "Each layer has two sub-layers. The first is a multi-head self-attention mechanism, and the second is a simple, positionwise fully connected feed-forward network.",
+     "ko": "각 층(layer)은 두 개의 서브 레이어로 구성됩니다. 첫 번째는 멀티헤드 셀프 어텐션(multi-head self-attention) 메커니즘이며, 두번째는 단순한 위치별 완전 연결 피드포워드 신경망(position-wise fully connected feed-forward network)입니다."
+    },
+    {
+     "sentenceId": "3.1-3",
+     "en": "We employ a residual connection around each of the two sub-layers, followed by layer normalization.",
+     "ko": "우리는 두 개의 각 서브 레이어 주위에 잔차 연결(residual connection [11])을 적용하고, 그 뒤에 레이어 정규화(layernormalization [1])를 수행합니다."
+    }
+   ]
+  },
+  {
+   "id": "w117",
+   "part": 4,
+   "partTitle": "Part 4. Model Architecture: 인코더-디코더 스택과 연결 구조",
+   "no": 117,
+   "word": "feed-forward",
+   "pos": "형",
+   "meaning": "순방향의 (피드포워드)",
+   "context": "순환이나 루프 없이 신호가 한 방향으로만 전달되는 다층 완전 연결 신경망 구조.",
+   "exampleEn": "The classifier uses a multi-layer feed-forward network to predict customer churn risk.",
+   "exampleKo": "그 분류기는 고객 이탈 위험을 예측하기 위해 다층 순방향 신경망을 사용한다.",
+   "paperExamples": [
+    {
+     "sentenceId": "3.1-2",
+     "en": "Each layer has two sub-layers. The first is a multi-head self-attention mechanism, and the second is a simple, positionwise fully connected feed-forward network.",
+     "ko": "각 층(layer)은 두 개의 서브 레이어로 구성됩니다. 첫 번째는 멀티헤드 셀프 어텐션(multi-head self-attention) 메커니즘이며, 두번째는 단순한 위치별 완전 연결 피드포워드 신경망(position-wise fully connected feed-forward network)입니다."
+    },
+    {
+     "sentenceId": "3.2.1-9",
+     "en": "Additive attention computes the compatibility function using a feed-forward network with a single hidden layer.",
+     "ko": "가산 어텐션(additive attention)은 단일 은닉층(single hidden layer)을 갖춘 피드포워드 신경망을 사용하여 적합도(유사도) 함수를 계산합니다."
+    }
+   ]
+  },
+  {
+   "id": "w118",
+   "part": 4,
+   "partTitle": "Part 4. Model Architecture: 인코더-디코더 스택과 연결 구조",
+   "no": 118,
+   "word": "employ",
+   "pos": "동",
+   "meaning": "채택하다, 사용하다 / 고용하다",
+   "context": "각 서브레이어 주위에 잔차 연결과 레이어 정규화를 도입/채택했음을 서술.",
+   "exampleEn": "We employ a residual connection around each of the two sub-layers.",
+   "exampleKo": "우리는 두 서브 레이어 각각의 주위에 잔차 연결을 채택하여 적용합니다.",
+   "paperExamples": [
+    {
+     "sentenceId": "3.1-3",
+     "en": "We employ a residual connection around each of the two sub-layers, followed by layer normalization.",
+     "ko": "우리는 두 개의 각 서브 레이어 주위에 잔차 연결(residual connection [11])을 적용하고, 그 뒤에 레이어 정규화(layernormalization [1])를 수행합니다."
+    },
+    {
+     "sentenceId": "3.1-8",
+     "en": "Similar to the encoder, we employ residual connections around each of the sub-layers, followed by layer normalization.",
+     "ko": "인코더와 마찬가지로 디코더에서도 각 서브 레이어 주위에 잔차 연결(residual connections)을 적용하고, 그 뒤이어 레이어 정규화(layer normalization)를 수행합니다."
+    }
+   ]
+  },
+  {
+   "id": "w119",
+   "part": 4,
+   "partTitle": "Part 4. Model Architecture: 인코더-디코더 스택과 연결 구조",
+   "no": 119,
+   "word": "residual connection",
+   "pos": "명",
+   "meaning": "잔차 연결 (스킵 연결)",
+   "context": "서브레이어 출력을 원래 입력에 그대로 더해줌으로써(x + SubLayer(x)) 기울기 소실을 방지.",
+   "exampleEn": "Residual connections enable the effective training of extremely deep neural networks.",
+   "exampleKo": "잔차 연결은 극도로 깊은 신경망의 효과적인 훈련을 가능하게 한다.",
+   "paperExamples": [
+    {
+     "sentenceId": "3.1-3",
+     "en": "We employ a residual connection around each of the two sub-layers, followed by layer normalization.",
+     "ko": "우리는 두 개의 각 서브 레이어 주위에 잔차 연결(residual connection [11])을 적용하고, 그 뒤에 레이어 정규화(layernormalization [1])를 수행합니다."
+    },
+    {
+     "sentenceId": "3.1-5",
+     "en": "To facilitate these residual connections, all sub-layers in the model, as well as the embedding layers, produce outputs of dimension.",
+     "ko": "이러한 잔차 연결(residual connections)을 원활하게 수행할 수 있도록, 임베딩 계층은 물론 모델 내부의 모든 서브 레이어는 d_model = 512차원의 출력을 생성합니다."
+    }
+   ]
+  },
+  {
+   "id": "w120",
+   "part": 4,
+   "partTitle": "Part 4. Model Architecture: 인코더-디코더 스택과 연결 구조",
+   "no": 120,
+   "word": "followed by",
+   "pos": "분사구",
+   "meaning": "뒤이어 ~가 따르는, 그 후에",
+   "context": "잔차 덧셈이 일어난 직후 곧바로 레이어 정규화(LayerNorm)가 뒤따르는 Post-LN 연산 순서 명시.",
+   "exampleEn": "The keynote presentation will be followed by an interactive panel discussion with industry experts.",
+   "exampleKo": "기조연설이 끝난 뒤에 업계 전문가들과의 대화형 패널 토론이 이어질 예정입니다.",
+   "paperExamples": [
+    {
+     "sentenceId": "3-5",
+     "en": "The Transformer follows this overall architecture using stacked self-attention and point-wise, fully connected layers for both the encoder and decoder, shown in the left and right halves of Figure 1, respectively.",
+     "ko": "트랜스포머는 인코더와 디코더 모두에 쌓아 올린 셀프 어텐션(stacked self-attention)과 위치별 완전 연결 계층(point-wise, fullyconnected layers)을 사용하여 이러한 전반적인 아키텍처를 따르며, 이는 각각 그림 1의 왼쪽(인코더)과 오른쪽(디코더)에 나타나 있습니다."
+    },
+    {
+     "sentenceId": "3.1-3",
+     "en": "We employ a residual connection around each of the two sub-layers, followed by layer normalization.",
+     "ko": "우리는 두 개의 각 서브 레이어 주위에 잔차 연결(residual connection [11])을 적용하고, 그 뒤에 레이어 정규화(layernormalization [1])를 수행합니다."
+    }
+   ]
+  },
+  {
+   "id": "w121",
+   "part": 4,
+   "partTitle": "Part 4. Model Architecture: 인코더-디코더 스택과 연결 구조",
+   "no": 121,
+   "word": "normalization",
+   "pos": "명",
+   "meaning": "정규화, 표준화",
+   "context": "Layer Normalization (Ba et al., 2016): 각 샘플의 은닉 차원에 걸쳐 평균과 분산을 정규화.",
+   "exampleEn": "Feature normalization stabilizes internal hidden states during deep network backpropagation.",
+   "exampleKo": "특징 정규화는 심층 네트워크 역전파 중 내부 은닉 상태를 안정화한다.",
+   "paperExamples": [
+    {
+     "sentenceId": "3.1-3",
+     "en": "We employ a residual connection around each of the two sub-layers, followed by layer normalization.",
+     "ko": "우리는 두 개의 각 서브 레이어 주위에 잔차 연결(residual connection [11])을 적용하고, 그 뒤에 레이어 정규화(layernormalization [1])를 수행합니다."
+    },
+    {
+     "sentenceId": "3.1-8",
+     "en": "Similar to the encoder, we employ residual connections around each of the sub-layers, followed by layer normalization.",
+     "ko": "인코더와 마찬가지로 디코더에서도 각 서브 레이어 주위에 잔차 연결(residual connections)을 적용하고, 그 뒤이어 레이어 정규화(layer normalization)를 수행합니다."
+    }
+   ]
+  },
+  {
+   "id": "w122",
+   "part": 4,
+   "partTitle": "Part 4. Model Architecture: 인코더-디코더 스택과 연결 구조",
+   "no": 122,
+   "word": "that is",
+   "pos": "접속부사구",
+   "meaning": "즉, 다시 말해서 (=in other words)",
+   "context": "앞서 설명한 잔차 연결과 정규화의 복합 연산을 수학 공식 LayerNorm(x + SubLayer(x))로 명문화.",
+   "exampleEn": "The warranty is non-transferable; that is, it applies solely to the original purchaser.",
+   "exampleKo": "보증은 양도할 수 없습니다. 즉, 원래 구매자에게만 전적으로 적용됩니다.",
+   "paperExamples": [
+    {
+     "sentenceId": "3.1-4",
+     "en": "That is, the output of each sub-layer is LayerNorm(x + Sublayer(x)), where Sublayer(x) is the function implemented by the sub-layer itself.",
+     "ko": "즉, 각 서브 레이어의 최종 출력은 LayerNorm(x + SubLayer(x))이며, 여기서 SubLayer(x)는 해당 서브 레이어 자체가 구현하는 고유 연산 함수를 의미합니다."
+    },
+    {
+     "sentenceId": "3.2.2-7",
+     "en": "Due to the reduced dimension of each head, the total computational cost is similar to that of single-head attention with full dimensionality.",
+     "ko": "각 헤드의 차원이 줄어들었기 때문에, (8개 헤드를 합친) 전체 연산 비용은 전체 차원을 그대로 사용하는 단일 헤드 어텐션(single-head attention with full dimensionality)의 연산 비용과 유사합니다."
+    }
+   ]
+  },
+  {
+   "id": "w123",
+   "part": 4,
+   "partTitle": "Part 4. Model Architecture: 인코더-디코더 스택과 연결 구조",
+   "no": 123,
+   "word": "implement",
+   "pos": "동",
+   "meaning": "구현하다, 실행하다",
+   "context": "SubLayer(x)는 해당 서브레이어 자체에 의해 실제로 구현되는 함수 연산을 지칭.",
+   "exampleEn": "The IT security team will implement strict multi-factor authentication protocols next month.",
+   "exampleKo": "IT 보안 팀은 다음 달에 엄격한 다중 요소 인증 프로토콜을 구현할 것이다.",
+   "paperExamples": [
+    {
+     "sentenceId": "3.1-4",
+     "en": "That is, the output of each sub-layer is LayerNorm(x + Sublayer(x)), where Sublayer(x) is the function implemented by the sub-layer itself.",
+     "ko": "즉, 각 서브 레이어의 최종 출력은 LayerNorm(x + SubLayer(x))이며, 여기서 SubLayer(x)는 해당 서브 레이어 자체가 구현하는 고유 연산 함수를 의미합니다."
+    },
+    {
+     "sentenceId": "3.2.3-10",
+     "en": "We implement this inside of scaled dot-product attention by masking out (setting to -) all values in the input of the softmax which correspond to illegal connections.",
+     "ko": "우리는 잘못된 연결(미래 시점 참조)에 해당하는 소프트맥스의 입력값들을 모두 마스킹 처리(마이너스 무한대, −∞로 설정)함으로 써 스케일드 닷-프로덕트 어텐션 내부에서 이 메커니즘을 구현합니다."
+    }
+   ]
+  },
+  {
+   "id": "w124",
+   "part": 4,
+   "partTitle": "Part 4. Model Architecture: 인코더-디코더 스택과 연결 구조",
+   "no": 124,
+   "word": "facilitate",
+   "pos": "동",
+   "meaning": "용이하게 하다, 원활히 돕다",
+   "context": "잔차 덧셈(x + SubLayer(x))을 별도 프로젝션 없이 쉽게 수행하기 위해 모든 출력 차원을 d_model=512로 통일.",
+   "exampleEn": "To facilitate these residual connections, all sub-layers produce outputs of dimension 512.",
+   "exampleKo": "이러한 잔차 연결을 원활하게 수행할 수 있도록 모델 내 모든 서브 레이어는 512차원의 출력을 생성합니다.",
+   "paperExamples": [
+    {
+     "sentenceId": "3.1-5",
+     "en": "To facilitate these residual connections, all sub-layers in the model, as well as the embedding layers, produce outputs of dimension.",
+     "ko": "이러한 잔차 연결(residual connections)을 원활하게 수행할 수 있도록, 임베딩 계층은 물론 모델 내부의 모든 서브 레이어는 d_model = 512차원의 출력을 생성합니다."
+    }
+   ]
+  },
+  {
+   "id": "w125",
+   "part": 4,
+   "partTitle": "Part 4. Model Architecture: 인코더-디코더 스택과 연결 구조",
+   "no": 125,
+   "word": "dimension",
+   "pos": "명",
+   "meaning": "차원, 크기, 규격 (d_model=512)",
+   "context": "신경망 임베딩 및 은닉 벡터의 크기. 트랜스포머는 d_model=512를 모델의 표준 차원으로 고정함.",
+   "exampleEn": "Please confirm the exact spatial dimensions of the equipment rack prior to dispatch.",
+   "exampleKo": "장비 랙을 발송하기 전에 정확한 공간 치수를 확인해 주십시오.",
+   "paperExamples": [
+    {
+     "sentenceId": "3.1-5",
+     "en": "To facilitate these residual connections, all sub-layers in the model, as well as the embedding layers, produce outputs of dimension.",
+     "ko": "이러한 잔차 연결(residual connections)을 원활하게 수행할 수 있도록, 임베딩 계층은 물론 모델 내부의 모든 서브 레이어는 d_model = 512차원의 출력을 생성합니다."
+    },
+    {
+     "sentenceId": "3.2.1-2",
+     "en": "The input consists of queries and keys of dimension dk, and values of dimension.",
+     "ko": "(이 어텐션의) 입력은 dₖ 차원을 갖는 쿼리(queries) 및 키(keys), 그리고 dᵥ 차원을 갖는 값(values)들로 구성됩니다."
+    }
+   ]
+  },
+  {
+   "id": "w126",
+   "part": 4,
+   "partTitle": "Part 4. Model Architecture: 인코더-디코더 스택과 연결 구조",
+   "no": 126,
+   "word": "insert",
+   "pos": "동",
+   "meaning": "삽입하다, 끼워 넣다",
+   "context": "디코더는 인코더의 2개 서브레이어 외에 인코더 출력을 참조하는 세 번째 서브레이어를 중간에 삽입함.",
+   "exampleEn": "The decoder inserts a third sub-layer to perform multi-head attention over the encoder output.",
+   "exampleKo": "디코더는 인코더 스택의 출력을 대상으로 멀티헤드 어텐션을 수행하는 세 번째 서브 레이어를 삽입합니다.",
+   "paperExamples": [
+    {
+     "sentenceId": "3.1-7",
+     "en": "In addition to the two sub-layers in each encoder layer, the decoder inserts a third sub-layer, which performs multi-head attention over the output of the encoder stack.",
+     "ko": "각 인코더 계층에 존재하는 두 개의 서브 레이어 외에도, 디코더는 인코더 스택의 최종 출력을 대상으로 멀티헤드 어텐션(multi-head attention)을 수행하는 세 번째 서브 레이어를 추가로 삽입합니다."
+    }
+   ]
+  },
+  {
+   "id": "w127",
+   "part": 4,
+   "partTitle": "Part 4. Model Architecture: 인코더-디코더 스택과 연결 구조",
+   "no": 127,
+   "word": "modify",
+   "pos": "동",
+   "meaning": "수정하다, 변경하다",
+   "context": "미래 위치 참조를 방지하기 위해 디코더의 셀프 어텐션 서브레이어를 특별히 수정(마스킹)함.",
+   "exampleEn": "We also modify the self-attention sub-layer in the decoder stack to prevent illegal connections.",
+   "exampleKo": "우리는 또한 잘못된 연결을 방지하기 위해 디코더 스택 내의 셀프 어텐션 서브 레이어를 수정합니다.",
+   "paperExamples": [
+    {
+     "sentenceId": "3.1-9",
+     "en": "We also modify the self-attention sub-layer in the decoder stack to prevent positions from attending to subsequent positions.",
+     "ko": "우리는 또한 (특정) 위치가 그 뒤에 오는 후속 위치들을 참조(어텐션)하지 못하도록 디코더 스택의 셀프 어텐션 서브 레이어를 수정합니다."
+    }
+   ]
+  },
+  {
+   "id": "w128",
+   "part": 4,
+   "partTitle": "Part 4. Model Architecture: 인코더-디코더 스택과 연결 구조",
+   "no": 128,
+   "word": "prevent A from B",
+   "pos": "구문",
+   "meaning": "A가 B하는 것을 방지하다/막다",
+   "context": "현재 토큰 위치가 그 뒤에 오는 후속 토큰 위치들(subsequent positions)을 참조하는 것을 차단.",
+   "exampleEn": "To prevent positions from attending to subsequent positions.",
+   "exampleKo": "위치들이 후속 위치들에 주의를 기울이는 것을 방지하기 위해.",
+   "paperExamples": []
+  },
+  {
+   "id": "w129",
+   "part": 4,
+   "partTitle": "Part 4. Model Architecture: 인코더-디코더 스택과 연결 구조",
+   "no": 129,
+   "word": "subsequent",
+   "pos": "형",
+   "meaning": "차후의, 그 다음의, 뒤따르는",
+   "context": "시간 축 상에서 현재 예측 시점보다 뒤에 위치한 미래 토큰 위치군(subsequent positions).",
+   "exampleEn": "Subsequent performance audits confirmed that the security patches operated as intended.",
+   "exampleKo": "후속 성능 감사는 보안 패치가 의도한 대로 작동했음을 확인해 주었다.",
+   "paperExamples": [
+    {
+     "sentenceId": "3.1-9",
+     "en": "We also modify the self-attention sub-layer in the decoder stack to prevent positions from attending to subsequent positions.",
+     "ko": "우리는 또한 (특정) 위치가 그 뒤에 오는 후속 위치들을 참조(어텐션)하지 못하도록 디코더 스택의 셀프 어텐션 서브 레이어를 수정합니다."
+    }
+   ]
+  },
+  {
+   "id": "w130",
+   "part": 4,
+   "partTitle": "Part 4. Model Architecture: 인코더-디코더 스택과 연결 구조",
+   "no": 130,
+   "word": "attend to",
+   "pos": "구동사",
+   "meaning": "~에 주의를 기울이다, 참조하다",
+   "context": "어텐션 메커니즘에서 특정 쿼리 토큰이 다른 키-값 토큰과 가중합을 계산하며 주목하는 동작.",
+   "exampleEn": "The customer support desk must attend to high-priority escalation tickets immediately.",
+   "exampleKo": "고객 지원 데스크는 우선순위가 높은 에스컬레이션 티켓을 즉시 처리해야 한다.",
+   "paperExamples": [
+    {
+     "sentenceId": "3.1-9",
+     "en": "We also modify the self-attention sub-layer in the decoder stack to prevent positions from attending to subsequent positions.",
+     "ko": "우리는 또한 (특정) 위치가 그 뒤에 오는 후속 위치들을 참조(어텐션)하지 못하도록 디코더 스택의 셀프 어텐션 서브 레이어를 수정합니다."
+    },
+    {
+     "sentenceId": "3.2.3-3",
+     "en": "This allows every position in the decoder to attend over all positions in the input sequence.",
+     "ko": "이를 통해 디코더의 모든 위치(토큰)가 입력 시퀀스(원문)의 모든 위치를 골고루 참조(attend over)할 수 있게 됩니다."
+    }
+   ]
+  },
+  {
+   "id": "w131",
+   "part": 4,
+   "partTitle": "Part 4. Model Architecture: 인코더-디코더 스택과 연결 구조",
+   "no": 131,
+   "word": "offset",
+   "pos": "동/명",
+   "meaning": "오프셋(이동)시키다 / 상쇄하다",
+   "context": "디코더 입력 타깃 문장을 오른쪽으로 한 칸 이동시켜(Teacher Forcing) i번째가 <i만 보도록 보장.",
+   "exampleEn": "Output embeddings are offset by one position, ensuring predictions depend only on known outputs.",
+   "exampleKo": "출력 임베딩이 한 위치만큼 이동되어, 위치 i에 대한 예측이 i 이전의 알려진 출력에만 의존하도록 보장합니다.",
+   "paperExamples": [
+    {
+     "sentenceId": "3.1-10",
+     "en": "This masking, combined with fact that the output embeddings are offset by one position, ensures that the predictions for position i can depend only on the known outputs at positions less than.",
+     "ko": "이러한 마스킹(masking)은 출력 임베딩이 한 위치(포지션)씩 오른쪽으로 이동(offset)되어 들어간다는 사실과 결합되어, 특정 위치 i에 대한 예측이 i보다 앞선(작은) 위치의 이미 알려진 출력들에만 전적으로 의존하도록 보장해 줍니다."
+    },
+    {
+     "sentenceId": "3.5-9",
+     "en": "We chose this function because we hypothesized it would allow the model to easily learn to attend by relative positions, since for any fixed offset k, PE(pos+k) can be represented as a linear function of PE(pos).",
+     "ko": "우리가 이 함수를 선택한 이유는, 어떤 고정된 오프셋(거리) k에 대해서도 PE_(pos+k)가 PE_pos의 선형 함수(linear function)로 표현될 수 있어 모델이 상대적인 위치에 따라 쉽게 어텐션(attend)하는 법을 학습할 수 있을 것이라는 가설을 세웠기 때문입니다."
+    }
+   ]
+  },
+  {
+   "id": "w132",
+   "part": 4,
+   "partTitle": "Part 4. Model Architecture: 인코더-디코더 스택과 연결 구조",
+   "no": 132,
+   "word": "ensure",
+   "pos": "동",
+   "meaning": "보장하다, 확실하게 하다",
+   "context": "마스킹과 오프셋의 결합으로 특정 위치 예측이 이전 출력들에만 의존하도록 인과성을 완벽히 보장.",
+   "exampleEn": "Daily automated regression testing ensures software stability across production releases.",
+   "exampleKo": "매일 수행되는 자동화된 회귀 테스트는 프로덕션 릴리스 전반의 소프트웨어 안정성을 보장한다.",
+   "paperExamples": [
+    {
+     "sentenceId": "3.1-10",
+     "en": "This masking, combined with fact that the output embeddings are offset by one position, ensures that the predictions for position i can depend only on the known outputs at positions less than.",
+     "ko": "이러한 마스킹(masking)은 출력 임베딩이 한 위치(포지션)씩 오른쪽으로 이동(offset)되어 들어간다는 사실과 결합되어, 특정 위치 i에 대한 예측이 i보다 앞선(작은) 위치의 이미 알려진 출력들에만 전적으로 의존하도록 보장해 줍니다."
+    }
+   ]
+  },
+  {
+   "id": "w133",
+   "part": 4,
+   "partTitle": "Part 4. Model Architecture: 인코더-디코더 스택과 연결 구조",
+   "no": 133,
+   "word": "depend on",
+   "pos": "구동사",
+   "meaning": "~에 의존하다, 달려있다",
+   "context": "예측이 오직 이미 알려진 과거 출력들(known outputs at positions less than i)에만 의존해야 함.",
+   "exampleEn": "The accuracy of the analytical forecast depends on the integrity of the underlying datasets.",
+   "exampleKo": "분석적 예측의 정확성은 기초 데이터셋의 무결성에 달려 있다.",
+   "paperExamples": [
+    {
+     "sentenceId": "3.1-10",
+     "en": "This masking, combined with fact that the output embeddings are offset by one position, ensures that the predictions for position i can depend only on the known outputs at positions less than.",
+     "ko": "이러한 마스킹(masking)은 출력 임베딩이 한 위치(포지션)씩 오른쪽으로 이동(offset)되어 들어간다는 사실과 결합되어, 특정 위치 i에 대한 예측이 i보다 앞선(작은) 위치의 이미 알려진 출력들에만 전적으로 의존하도록 보장해 줍니다."
+    },
+    {
+     "sentenceId": "1-8",
+     "en": "Attention mechanisms have become an integral part of compelling sequence modeling and transduction models in various tasks, allowing modeling of dependencies without regard to their distance in the input or output sequences.",
+     "ko": "어텐션 메커니즘은 다양한 자연어 처리 과제에서 강력한 성능을 내는 시퀀스 모델링 및 변환 모델의 필수적인 요소로 자리 잡아 왔으며, 이는 입력 또는 출력 시퀀스 내에서의 거리에 상관없이 단어 간의 상호 의존성을 모델링할 수 있게 해 주었습니다. t t-1"
+    }
+   ]
+  },
+  {
+   "id": "w134",
+   "part": 5,
+   "partTitle": "Part 5. Attention & FFN: Scaled Dot-Product, Multi-Head 및 피드포워드",
+   "no": 134,
+   "word": "query",
+   "pos": "명",
+   "meaning": "쿼리 (질의 벡터)",
+   "context": "어텐션 연산에서 현재 위치의 토큰이 다른 토큰들에게 질문을 던지는 기준 벡터 q.",
+   "exampleEn": "The search engine processes complex semantic queries using distributed index nodes.",
+   "exampleKo": "검색 엔진은 분산 색인 노드를 사용하여 복잡한 의미론적 질의를 처리한다.",
+   "paperExamples": [
+    {
+     "sentenceId": "3.2.1-3",
+     "en": "We compute the dot products of the query with all keys, divide each by √dₖ, and apply a softmax function to obtain the weights on the values.",
+     "ko": "우리는 쿼리와 모든 키 사이의 점곱(내적)을 계산한 뒤, 각 결과를 √dₖ로 나누고, 소프트맥스(softmax) 함수를 적용하여각 값(value)들에 할당할 가중치를 얻습니다."
+    },
+    {
+     "sentenceId": "3.2-1",
+     "en": "An attention function can be described as mapping a query and a set of key-value pairs to an output, where the query, keys, values, and output are all vectors.",
+     "ko": "어텐션 함수는 하나의 쿼리(query)와 일련의 키-값(key-value) 쌍들을 어떤 출력으로 매핑(변환)하는 것으로 설명할 수 있으며, 여기서 쿼리, 키, 값, 그리고 출력은 모두 벡터(vector)입니다."
+    }
+   ]
+  },
+  {
+   "id": "w135",
+   "part": 5,
+   "partTitle": "Part 5. Attention & FFN: Scaled Dot-Product, Multi-Head 및 피드포워드",
+   "no": 135,
+   "word": "key",
+   "pos": "명/형",
+   "meaning": "(명) 키 (색인 벡터) / (형) 핵심적인",
+   "context": "쿼리와 비교되어 적합도(유사도) 점수를 산출하는 기준이 되는 색인 벡터 k.",
+   "exampleEn": "Maintaining data security is a key operational priority for enterprise cloud deployments.",
+   "exampleKo": "데이터 보안을 유지하는 것은 엔터프라이즈 클라우드 배포의 핵심적인 운영 우선순위이다.",
+   "paperExamples": [
+    {
+     "sentenceId": "3.2.1-2",
+     "en": "The input consists of queries and keys of dimension dk, and values of dimension.",
+     "ko": "(이 어텐션의) 입력은 dₖ 차원을 갖는 쿼리(queries) 및 키(keys), 그리고 dᵥ 차원을 갖는 값(values)들로 구성됩니다."
+    },
+    {
+     "sentenceId": "3.2.1-3",
+     "en": "We compute the dot products of the query with all keys, divide each by √dₖ, and apply a softmax function to obtain the weights on the values.",
+     "ko": "우리는 쿼리와 모든 키 사이의 점곱(내적)을 계산한 뒤, 각 결과를 √dₖ로 나누고, 소프트맥스(softmax) 함수를 적용하여각 값(value)들에 할당할 가중치를 얻습니다."
+    }
+   ]
+  },
+  {
+   "id": "w136",
+   "part": 5,
+   "partTitle": "Part 5. Attention & FFN: Scaled Dot-Product, Multi-Head 및 피드포워드",
+   "no": 136,
+   "word": "value",
+   "pos": "명",
+   "meaning": "값 (정보 벡터)",
+   "context": "어텐션 가중치 확률에 따라 최종적으로 가중합되어 출력 벡터를 구성하는 실제 내용 정보 벡터 v.",
+   "exampleEn": "The lookup table retrieves configuration values associated with specific device IDs.",
+   "exampleKo": "조회 테이블은 특정 장치 ID와 연결된 구성 값들을 검색한다.",
+   "paperExamples": [
+    {
+     "sentenceId": "3.2.1-2",
+     "en": "The input consists of queries and keys of dimension dk, and values of dimension.",
+     "ko": "(이 어텐션의) 입력은 dₖ 차원을 갖는 쿼리(queries) 및 키(keys), 그리고 dᵥ 차원을 갖는 값(values)들로 구성됩니다."
+    },
+    {
+     "sentenceId": "3.2.1-3",
+     "en": "We compute the dot products of the query with all keys, divide each by √dₖ, and apply a softmax function to obtain the weights on the values.",
+     "ko": "우리는 쿼리와 모든 키 사이의 점곱(내적)을 계산한 뒤, 각 결과를 √dₖ로 나누고, 소프트맥스(softmax) 함수를 적용하여각 값(value)들에 할당할 가중치를 얻습니다."
+    }
+   ]
+  },
+  {
+   "id": "w137",
+   "part": 5,
+   "partTitle": "Part 5. Attention & FFN: Scaled Dot-Product, Multi-Head 및 피드포워드",
+   "no": 137,
+   "word": "compatibility",
+   "pos": "명",
+   "meaning": "적합도, 호환성",
+   "context": "compatibility function: 쿼리와 키의 내적 등을 통해 두 벡터 간의 연관성/일치도 점수를 계산하는 함수.",
+   "exampleEn": "Please confirm firmware compatibility before initiating the operating system upgrade.",
+   "exampleKo": "운영체제 업그레이드를 시작하기 전에 펌웨어 호환성을 확인하십시오.",
+   "paperExamples": [
+    {
+     "sentenceId": "3.2.1-9",
+     "en": "Additive attention computes the compatibility function using a feed-forward network with a single hidden layer.",
+     "ko": "가산 어텐션(additive attention)은 단일 은닉층(single hidden layer)을 갖춘 피드포워드 신경망을 사용하여 적합도(유사도) 함수를 계산합니다."
+    },
+    {
+     "sentenceId": "3.2-2",
+     "en": "The output is computed as a weighted sum of the values, where the weight assigned to each value is computed by a compatibility function of the query with the corresponding key.",
+     "ko": "출력(output)은 값(values)들의 가중합(weighted sum)으로 계산되며, 각 값에 할당되는 가중치는 쿼리(query)와 그에 대응하는키(corresponding key) 간의 적합도 함수(compatibility function)에 의해 계산됩니다."
+    }
+   ]
+  },
+  {
+   "id": "w138",
+   "part": 5,
+   "partTitle": "Part 5. Attention & FFN: Scaled Dot-Product, Multi-Head 및 피드포워드",
+   "no": 138,
+   "word": "weighted sum",
+   "pos": "명",
+   "meaning": "가중합 (가중 평균)",
+   "context": "소프트맥스를 통과한 확률 가중치(합=1)를 각 값(Value) 벡터에 곱하여 최종 출력 벡터를 만듦.",
+   "exampleEn": "The final score is calculated as a weighted sum of individual evaluation metrics.",
+   "exampleKo": "최종 점수는 개별 평가 지표들의 가중합으로 계산된다.",
+   "paperExamples": [
+    {
+     "sentenceId": "3.2-2",
+     "en": "The output is computed as a weighted sum of the values, where the weight assigned to each value is computed by a compatibility function of the query with the corresponding key.",
+     "ko": "출력(output)은 값(values)들의 가중합(weighted sum)으로 계산되며, 각 값에 할당되는 가중치는 쿼리(query)와 그에 대응하는키(corresponding key) 간의 적합도 함수(compatibility function)에 의해 계산됩니다."
+    }
+   ]
+  },
+  {
+   "id": "w139",
+   "part": 5,
+   "partTitle": "Part 5. Attention & FFN: Scaled Dot-Product, Multi-Head 및 피드포워드",
+   "no": 139,
+   "word": "dot-product",
+   "pos": "명",
+   "meaning": "점곱, 내적 (행렬곱 기반)",
+   "context": "두 벡터의 각 성분을 곱해 모두 더하는 선형대수학 기본 연산. 쿼리와 키의 유사도 측정에 사용.",
+   "exampleEn": "We call our particular attention 'Scaled Dot-Product Attention'.",
+   "exampleKo": "우리는 우리가 제안하는 특정한 어텐션을 '스케일드 닷-프로덕트 어텐션'이라고 부릅니다.",
+   "paperExamples": [
+    {
+     "sentenceId": "3.2.1-1",
+     "en": "We call our particular attention \"Scaled Dot-Product Attention\" (Figure 2).",
+     "ko": "우리는 우리가 제안하는 특정한 어텐션을 '스케일드 닷-프로덕트 어텐션(Scaled Dot-Product Attention, 크기 조절 점곱 어텐션)'이라고 부릅니다 (그림 2)."
+    },
+    {
+     "sentenceId": "3.2.1-7",
+     "en": "The two most commonly used attention functions are additive attention, and dot-product (multi- plicative) attention.",
+     "ko": "가장 널리 사용되는 두 가지 어텐션 함수는 가산 어텐션(additive attention [2])과 점곱(승산) 어텐션(dot-product[multiplicative] attention)입니다."
+    }
+   ]
+  },
+  {
+   "id": "w140",
+   "part": 5,
+   "partTitle": "Part 5. Attention & FFN: Scaled Dot-Product, Multi-Head 및 피드포워드",
+   "no": 140,
+   "word": "scale",
+   "pos": "동/명",
+   "meaning": "(동) 크기를 조정하다 / (명) 규모",
+   "context": "차원 d_k가 커질 때 내적 결과의 분산이 커지는 것을 막기 위해 sqrt(d_k)로 나누어 스케일링함.",
+   "exampleEn": "Cloud hosting platforms enable enterprises to scale computational resources dynamically.",
+   "exampleKo": "클라우드 호스팅 플랫폼은 기업이 컴퓨팅 자원을 동적으로 확장/조정할 수 있게 해준다.",
+   "paperExamples": [
+    {
+     "sentenceId": "3.2.1-1",
+     "en": "We call our particular attention \"Scaled Dot-Product Attention\" (Figure 2).",
+     "ko": "우리는 우리가 제안하는 특정한 어텐션을 '스케일드 닷-프로덕트 어텐션(Scaled Dot-Product Attention, 크기 조절 점곱 어텐션)'이라고 부릅니다 (그림 2)."
+    },
+    {
+     "sentenceId": "3.2.1-13",
+     "en": "To counteract this effect, we scale the dot products by 1/√dₖ.",
+     "ko": "이러한 현상(소프트맥스 포화 및 기울기 소실)을 상쇄하기 위해, 우리는 점곱 결과값에 1/√dₖ을 곱하여 크기를 조절(스케일링)합니다."
+    }
+   ]
+  },
+  {
+   "id": "w141",
+   "part": 5,
+   "partTitle": "Part 5. Attention & FFN: Scaled Dot-Product, Multi-Head 및 피드포워드",
+   "no": 141,
+   "word": "simultaneously",
+   "pos": "부",
+   "meaning": "동시에, 일제히 (=concurrently)",
+   "context": "루프를 돌며 하나씩 계산하지 않고 모든 쿼리를 행렬 Q로 패킹하여 GPU 위에서 한 번에 병렬 연산함.",
+   "exampleEn": "In practice, we compute the attention function on a set of queries simultaneously.",
+   "exampleKo": "실제 구현에서는 일련의 쿼리들에 대해 어텐션 함수를 동시에 계산합니다.",
+   "paperExamples": [
+    {
+     "sentenceId": "3.2.1-4",
+     "en": "In practice, we compute the attention function on a set of queries simultaneously, packed together into a matrix Q.",
+     "ko": "실제 구현(in practice)에서는 하나의 행렬 Q로 함께 묶인(패킹된) 일련의 쿼리(queries)들에 대해 어텐션 함수를 동시에(병렬로) 계산합니다."
+    }
+   ]
+  },
+  {
+   "id": "w142",
+   "part": 5,
+   "partTitle": "Part 5. Attention & FFN: Scaled Dot-Product, Multi-Head 및 피드포워드",
+   "no": 142,
+   "word": "matrix",
+   "pos": "명",
+   "meaning": "행렬 (복수: matrices)",
+   "context": "쿼리, 키, 값을 각각 묶어 병렬 GEMM 연산을 수행하는 2차원 텐서 배열 (Q, K, V).",
+   "exampleEn": "High-performance computing clusters rely on optimized matrix multiplication libraries.",
+   "exampleKo": "고성능 컴퓨팅 클러스터는 최적화된 행렬 곱셈 라이브러리에 의존한다.",
+   "paperExamples": [
+    {
+     "sentenceId": "3.2.1-4",
+     "en": "In practice, we compute the attention function on a set of queries simultaneously, packed together into a matrix Q.",
+     "ko": "실제 구현(in practice)에서는 하나의 행렬 Q로 함께 묶인(패킹된) 일련의 쿼리(queries)들에 대해 어텐션 함수를 동시에(병렬로) 계산합니다."
+    },
+    {
+     "sentenceId": "3.2.1-6",
+     "en": "We compute the matrix of outputs as:",
+     "ko": "우리는 출력 행렬(matrix of outputs)을 다음과 같이 계산합니다:"
+    }
+   ]
+  },
+  {
+   "id": "w143",
+   "part": 5,
+   "partTitle": "Part 5. Attention & FFN: Scaled Dot-Product, Multi-Head 및 피드포워드",
+   "no": 143,
+   "word": "transpose",
+   "pos": "동/명",
+   "meaning": "(동) 전치하다 / (명) 전치 행렬 (K^T)",
+   "context": "행렬의 행과 열을 맞바꾸는 연산. 쿼리 Q와 키 K의 내적을 위해 K^T를 취해 곱해줌.",
+   "exampleEn": "Matrix transposition switches row and column indices across the diagonal.",
+   "exampleKo": "행렬 전치는 주대각선을 기준으로 행과 열 인덱스를 맞바꾼다.",
+   "paperExamples": []
+  },
+  {
+   "id": "w144",
+   "part": 5,
+   "partTitle": "Part 5. Attention & FFN: Scaled Dot-Product, Multi-Head 및 피드포워드",
+   "no": 144,
+   "word": "additive attention",
+   "pos": "명",
+   "meaning": "가산 어텐션 (Bahdanau 어텐션)",
+   "context": "1계층 피드포워드 신경망(MLP)과 tanh를 사용하여 쿼리와 키를 더해서 유사도 스코어를 구하는 방식.",
+   "exampleEn": "Additive attention computes the compatibility function using a feed-forward network.",
+   "exampleKo": "가산 어텐션은 피드포워드 신경망을 사용하여 적합도 함수를 계산합니다.",
+   "paperExamples": [
+    {
+     "sentenceId": "3.2.1-7",
+     "en": "The two most commonly used attention functions are additive attention, and dot-product (multi- plicative) attention.",
+     "ko": "가장 널리 사용되는 두 가지 어텐션 함수는 가산 어텐션(additive attention [2])과 점곱(승산) 어텐션(dot-product[multiplicative] attention)입니다."
+    },
+    {
+     "sentenceId": "3.2.1-9",
+     "en": "Additive attention computes the compatibility function using a feed-forward network with a single hidden layer.",
+     "ko": "가산 어텐션(additive attention)은 단일 은닉층(single hidden layer)을 갖춘 피드포워드 신경망을 사용하여 적합도(유사도) 함수를 계산합니다."
+    }
+   ]
+  },
+  {
+   "id": "w145",
+   "part": 5,
+   "partTitle": "Part 5. Attention & FFN: Scaled Dot-Product, Multi-Head 및 피드포워드",
+   "no": 145,
+   "word": "multiplicative",
+   "pos": "형",
+   "meaning": "승산의, 곱셈 기반의",
+   "context": "dot-product attention의 동의어. 벡터 간의 점곱(내적) 연산을 기반으로 유사도를 산출함.",
+   "exampleEn": "The model applies a multiplicative scaling factor to adjust feature weights.",
+   "exampleKo": "그 모델은 특징 가중치를 조정하기 위해 승산 스케일링 인자를 적용한다.",
+   "paperExamples": []
+  },
+  {
+   "id": "w146",
+   "part": 5,
+   "partTitle": "Part 5. Attention & FFN: Scaled Dot-Product, Multi-Head 및 피드포워드",
+   "no": 146,
+   "word": "space-efficient",
+   "pos": "형",
+   "meaning": "공간 효율적인 (메모리 절약)",
+   "context": "점곱 어텐션은 중간 텐서 저장 오버헤드가 적어 가산 어텐션 대비 메모리 대역폭과 공간 면에서 탁월함.",
+   "exampleEn": "Dot-product attention is much faster and more space-efficient in practice.",
+   "exampleKo": "점곱 어텐션은 실제 구현에서 훨씬 더 빠르고 메모리 공간 효율적입니다.",
+   "paperExamples": [
+    {
+     "sentenceId": "3.2.1-10",
+     "en": "While the two are similar in theoretical complexity, dot-product attention is much faster and more space-efficient in practice, since it can be implemented using highly optimized matrix multiplication code. While.",
+     "ko": "이론적 복잡도(theoretical complexity) 측면에서는 두 방식이 유사하지만, 실제(in practice)로는 점곱 어텐션(dot-productattention)이 훨씬 더 빠르고 메모리 공간 효율적입니다. 왜냐하면 고도로 최적화된 행렬 곱셈(matrix multiplication) 코드를 사용하여 구현할 수 있기 때문입니다."
+    }
+   ]
+  },
+  {
+   "id": "w147",
+   "part": 5,
+   "partTitle": "Part 5. Attention & FFN: Scaled Dot-Product, Multi-Head 및 피드포워드",
+   "no": 147,
+   "word": "outperform",
+   "pos": "동",
+   "meaning": "능가하다, 뛰어난 성능을 내다",
+   "context": "벡터 차원 d_k가 클 때 스케일링을 적용하지 않은 점곱 어텐션은 가산 어텐션보다 성능이 뒤처짐.",
+   "exampleEn": "Additive attention outperforms dot product attention without scaling for large d_k.",
+   "exampleKo": "차원이 클 때는 가산 어텐션이 스케일링 없는 점곱 어텐션보다 우수한 성능을 냅니다.",
+   "paperExamples": [
+    {
+     "sentenceId": "3.2.1-11",
+     "en": "While for small values of dₖ the two mechanisms perform similarly, additive attention outperforms dot product attention without scaling for larger values of dₖ.",
+     "ko": "dₖ 값이 작을 때는 두 메커니즘의 성능이 유사하지만, dₖ 값이 커질수록 가산 어텐션(additive attention)이 스케일링을 적용하지 않은 점곱 어텐션보다 우수한 성능을 발휘합니다 [3]."
+    },
+    {
+     "sentenceId": "6.1-1",
+     "en": "On the WMT 2014 English-to-German translation task, the big transformer model (Transformer (big) in Table 2) outperforms the best previously reported models (including ensembles) by more than 2.0 BLEU, establishing a new state-of-the-art BLEU score of 28.4.",
+     "ko": "6 결과: 기계 번역(Results: Machine Translation): WMT 2014 영어-독일어 번역 과업에서, 대형 트랜스포머 모델(표 2의Transformer (big))은 (앙상블 모델들을 포함하여) 이전에 보고된 최고의 모델들을 2.0 BLEU 이상 능가하며, 28.4라는 새로운 최고(state-of-the-art) BLEU 점수를 달성했습니다."
+    }
+   ]
+  },
+  {
+   "id": "w148",
+   "part": 5,
+   "partTitle": "Part 5. Attention & FFN: Scaled Dot-Product, Multi-Head 및 피드포워드",
+   "no": 148,
+   "word": "magnitude",
+   "pos": "명",
+   "meaning": "크기, 절댓값 규모",
+   "context": "차원 d_k가 커지면 쿼리와 키의 내적 결과값의 크기(절댓값)가 분산 d_k에 비례하여 비대해짐.",
+   "exampleEn": "The dot products grow large in magnitude, pushing softmax into tiny gradient regions.",
+   "exampleKo": "점곱 결과값의 크기가 지나치게 커져 소프트맥스를 기울기가 극히 작은 영역으로 밀어 넣습니다.",
+   "paperExamples": [
+    {
+     "sentenceId": "3.2.1-12",
+     "en": "We suspect that for large values of dₖ, the dot products grow large in magnitude, pushing the softmax function into regions where it has extremely small gradients.",
+     "ko": "우리는 dₖ 값이 커질수록 점곱의 결과값 크기(magnitude)가 지나치게 커지며, 이로 인해 소프트맥스 함수가 기울기(gradient)가 극도로 작은 영역으로 밀려나게 된다고 추정합니다 [4]."
+    }
+   ]
+  },
+  {
+   "id": "w149",
+   "part": 5,
+   "partTitle": "Part 5. Attention & FFN: Scaled Dot-Product, Multi-Head 및 피드포워드",
+   "no": 149,
+   "word": "suspect",
+   "pos": "동/명",
+   "meaning": "(동) 추정하다, 의심하다 / (명) 용의자",
+   "context": "저자들이 큰 차원에서 점곱 어텐션의 성능 저하 원인을 수학적 가설로 규명할 때 사용.",
+   "exampleEn": "Researchers suspect that large magnitude causes gradient vanishing in softmax.",
+   "exampleKo": "연구자들은 큰 절댓값 크기가 소프트맥스의 기울기 소실을 유발한다고 추정합니다.",
+   "paperExamples": [
+    {
+     "sentenceId": "3.2.1-12",
+     "en": "We suspect that for large values of dₖ, the dot products grow large in magnitude, pushing the softmax function into regions where it has extremely small gradients.",
+     "ko": "우리는 dₖ 값이 커질수록 점곱의 결과값 크기(magnitude)가 지나치게 커지며, 이로 인해 소프트맥스 함수가 기울기(gradient)가 극도로 작은 영역으로 밀려나게 된다고 추정합니다 [4]."
+    }
+   ]
+  },
+  {
+   "id": "w150",
+   "part": 5,
+   "partTitle": "Part 5. Attention & FFN: Scaled Dot-Product, Multi-Head 및 피드포워드",
+   "no": 150,
+   "word": "gradient",
+   "pos": "명",
+   "meaning": "기울기, 그래디언트 (편미분 벡터)",
+   "context": "역전파 시 가중치를 업데이트하는 원천 신호. 소프트맥스 포화 시 0으로 소실(Vanishing Gradient)됨.",
+   "exampleEn": "The optimizer adjusts model weights based on the computed loss gradients.",
+   "exampleKo": "옵티마이저는 계산된 손실 그래디언트를 기반으로 모델 가중치를 조정한다.",
+   "paperExamples": [
+    {
+     "sentenceId": "3.2.1-12",
+     "en": "We suspect that for large values of dₖ, the dot products grow large in magnitude, pushing the softmax function into regions where it has extremely small gradients.",
+     "ko": "우리는 dₖ 값이 커질수록 점곱의 결과값 크기(magnitude)가 지나치게 커지며, 이로 인해 소프트맥스 함수가 기울기(gradient)가 극도로 작은 영역으로 밀려나게 된다고 추정합니다 [4]."
+    }
+   ]
+  },
+  {
+   "id": "w151",
+   "part": 5,
+   "partTitle": "Part 5. Attention & FFN: Scaled Dot-Product, Multi-Head 및 피드포워드",
+   "no": 151,
+   "word": "project",
+   "pos": "동",
+   "meaning": "사영하다, 투영하다 (명: projection)",
+   "context": "512차원 입력 벡터를 h개의 서로 다른 학습 가중치 행렬 W_i를 통해 64차원 저차원 부분공간으로 매핑.",
+   "exampleEn": "It is beneficial to linearly project queries, keys and values h times with learned projections.",
+   "exampleKo": "쿼리, 키, 값을 학습된 선형 사영을 통해 h번 선형 사영하는 것이 유익합니다.",
+   "paperExamples": [
+    {
+     "sentenceId": "3.2.2-1",
+     "en": "Instead of performing a single attention function with d_model-dimensional keys, values and queries, we found it beneficial to linearly project the queries, keys and values h times with different, learned linear projections to dₖ, dₖ and dᵥ dimensions, respectively.",
+     "ko": "d_model 차원의 키, 값, 쿼리로 단일 어텐션 함수를 한 번만 수행하는 대신, 서로 다르게 학습된 선형 사영(linear projections)을 사 용해 쿼리, 키, 값을 각각 dₖ, dₖ, dᵥ 차원으로 h번 선형 사영(projection)하는 것이 훨씬 유익하다는 사실을 알아냈습니다."
+    },
+    {
+     "sentenceId": "3.2.2-2",
+     "en": "On each of these projected versions of queries, keys and values we then perform the attention function in parallel, yielding dᵥ-dimensional output values.",
+     "ko": "그런 다음 우리는 이렇게 사영된 쿼리, 키, 값의 각 버전(헤드)에 대해 어텐션 함수를 병렬로 수행하여, 각각 dᵥ 차원을 갖는 출력 값들을 산출합니다."
+    }
+   ]
+  },
+  {
+   "id": "w152",
+   "part": 5,
+   "partTitle": "Part 5. Attention & FFN: Scaled Dot-Product, Multi-Head 및 피드포워드",
+   "no": 152,
+   "word": "subspace",
+   "pos": "명",
+   "meaning": "부분공간 (하위 차원 공간)",
+   "context": "전체 512차원 특징 공간 내에서 각 어텐션 헤드가 독립적으로 형성하는 저차원(64차원) 의미 공간.",
+   "exampleEn": "Multi-head attention allows the model to jointly attend to different representation subspaces.",
+   "exampleKo": "멀티헤드 어텐션은 모델이 서로 다른 표현 부분공간에 공동으로 주의를 기울이게 돕습니다.",
+   "paperExamples": [
+    {
+     "sentenceId": "3.2.2-4",
+     "en": "Multi-head attention allows the model to jointly attend to information from different representation subspaces at different positions. With a single attention head, averaging inhibits this.",
+     "ko": "멀티헤드 어텐션(Multi-head attention)은 모델이 서로 다른 위치에 있는 서로 다른 표현 부분공간(representation subspaces)의 정보들을 동시에(공동으로) 참조할 수 있도록 해줍니다. 단일 어텐션 헤드만 사용할 경우, 가중 평균화 과정으로 인해 이러한 다각적 참조가 억제됩니다. 여기서 사영(projection) 연산에 사용되는 파라미터 행렬은 W_i^Q ∈ ℝ^(d_model×dₖ), W_i^K ∈ ℝ^(d_model×dₖ), W_i^V ∈ ℝ^(d_model×dᵥ) 및 W^O ∈ ℝ^(hdᵥ×d_model)입니다."
+    }
+   ]
+  },
+  {
+   "id": "w153",
+   "part": 5,
+   "partTitle": "Part 5. Attention & FFN: Scaled Dot-Product, Multi-Head 및 피드포워드",
+   "no": 153,
+   "word": "inhibit",
+   "pos": "동",
+   "meaning": "억제하다, 저해하다 (=impede)",
+   "context": "단일 어텐션 헤드만 쓰면 가중 평균화(averaging)로 인해 다양한 부분공간의 다각적 포착이 저해됨.",
+   "exampleEn": "With a single attention head, averaging inhibits this multi-perspective capturing.",
+   "exampleKo": "단일 어텐션 헤드로는 가중 평균화 과정으로 인해 이러한 다각적 참조가 억제됩니다.",
+   "paperExamples": [
+    {
+     "sentenceId": "3.2.2-4",
+     "en": "Multi-head attention allows the model to jointly attend to information from different representation subspaces at different positions. With a single attention head, averaging inhibits this.",
+     "ko": "멀티헤드 어텐션(Multi-head attention)은 모델이 서로 다른 위치에 있는 서로 다른 표현 부분공간(representation subspaces)의 정보들을 동시에(공동으로) 참조할 수 있도록 해줍니다. 단일 어텐션 헤드만 사용할 경우, 가중 평균화 과정으로 인해 이러한 다각적 참조가 억제됩니다. 여기서 사영(projection) 연산에 사용되는 파라미터 행렬은 W_i^Q ∈ ℝ^(d_model×dₖ), W_i^K ∈ ℝ^(d_model×dₖ), W_i^V ∈ ℝ^(d_model×dᵥ) 및 W^O ∈ ℝ^(hdᵥ×d_model)입니다."
+    }
+   ]
+  },
+  {
+   "id": "w154",
+   "part": 5,
+   "partTitle": "Part 5. Attention & FFN: Scaled Dot-Product, Multi-Head 및 피드포워드",
+   "no": 154,
+   "word": "jointly",
+   "pos": "부",
+   "meaning": "공동으로, 동시에 연대하여",
+   "context": "여러 헤드가 문법적 관계, 지시대명사, 장거리 수식 관계 등을 동시에 연계하여 참조함을 강조.",
+   "exampleEn": "The engineering and product teams jointly finalized the system specifications.",
+   "exampleKo": "엔지니어링 팀과 제품 팀은 시스템 사양을 공동으로 확정했다.",
+   "paperExamples": [
+    {
+     "sentenceId": "3.2.2-4",
+     "en": "Multi-head attention allows the model to jointly attend to information from different representation subspaces at different positions. With a single attention head, averaging inhibits this.",
+     "ko": "멀티헤드 어텐션(Multi-head attention)은 모델이 서로 다른 위치에 있는 서로 다른 표현 부분공간(representation subspaces)의 정보들을 동시에(공동으로) 참조할 수 있도록 해줍니다. 단일 어텐션 헤드만 사용할 경우, 가중 평균화 과정으로 인해 이러한 다각적 참조가 억제됩니다. 여기서 사영(projection) 연산에 사용되는 파라미터 행렬은 W_i^Q ∈ ℝ^(d_model×dₖ), W_i^K ∈ ℝ^(d_model×dₖ), W_i^V ∈ ℝ^(d_model×dᵥ) 및 W^O ∈ ℝ^(hdᵥ×d_model)입니다."
+    }
+   ]
+  },
+  {
+   "id": "w155",
+   "part": 5,
+   "partTitle": "Part 5. Attention & FFN: Scaled Dot-Product, Multi-Head 및 피드포워드",
+   "no": 155,
+   "word": "concatenate",
+   "pos": "동",
+   "meaning": "이어붙이다, 결합하다 (약어: concat)",
+   "context": "h=8개의 헤드에서 나온 각각의 64차원 출력 행렬을 열(column) 방향으로 연결하여 512차원으로 복원.",
+   "exampleEn": "These head outputs are concatenated and once again projected with parameter matrix W^O.",
+   "exampleKo": "이들 헤드 출력값은 하나로 이어붙여진 뒤 파라미터 행렬 W^O로 다시 한번 사영됩니다.",
+   "paperExamples": [
+    {
+     "sentenceId": "3.2.2-3",
+     "en": "These are concatenated and once again projected, resulting in the final values, as depicted in Figure 2.",
+     "ko": "이들(각 헤드의 출력값들)은 하나로 이어붙여진(concatenated) 뒤 다시 한번 선형 사영을 거쳐 최종 출력값을 만들어내며, 이는 그림 2(Figure 2)에 묘사되어 있습니다."
+    }
+   ]
+  },
+  {
+   "id": "w156",
+   "part": 5,
+   "partTitle": "Part 5. Attention & FFN: Scaled Dot-Product, Multi-Head 및 피드포워드",
+   "no": 156,
+   "word": "mimic",
+   "pos": "동",
+   "meaning": "모방하다, 그대로 본뜨다",
+   "context": "트랜스포머의 Cross-Attention이 기존 Seq2Seq 모델의 인코더-디코더 어텐션을 충실히 계승함.",
+   "exampleEn": "This mimics the typical encoder-decoder attention mechanisms in sequence-to-sequence models.",
+   "exampleKo": "이는 기존 시퀀스-투-시퀀스 모델의 전형적인 인코더-디코더 어텐션 메커니즘을 그대로 모방한 것입니다.",
+   "paperExamples": [
+    {
+     "sentenceId": "3.2.3-4",
+     "en": "This mimics the typical encoder-decoder attention mechanisms in sequence-to-sequence models such as.",
+     "ko": "이는 [38, 2, 9] 등의 시퀀스-투-시퀀스(sequence-to-sequence) 모델들에서 사용되던 전형적인 인코더-디코더 어텐션 메커니즘을그대로 모방(계승)한 것입니다."
+    }
+   ]
+  },
+  {
+   "id": "w157",
+   "part": 5,
+   "partTitle": "Part 5. Attention & FFN: Scaled Dot-Product, Multi-Head 및 피드포워드",
+   "no": 157,
+   "word": "up to and including",
+   "pos": "관용구",
+   "meaning": "~까지, 그리고 ~를 포함하여",
+   "context": "디코더 셀프 어텐션에서 현재 위치 i의 토큰이 과거 토큰(<i) 및 자기 자신(=i)까지만 참조하도록 한정.",
+   "exampleEn": "Positions in decoder attend to all positions up to and including that position.",
+   "exampleKo": "디코더의 각 위치는 해당 위치에 이르기까지, 그리고 그 위치를 포함한 위치들만 참조합니다.",
+   "paperExamples": [
+    {
+     "sentenceId": "abstract-1",
+     "en": "The dominant sequence transduction models are based on complex recurrent or convolutional neural networks that include an encoder and a decoder.",
+     "ko": "현재 주류를 이루는 시퀀스 변환 모델들은 인코더와 디코더를 포함하는 복잡한 RNN(순환 신경망) 또는 CNN(합성곱 신경망) 구조를기반으로 합니다."
+    },
+    {
+     "sentenceId": "abstract-5",
+     "en": "Our model achieves 28.4 BLEU on the WMT 2014 Englishto-German translation task, improving over the existing best results, including ensembles, by over 2 BLEU.",
+     "ko": "우리 모델은 WMT 2014 영어-독일어 번역 과제에서 28.4 BLEU를 달성하였으며, 앙상블 모델을 포함한 기존 최고 기록보다 2 BLEU 이상 향상된 성능을 보여주었습니다."
+    }
+   ]
+  },
+  {
+   "id": "w158",
+   "part": 5,
+   "partTitle": "Part 5. Attention & FFN: Scaled Dot-Product, Multi-Head 및 피드포워드",
+   "no": 158,
+   "word": "leftward",
+   "pos": "형",
+   "meaning": "좌향의 (미래에서 과거로 향하는)",
+   "context": "leftward information flow: 자기회귀 디코더에서 미래 단어 정보가 과거 예측 위치로 흘러들어오는 부정행위.",
+   "exampleEn": "We need to prevent leftward information flow in the decoder to preserve auto-regression.",
+   "exampleKo": "자기회귀 속성을 보존하기 위해 디코더 내부에서 미래 정보가 과거로 흘러드는 것을 막아야 합니다.",
+   "paperExamples": [
+    {
+     "sentenceId": "3.2.3-9",
+     "en": "We need to prevent leftward information flow in the decoder to preserve the auto-regressive property.",
+     "ko": "자기회귀적(auto-regressive) 속성을 유지하기 위해서는 디코더 내부에서 미래 시점의 정보가 이전 시점으로 흘러 들어가는 것(leftward information flow)을 막아야 합니다."
+    }
+   ]
+  },
+  {
+   "id": "w159",
+   "part": 5,
+   "partTitle": "Part 5. Attention & FFN: Scaled Dot-Product, Multi-Head 및 피드포워드",
+   "no": 159,
+   "word": "mask out",
+   "pos": "구동사",
+   "meaning": "마스킹하다, 가리다, 차단하다",
+   "context": "소프트맥스 입력 로짓의 상삼각 영역을 음의 무한대(-inf)로 치환하여 어텐션 가중치 확률을 0으로 만듦.",
+   "exampleEn": "We implement this inside scaled dot-product attention by masking out illegal connections.",
+   "exampleKo": "우리는 잘못된 연결들을 마스킹 처리함으로써 스케일드 닷-프로덕트 어텐션 내부에서 이를 구현합니다.",
+   "paperExamples": [
+    {
+     "sentenceId": "3.1-10",
+     "en": "This masking, combined with fact that the output embeddings are offset by one position, ensures that the predictions for position i can depend only on the known outputs at positions less than.",
+     "ko": "이러한 마스킹(masking)은 출력 임베딩이 한 위치(포지션)씩 오른쪽으로 이동(offset)되어 들어간다는 사실과 결합되어, 특정 위치 i에 대한 예측이 i보다 앞선(작은) 위치의 이미 알려진 출력들에만 전적으로 의존하도록 보장해 줍니다."
+    },
+    {
+     "sentenceId": "3.2.3-10",
+     "en": "We implement this inside of scaled dot-product attention by masking out (setting to -) all values in the input of the softmax which correspond to illegal connections.",
+     "ko": "우리는 잘못된 연결(미래 시점 참조)에 해당하는 소프트맥스의 입력값들을 모두 마스킹 처리(마이너스 무한대, −∞로 설정)함으로 써 스케일드 닷-프로덕트 어텐션 내부에서 이 메커니즘을 구현합니다."
+    }
+   ]
+  },
+  {
+   "id": "w160",
+   "part": 5,
+   "partTitle": "Part 5. Attention & FFN: Scaled Dot-Product, Multi-Head 및 피드포워드",
+   "no": 160,
+   "word": "illegal",
+   "pos": "형",
+   "meaning": "허용되지 않은, 유효하지 않은",
+   "context": "법적 불법이 아니라, 오토리그레시브 규칙을 위반하여 미래 시점(j > i)을 훔쳐보는 연결을 뜻함.",
+   "exampleEn": "Values corresponding to illegal connections are set to negative infinity in the softmax input.",
+   "exampleKo": "허용되지 않은 잘못된 연결에 해당하는 값들은 소프트맥스 입력에서 음의 무한대로 설정됩니다.",
+   "paperExamples": [
+    {
+     "sentenceId": "3.2.3-10",
+     "en": "We implement this inside of scaled dot-product attention by masking out (setting to -) all values in the input of the softmax which correspond to illegal connections.",
+     "ko": "우리는 잘못된 연결(미래 시점 참조)에 해당하는 소프트맥스의 입력값들을 모두 마스킹 처리(마이너스 무한대, −∞로 설정)함으로 써 스케일드 닷-프로덕트 어텐션 내부에서 이 메커니즘을 구현합니다."
+    }
+   ]
+  },
+  {
+   "id": "w161",
+   "part": 5,
+   "partTitle": "Part 5. Attention & FFN: Scaled Dot-Product, Multi-Head 및 피드포워드",
+   "no": 161,
+   "word": "separately",
+   "pos": "부",
+   "meaning": "개별적으로, 따로따로",
+   "context": "피드포워드 신경망(FFN)이 각 토큰 위치마다 다른 토큰과 섞이지 않고 개별적으로 독립 계산됨.",
+   "exampleEn": "The feed-forward network is applied to each position separately and identically.",
+   "exampleKo": "피드포워드 신경망은 각 위치마다 개별적이면서도 동일한 방식으로 적용됩니다.",
+   "paperExamples": [
+    {
+     "sentenceId": "3.3-1",
+     "en": "In addition to attention sub-layers, each of the layers in our encoder and decoder contains a fully connected feed-forward network, which is applied to each position separately and identically.",
+     "ko": "어텐션 서브레이어 외에도, 인코더와 디코더의 각 계층은 완전 연결 피드포워드 신경망(fully connected feed-forward network)을 포함하고 있으며, 이는 각 위치(토큰)마다 개별적이면서도 동일한 방식으로 적용됩니다."
+    }
+   ]
+  },
+  {
+   "id": "w162",
+   "part": 5,
+   "partTitle": "Part 5. Attention & FFN: Scaled Dot-Product, Multi-Head 및 피드포워드",
+   "no": 162,
+   "word": "inner-layer",
+   "pos": "명",
+   "meaning": "내부 계층, 중간 은닉층",
+   "context": "FFN의 1번째 선형 변환에서 차원을 d_model=512에서 4배인 d_ff=2048로 확장하는 중간 은닉 계층.",
+   "exampleEn": "The inner-layer of the feed-forward network has dimensionality d_ff = 2048.",
+   "exampleKo": "피드포워드 신경망의 내부 계층은 d_ff = 2048의 차원을 갖습니다.",
+   "paperExamples": [
+    {
+     "sentenceId": "3.3-5",
+     "en": "The dimensionality of input and output is d_model = 512, and the inner-layer has dimensionality d_ff = 2048.",
+     "ko": "(FFN의) 입력과 출력의 차원은 d_model = 512이며, 내부 계층(inner-layer)의 차원은 d_ff = 2048입니다."
+    }
+   ]
+  },
+  {
+   "id": "w163",
+   "part": 5,
+   "partTitle": "Part 5. Attention & FFN: Scaled Dot-Product, Multi-Head 및 피드포워드",
+   "no": 163,
+   "word": "kernel size",
+   "pos": "명",
+   "meaning": "커널 크기 (합성곱 필터 크기)",
+   "context": "트랜스포머의 Position-wise FFN은 커널 크기 1인 1D 합성곱(Conv1D) 2개 층과 수학적으로 완전히 동등함.",
+   "exampleEn": "Another way of describing FFN is as two convolutions with kernel size 1.",
+   "exampleKo": "FFN을 설명하는 또 다른 방법은 커널 크기가 1인 두 개의 합성곱 계층으로 보는 것입니다.",
+   "paperExamples": [
+    {
+     "sentenceId": "3.3-4",
+     "en": "Another way of describing this is as two convolutions with kernel size 1.",
+     "ko": "이를 설명하는 또 다른 방법은 커널 크기 1(kernel size 1)을 갖는 두 번의 합성곱(1D convolution)으로 바라보는 것입니다."
+    }
+   ]
+  },
+  {
+   "id": "w164",
+   "part": 6,
+   "partTitle": "Part 6. Positional Encoding & Training: 위치 주입과 학습 테크닉",
+   "no": 164,
+   "word": "inject",
+   "pos": "동",
+   "meaning": "주입하다, 불어넣다",
+   "context": "순환과 합성곱이 없는 모델에 토큰 순서 정보를 제공하기 위해 Positional Encoding을 임베딩에 더해 주입함.",
+   "exampleEn": "We must inject some information about the relative or absolute position of the tokens.",
+   "exampleKo": "우리는 토큰들의 상대적 또는 절대적 위치에 대한 정보를 모델에 반드시 주입해야 합니다.",
+   "paperExamples": [
+    {
+     "sentenceId": "3.5-1",
+     "en": "Since our model contains no recurrence and no convolution, in order for the model to make use of the order of the sequence, we must inject some information about the relative or absolute position of the tokens in the sequence.",
+     "ko": "우리 모델은 순환(recurrence)이나 합성곱(convolution) 구조를 전혀 포함하고 있지 않기 때문에, 모델이 시퀀스의 순서(order)정보를 활용할 수 있도록 하려면 시퀀스 내 토큰들의 상대적 또는 절대적 위치에 관한 정보를 주입(inject)해주어야만 합니다."
+    }
+   ]
+  },
+  {
+   "id": "w165",
+   "part": 6,
+   "partTitle": "Part 6. Positional Encoding & Training: 위치 주입과 학습 테크닉",
+   "no": 165,
+   "word": "sinusoid",
+   "pos": "명/형",
+   "meaning": "정현파, 사인/코사인 곡선",
+   "context": "Sinusoidal Positional Encoding: 서로 다른 주파수를 갖는 사인 및 코사인 함수를 사용하여 위치를 인코딩.",
+   "exampleEn": "We use sine and cosine functions of different frequencies to generate positional encodings.",
+   "exampleKo": "우리는 서로 다른 주파수를 갖는 사인 및 코사인 함수를 사용하여 위치 인코딩을 생성합니다.",
+   "paperExamples": [
+    {
+     "sentenceId": "3.5-7",
+     "en": "That is, each dimension of the positional encoding corresponds to a sinusoid.",
+     "ko": "즉(That is), 위치 인코딩(positional encoding)의 각 차원은 하나의 사인 곡선(정현파, sinusoid)에 대응됩니다."
+    },
+    {
+     "sentenceId": "3.5-11",
+     "en": "We chose the sinusoidal version because it may allow the model to extrapolate to sequence lengths longer than the ones encountered during training.",
+     "ko": "우리가 사인파(삼각함수) 버전을 선택한 이유는, 이 방식이 모델로 하여금 훈련(training) 과정에서 접했던 것보다 더 긴 시퀀스 길이에 대해서도 외삽(extrapolate, 확장 적용)할 수 있도록 해줄 가능성이 있기 때문입니다."
+    }
+   ]
+  },
+  {
+   "id": "w166",
+   "part": 6,
+   "partTitle": "Part 6. Positional Encoding & Training: 위치 주입과 학습 테크닉",
+   "no": 166,
+   "word": "wavelength",
+   "pos": "명",
+   "meaning": "파장, 주기",
+   "context": "위치 인코딩의 각 차원별 삼각함수 파장은 2π에서 10000·2π까지 기하급수적으로 증가하도록 설계됨.",
+   "exampleEn": "The wavelengths form a geometric progression from 2π to 10000·2π across dimensions.",
+   "exampleKo": "그 파장들은 차원에 걸쳐 2π에서 10000·2π에 이르는 기하급수적 수열을 형성합니다.",
+   "paperExamples": [
+    {
+     "sentenceId": "3.5-8",
+     "en": "The wavelengths form a geometric progression from 2π to 10000·2π.",
+     "ko": "(각 차원에 해당하는 사인 곡선의) 파장들은 2π에서 10000·2π에 이르는 등비수열(geometric progression)을 이룹니다."
+    }
+   ]
+  },
+  {
+   "id": "w167",
+   "part": 6,
+   "partTitle": "Part 6. Positional Encoding & Training: 위치 주입과 학습 테크닉",
+   "no": 167,
+   "word": "hypothesize",
+   "pos": "동",
+   "meaning": "가설을 세우다 (명: hypothesis)",
+   "context": "삼각함수 위치 인코딩이 고정 오프셋 k에 대해 선형 변환이 가능하여 상대적 위치 학습에 유리할 것이라 가설함.",
+   "exampleEn": "We hypothesized that this would allow the model to learn to attend by relative positions easily.",
+   "exampleKo": "우리는 이것이 모델로 하여금 상대적 위치에 따라 어텐션하는 법을 쉽게 학습할 수 있게 할 것이라 가설했습니다.",
+   "paperExamples": [
+    {
+     "sentenceId": "3.5-9",
+     "en": "We chose this function because we hypothesized it would allow the model to easily learn to attend by relative positions, since for any fixed offset k, PE(pos+k) can be represented as a linear function of PE(pos).",
+     "ko": "우리가 이 함수를 선택한 이유는, 어떤 고정된 오프셋(거리) k에 대해서도 PE_(pos+k)가 PE_pos의 선형 함수(linear function)로 표현될 수 있어 모델이 상대적인 위치에 따라 쉽게 어텐션(attend)하는 법을 학습할 수 있을 것이라는 가설을 세웠기 때문입니다."
+    }
+   ]
+  },
+  {
+   "id": "w168",
+   "part": 6,
+   "partTitle": "Part 6. Positional Encoding & Training: 위치 주입과 학습 테크닉",
+   "no": 168,
+   "word": "extrapolate",
+   "pos": "동",
+   "meaning": "외삽하다 (학습 범위를 넘어 추정하다)",
+   "context": "훈련 때 보지 못했던 훨씬 더 긴 시퀀스 길이(Unseen sequence length)에 대해서도 위치 인코딩이 확장 적용됨.",
+   "exampleEn": "Sinusoidal encoding may allow the model to extrapolate to sequence lengths longer than trained.",
+   "exampleKo": "정현파 인코딩은 훈련된 것보다 더 긴 시퀀스 길이에 대해서도 모델이 외삽할 수 있게 해줍니다.",
+   "paperExamples": [
+    {
+     "sentenceId": "3.5-11",
+     "en": "We chose the sinusoidal version because it may allow the model to extrapolate to sequence lengths longer than the ones encountered during training.",
+     "ko": "우리가 사인파(삼각함수) 버전을 선택한 이유는, 이 방식이 모델로 하여금 훈련(training) 과정에서 접했던 것보다 더 긴 시퀀스 길이에 대해서도 외삽(extrapolate, 확장 적용)할 수 있도록 해줄 가능성이 있기 때문입니다."
+    }
+   ]
+  },
+  {
+   "id": "w169",
+   "part": 6,
+   "partTitle": "Part 6. Positional Encoding & Training: 위치 주입과 학습 테크닉",
+   "no": 169,
+   "word": "warmup",
+   "pos": "명",
+   "meaning": "웜업 단계 (예열 학습)",
+   "context": "학습 초기 warmup_steps(4000스텝) 동안 학습률을 0에서 선형적으로 서서히 증가시켜 수렴 안정화.",
+   "exampleEn": "The learning rate increases linearly for the first warmup_steps training steps.",
+   "exampleKo": "학습률은 초기 웜업 단계 동안 선형적으로 증가합니다.",
+   "paperExamples": [
+    {
+     "sentenceId": "5.3-3",
+     "en": "This corresponds to increasing the learning rate linearly for the first warmup_steps training steps, and decreasing it thereafter proportionally to the inverse square root of the step number. We used warmup_steps = 4000.",
+     "ko": "이는 초기 warmup_steps 훈련 스텝 동안 학습률을 선형적(linearly)으로 증가시킨 후, 그 이후에는 스텝 번호의 역제곱근 (inverse square root)에 비례하여 감소시키는 것에 해당합니다. 우리는 warmup_steps = 4000을 사용했습니다."
+    }
+   ]
+  },
+  {
+   "id": "w170",
+   "part": 6,
+   "partTitle": "Part 6. Positional Encoding & Training: 위치 주입과 학습 테크닉",
+   "no": 170,
+   "word": "decay",
+   "pos": "동/명",
+   "meaning": "감쇠하다, 감소하다 / 감쇠",
+   "context": "웜업 이후 학습률을 스텝 수의 역제곱근(step_num^-0.5)에 비례하여 점진적으로 감쇠시킴.",
+   "exampleEn": "After warmup, the learning rate decays proportionally to the inverse square root of the step number.",
+   "exampleKo": "웜업 이후 학습률은 스텝 번호의 역제곱근에 비례하여 감쇠합니다.",
+   "paperExamples": []
+  },
+  {
+   "id": "w171",
+   "part": 6,
+   "partTitle": "Part 6. Positional Encoding & Training: 위치 주입과 학습 테크닉",
+   "no": 171,
+   "word": "weight tying",
+   "pos": "명",
+   "meaning": "가중치 공유 (가중치 묶기)",
+   "context": "소스 임베딩, 타깃 임베딩, 최종 사전-소프트맥스 선형 사영 행렬의 가중치를 하나로 공유(Press & Wolf, 2016).",
+   "exampleEn": "We share the same weight matrix between the two embedding layers and the pre-softmax linear transformation.",
+   "exampleKo": "우리는 두 임베딩 계층과 소프트맥스 직전 선형 변환 사이에 동일한 가중치 행렬을 공유합니다.",
+   "paperExamples": []
+  },
+  {
+   "id": "w172",
+   "part": 6,
+   "partTitle": "Part 6. Positional Encoding & Training: 위치 주입과 학습 테크닉",
+   "no": 172,
+   "word": "residual dropout",
+   "pos": "명",
+   "meaning": "잔차 드롭아웃",
+   "context": "서브레이어 출력에 드롭아웃(P_drop=0.1)을 적용한 뒤 잔차 덧셈 및 LayerNorm을 수행하여 과적합 방지.",
+   "exampleEn": "We apply dropout to the output of each sub-layer, before it is added to the input.",
+   "exampleKo": "우리는 각 서브 레이어 출력을 입력에 더하기 전에 드롭아웃을 선제 적용합니다.",
+   "paperExamples": [
+    {
+     "sentenceId": "5.4-1",
+     "en": "We employ three types of regularization during training. Residual Dropout: We apply dropout to the output of each sub-layer, before it is added to the sub-layer input and normalized.",
+     "ko": "정규화(Regularization): 우리는 훈련 과정에서 세 가지 유형의 정규화 기법을 사용합니다. 잔차 드롭아웃(Residual Dropout): 각 서브 계층(sub-layer)의 출력이 서브 계층의 입력에 더해지고 정규화(Layer Normalization)되기 전에, 우리는 그 출력에 드롭아웃(dropout) [27]을 적용합니다."
+    },
+    {
+     "sentenceId": "6.3-7",
+     "en": "We performed only a small number of experiments to select the dropout, both attention and residual (section 5.4), learning rates and beam size on the Section 22 development set, all other parameters remained unchanged from the English-to-German base translation model.",
+     "ko": "우리는 섹션 22 개발 세트(development set)에서 드롭아웃(어텐션 및 잔차 드롭아웃 모두, 5.4절 참조), 학습률(learning rates),L2 정규화(L2 regularization)를 선택하기 위해 아주 적은 횟수의 실험만을 수행했으며, 그 외의 다른 모든 파라미터는 영어-독일어 기본 번역 모델(base translation model)의 설정을 그대로 유지했습니다."
+    }
+   ]
+  },
+  {
+   "id": "w173",
+   "part": 6,
+   "partTitle": "Part 6. Positional Encoding & Training: 위치 주입과 학습 테크닉",
+   "no": 173,
+   "word": "label smoothing",
+   "pos": "명",
+   "meaning": "레이블 스무딩 (정규화 기법)",
+   "context": "정답 원-핫 레이블을 1 대신 1-ε(0.9)로 낮추고 나머지에 균등 분배(ε_ls=0.1)하여 모델의 과확신을 억제.",
+   "exampleEn": "Label smoothing hurts perplexity as the model learns to be more unsure, but improves BLEU.",
+   "exampleKo": "레이블 스무딩은 불확실성을 학습시켜 퍼플렉시티는 낮추지만 실제 BLEU 점수는 향상시킵니다.",
+   "paperExamples": [
+    {
+     "sentenceId": "5.4-3",
+     "en": "Label Smoothing: During training, we employed label smoothing of value ε_ls = 0.1. This hurts perplexity, as the model learns to be more unsure, but improves accuracy and BLEU score.",
+     "ko": "레이블 스무딩(Label Smoothing): 훈련 중 우리는 ε_ls = 0.1 값의 레이블 스무딩(label smoothing)을 적용했습니다 [36]. 이는 모델이 덜 확신하도록(더 불확실해지도록) 학습하게 만들어 펄플렉서티(perplexity)에는 악영향을 주지만, 결과적으로 정확도와 BLEU 점수를 향상시킵니다."
+    }
+   ]
+  },
+  {
+   "id": "w174",
+   "part": 6,
+   "partTitle": "Part 6. Positional Encoding & Training: 위치 주입과 학습 테크닉",
+   "no": 174,
+   "word": "perplexity",
+   "pos": "명",
+   "meaning": "퍼플렉시티, 혼잡도 (PPL)",
+   "context": "언어 모델이 다음 단어를 예측할 때 느끼는 헷갈림의 정도. 낮을수록 뛰어난 언어 모델임.",
+   "exampleEn": "The optimized language model achieved a significantly lower perplexity score on test data.",
+   "exampleKo": "최적화된 언어 모델은 테스트 데이터에서 현저히 낮은 퍼플렉시티 점수를 달성했다.",
+   "paperExamples": [
+    {
+     "sentenceId": "5.4-3",
+     "en": "Label Smoothing: During training, we employed label smoothing of value ε_ls = 0.1. This hurts perplexity, as the model learns to be more unsure, but improves accuracy and BLEU score.",
+     "ko": "레이블 스무딩(Label Smoothing): 훈련 중 우리는 ε_ls = 0.1 값의 레이블 스무딩(label smoothing)을 적용했습니다 [36]. 이는 모델이 덜 확신하도록(더 불확실해지도록) 학습하게 만들어 펄플렉서티(perplexity)에는 악영향을 주지만, 결과적으로 정확도와 BLEU 점수를 향상시킵니다."
+    }
+   ]
+  },
+  {
+   "id": "w175",
+   "part": 6,
+   "partTitle": "Part 6. Positional Encoding & Training: 위치 주입과 학습 테크닉",
+   "no": 175,
+   "word": "hyperparameter",
+   "pos": "명",
+   "meaning": "하이퍼파라미터 (초매개변수)",
+   "context": "학습률, 드롭아웃 비율, 레이어 수 등 역전파로 학습되지 않고 연구자가 직접 설정하는 외부 설정값.",
+   "exampleEn": "Tuning critical hyperparameters such as learning rate and batch size is essential for convergence.",
+   "exampleKo": "학습률과 배치 크기 같은 핵심 하이퍼파라미터를 튜닝하는 것은 수렴에 필수적이다.",
+   "paperExamples": [
+    {
+     "sentenceId": "5.2-2",
+     "en": "For our base models using the hyperparameters described throughout the paper, each training step took about 0.4 seconds. We trained the base models for a total of 100,000 steps or 12 hours.",
+     "ko": "논문 전반에 걸쳐 설명된 하이퍼파라미터를 사용한 기본 모델(base models)의 경우, 훈련 스텝(training step)당 약 0.4초가 소요되었습니다. 우리는 기본 모델을 총 100,000 스텝, 즉 12시간 동안 훈련했습니다."
+    },
+    {
+     "sentenceId": "6.1-6",
+     "en": "We used beam search with a beam size of 4 and length penalty α = 0.6. These hyperparameters were chosen after experimentation on the development set.",
+     "ko": "우리는 빔 크기(beam size) 4와 길이 페널티(length penalty) α = 0.6을 적용한 빔 서치(beam search)를 사용했습니다 [38]. 이러한 하이퍼파라미터들은 개발 세트(development set)에서의 실험을 거쳐 선택되었습니다."
+    }
+   ]
+  },
+  {
+   "id": "w176",
+   "part": 6,
+   "partTitle": "Part 6. Positional Encoding & Training: 위치 주입과 학습 테크닉",
+   "no": 176,
+   "word": "convergence",
+   "pos": "명",
+   "meaning": "수렴 (동: converge, 반: divergence)",
+   "context": "손실 함수(Loss)가 최적의 최솟값에 안정적으로 도달하는 상태. 웜업 스케줄러가 이를 도움.",
+   "exampleEn": "Carefully scheduled learning rates promote rapid and stable convergence during training.",
+   "exampleKo": "세심하게 스케줄링된 학습률은 훈련 중 빠르고 안정적인 수렴을 촉진한다.",
+   "paperExamples": []
+  },
+  {
+   "id": "w177",
+   "part": 6,
+   "partTitle": "Part 6. Positional Encoding & Training: 위치 주입과 학습 테크닉",
+   "no": 177,
+   "word": "coefficient",
+   "pos": "명",
+   "meaning": "계수, 비례 인자",
+   "context": "Adam 옵티마이저의 모멘텀 및 분산 감쇠 계수(beta_1=0.9, beta_2=0.98).",
+   "exampleEn": "The algorithm updates internal momentum based on predefined smoothing coefficients.",
+   "exampleKo": "그 알고리즘은 사전 정의된 스무딩 계수를 기반으로 내부 모멘텀을 업데이트한다.",
+   "paperExamples": []
+  },
+  {
+   "id": "w178",
+   "part": 6,
+   "partTitle": "Part 6. Positional Encoding & Training: 위치 주입과 학습 테크닉",
+   "no": 178,
+   "word": "checkpoint",
+   "pos": "명",
+   "meaning": "체크포인트, 모델 저장본",
+   "context": "훈련 도중 주기적으로 디스크에 저장된 모델 가중치 파일. 마지막 5개 체크포인트를 평균 내어 평가.",
+   "exampleEn": "We averaged the last 5 checkpoints to obtain the final model evaluation weights.",
+   "exampleKo": "우리는 최종 모델 평가 가중치를 얻기 위해 마지막 5개의 체크포인트를 평균 냈습니다.",
+   "paperExamples": [
+    {
+     "sentenceId": "6.1-5",
+     "en": "For the base models, we used a single model obtained by averaging the last 5 checkpoints, which were written at 10-minute intervals. For the big models, we averaged the last 20 checkpoints.",
+     "ko": "기본 모델(base models)의 경우, 우리는 10분 간격으로 저장된 마지막 5개의 체크포인트를 평균하여 얻은 단일 모델을 사용했습니다. 대형 모델(big models)의 경우에는 마지막 20개의 체크포인트를 평균화했습니다."
+    },
+    {
+     "sentenceId": "6.2-2",
+     "en": "We used beam search as described in the previous section, but no checkpoint averaging. We present these results in Table 3.",
+     "ko": "우리는 이전 절에서 설명한 것과 동일하게 빔 서치(beam search)를 사용했으나, 체크포인트 평균화(checkpoint averaging)는 적용하지 않았습니다. 이러한 결과들을 표 3(Table 3)에 제시합니다."
+    }
+   ]
+  },
+  {
+   "id": "w179",
+   "part": 7,
+   "partTitle": "Part 7. Complexity, Results & Conclusion: 연산 복잡도와 최종 결론",
+   "no": 179,
+   "word": "maximum path length",
+   "pos": "명",
+   "meaning": "최대 경로 길이 (O(1) vs O(n))",
+   "context": "네트워크 내에서 임의의 두 입력 위치 간에 신호가 이동해야 하는 연산 계층 간 물리적/수학적 거리.",
+   "exampleEn": "Self-attention connects all positions with a constant O(1) maximum path length.",
+   "exampleKo": "셀프 어텐션은 모든 위치를 O(1)의 일정한 최대 경로 길이로 직접 연결합니다.",
+   "paperExamples": [
+    {
+     "sentenceId": "4-9",
+     "en": "Hence we also compare the maximum path length between any two input and output positions in networks composed of the different layer types.",
+     "ko": "따라서(Hence), 우리는 서로 다른 계층 유형(different layer types)들로 구성된 네트워크 내부에서 임의의 두 입력 및 출력 위치사이의 최대 경로 길이(maximum path length) 또한 비교합니다."
+    },
+    {
+     "sentenceId": "4-13",
+     "en": "This would increase the maximum path length to O(n/r). We plan to investigate this approach further in future work.",
+     "ko": "이렇게 하면 최대 경로 길이(maximum path length)가 O(n/r)로 증가하게 됩니다. 우리는 향후 연구(future work)에서 이러한 접근 방식을 추가로 탐구할 계획입니다."
+    }
+   ]
+  },
+  {
+   "id": "w180",
+   "part": 7,
+   "partTitle": "Part 7. Complexity, Results & Conclusion: 연산 복잡도와 최종 결론",
+   "no": 180,
+   "word": "sequential operations",
+   "pos": "명",
+   "meaning": "순차 연산 수 (O(1) vs O(n))",
+   "context": "다음 계산을 수행하기 위해 선행 계산이 완료되기를 기다려야 하는 직렬 연산 단계의 최소 횟수.",
+   "exampleEn": "Self-attention requires O(1) sequential operations, whereas RNN requires O(n).",
+   "exampleKo": "RNN은 O(n)회의 순차 연산을 필요로 하는 반면, 셀프 어텐션은 O(1)회만 필요로 합니다.",
+   "paperExamples": [
+    {
+     "sentenceId": "4-4",
+     "en": "Another is the amount of computation that can be parallelized, as measured by the minimum number of sequential operations required.",
+     "ko": "또 다른 기준은 병렬화(parallelized)할 수 있는 연산의 양이며, 이는 요구되는 최소 순차 연산 횟수(minimum number ofsequential operations)로 측정됩니다."
+    },
+    {
+     "sentenceId": "4-10",
+     "en": "As noted in Table 1, a self-attention layer connects all positions with a constant number of sequentially executed operations, whereas a recurrent layer requires O(n) sequential operations.",
+     "ko": "표 1에 명시된 바와 같이, 셀프 어텐션(self-attention) 계층은 일정하게 고정된 횟수(상수 횟수, )의 순차 실행 연산만으로 모든 위치를 연결하는 반면, 순환(recurrent) 계층은 O(n)개의 순차 연산을 필요로 합니다."
+    }
+   ]
+  },
+  {
+   "id": "w181",
+   "part": 7,
+   "partTitle": "Part 7. Complexity, Results & Conclusion: 연산 복잡도와 최종 결론",
+   "no": 181,
+   "word": "per-layer complexity",
+   "pos": "명",
+   "meaning": "계층당 연산 복잡도",
+   "context": "단일 계층을 통과할 때 소모되는 총 연산량. 셀프 어텐션은 O(n^2·d), RNN은 O(n·d^2).",
+   "exampleEn": "When sequence length n is smaller than dimension d, self-attention is faster than recurrent layers.",
+   "exampleKo": "시퀀스 길이 n이 차원 d보다 작을 때, 셀프 어텐션은 순환 계층보다 연산 속도가 빠릅니다.",
+   "paperExamples": []
+  },
+  {
+   "id": "w182",
+   "part": 7,
+   "partTitle": "Part 7. Complexity, Results & Conclusion: 연산 복잡도와 최종 결론",
+   "no": 182,
+   "word": "ablation study",
+   "pos": "명",
+   "meaning": "절제 연구 (구성 요소 제거/변형 분석)",
+   "context": "헤드 수 h, 키 차원 d_k, 레이어 수, 위치 인코딩 방식 등 특정 부품을 변경/제거하며 기여도를 측정.",
+   "exampleEn": "We conducted comprehensive ablation experiments to evaluate individual component contributions.",
+   "exampleKo": "우리는 개별 구성 요소의 기여도를 평가하기 위해 종합적인 절제 연구 실험들을 수행했습니다.",
+   "paperExamples": []
+  },
+  {
+   "id": "w183",
+   "part": 7,
+   "partTitle": "Part 7. Complexity, Results & Conclusion: 연산 복잡도와 최종 결론",
+   "no": 183,
+   "word": "constituency parsing",
+   "pos": "명",
+   "meaning": "구 구조 구문 분석",
+   "context": "문장을 문법 트리 구조(명사구 NP, 동사구 VP 등)로 계층 분석하는 태스크. 번역 외 범용성 입증용.",
+   "exampleEn": "The Transformer generalizes well by applying it successfully to English constituency parsing.",
+   "exampleKo": "트랜스포머는 영어 구 구조 구문 분석에 성공적으로 적용됨으로써 뛰어난 일반화 능력을 보입니다.",
+   "paperExamples": [
+    {
+     "sentenceId": "6.3-1",
+     "en": "To evaluate if the Transformer can generalize to other tasks we performed experiments on English constituency parsing.",
+     "ko": "6.3 영어 구구조 구문 분석(English Constituency Parsing): 트랜스포머가 다른 과업으로도 일반화(generalize)될 수 있는지를평가하기 위해, 우리는 영어 구구조 구문 분석(English constituency parsing)에 대한 실험을 수행했습니다."
+    },
+    {
+     "sentenceId": "abstract-7",
+     "en": "We show that the Transformer generalizes well to other tasks by applying it successfully to English constituency parsing both with large and limited training data.",
+     "ko": "우리는 대규모 훈련 데이터뿐만 아니라 제한된 훈련 데이터 환경에서도 Transformer를 영어 구 구조 구문 분석(constituencyparsing)에 성공적으로 적용함으로써, 이 모델이 다른 자연어 처리 과제에도 훌륭하게 일반화(확장)된다는 점을 증명합니다."
+    }
+   ]
+  },
+  {
+   "id": "w184",
+   "part": 7,
+   "partTitle": "Part 7. Complexity, Results & Conclusion: 연산 복잡도와 최종 결론",
+   "no": 184,
+   "word": "desiderata",
+   "pos": "명 (복수형)",
+   "meaning": "요구 조건들, 희망 사항들 (단수: desideratum)",
+   "context": "최적의 시퀀스 모델 아키텍처를 설계하기 위해 충족해야 하는 세 가지 핵심 목표 기준(표 1의 3대 지표).",
+   "exampleEn": "We consider three key desiderata when comparing different neural sequence architectures.",
+   "exampleKo": "우리는 서로 다른 신경망 시퀀스 아키텍처들을 비교할 때 세 가지 핵심 요구 조건들을 고려합니다.",
+   "paperExamples": [
+    {
+     "sentenceId": "4-2",
+     "en": "Motivating our use of self-attention we consider three desiderata.",
+     "ko": "셀프 어텐션(self-attention)을 선택한 이유(동기)를 설명하기 위해, 우리는 세 가지 핵심 요구 조건(desiderata)을 고려합니다."
+    }
+   ]
+  },
+  {
+   "id": "w185",
+   "part": 7,
+   "partTitle": "Part 7. Complexity, Results & Conclusion: 연산 복잡도와 최종 결론",
+   "no": 185,
+   "word": "traverse",
+   "pos": "동",
+   "meaning": "가로지르다, 통과하다",
+   "context": "신호나 그래디언트가 입력에서 출력까지 네트워크 계층 경로를 따라 이동하는 과정을 묘사.",
+   "exampleEn": "Signals must traverse multiple convolutional layers to relate distant input positions.",
+   "exampleKo": "멀리 떨어진 입력 위치들을 연결하기 위해 신호는 다수의 합성곱 계층을 가로질러 통과해야 한다.",
+   "paperExamples": [
+    {
+     "sentenceId": "4-7",
+     "en": "One key factor affecting the ability to learn such dependencies is the length of the paths forward and backward signals have to traverse in the network.",
+     "ko": "이러한 의존성을 학습하는 능력에 영향을 미치는 한 가지 핵심 요인은 순전파(forward) 및 역전파(backward) 신호가 네트워크 내에서 통과(traverse)해야만 하는 경로의 길이(length of the paths)입니다. → Q-K 1"
+    }
+   ]
+  },
+  {
+   "id": "w186",
+   "part": 7,
+   "partTitle": "Part 7. Complexity, Results & Conclusion: 연산 복잡도와 최종 결론",
+   "no": 186,
+   "word": "penalize",
+   "pos": "동",
+   "meaning": "불이익을 주다, 감점하다",
+   "context": "BLEU 점수의 Brevity Penalty: 기계번역 결과가 원문보다 지나치게 짧을 때 점수를 깎아 균형을 맞춤.",
+   "exampleEn": "The evaluation metric penalizes candidate translations that are substantially shorter than references.",
+   "exampleKo": "그 평가지표는 참조문보다 상당히 짧은 후보 번역문에 대해 불이익(감점)을 부여합니다.",
+   "paperExamples": []
+  },
+  {
+   "id": "w187",
+   "part": 7,
+   "partTitle": "Part 7. Complexity, Results & Conclusion: 연산 복잡도와 최종 결론",
+   "no": 187,
+   "word": "restricted",
+   "pos": "형",
+   "meaning": "제한된, 국소적인 (=limited)",
+   "context": "restricted self-attention: 매우 긴 문장에서 O(n^2) 비용을 줄이기 위해 r개 주변 이웃 토큰만 보도록 제한.",
+   "exampleEn": "Restricted self-attention considers only a neighborhood of size r around each respective position.",
+   "exampleKo": "제한된 셀프 어텐션은 각 위치 주변의 r 크기 이웃 영역만을 고려합니다.",
+   "paperExamples": [
+    {
+     "sentenceId": "4-12",
+     "en": "To improve computational performance for tasks involving very long sequences, self-attention could be restricted to considering only a neighborhood of size r in the input sequence centered around the respective output position.",
+     "ko": "매우 긴 시퀀스를 다루는 과업에서 계산 성능을 개선하기 위해, 셀프 어텐션은 각 출력 위치를 중심으로 입력 시퀀스 내의 크기 인 국소 이웃(neighborhood)만을 고려하도록 제한될 수 있습니다."
+    }
+   ]
+  },
+  {
+   "id": "w188",
+   "part": 7,
+   "partTitle": "Part 7. Complexity, Results & Conclusion: 연산 복잡도와 최종 결론",
+   "no": 188,
+   "word": "drawback",
+   "pos": "명",
+   "meaning": "단점, 결점 (=disadvantage)",
+   "context": "긴 시퀀스(n > d) 환경에서 셀프 어텐션의 O(n^2) 연산 복잡도가 유발하는 메모리 부담을 지적할 때 쓰임.",
+   "exampleEn": "One potential drawback of standard self-attention is its quadratic memory complexity relative to sequence length.",
+   "exampleKo": "표준 셀프 어텐션의 한 가지 잠재적 단점은 시퀀스 길이에 대한 2차 메모리 복잡도이다.",
+   "paperExamples": []
+  },
+  {
+   "id": "w189",
+   "part": 7,
+   "partTitle": "Part 7. Complexity, Results & Conclusion: 연산 복잡도와 최종 결론",
+   "no": 189,
+   "word": "substantial",
+   "pos": "형",
+   "meaning": "상당한, 실질적인 (=considerable)",
+   "context": "하이퍼파라미터 변경 시 성능 하락 폭이나 자원 절감 폭을 기술할 때 쓰이는 학술/토익 형용사.",
+   "exampleEn": "The ablation experiments revealed a substantial performance drop when reducing head count.",
+   "exampleKo": "절제 실험 결과 헤드 수를 줄였을 때 상당한 성능 저하가 발생함이 드러났다.",
+   "paperExamples": []
+  },
+  {
+   "id": "w190",
+   "part": 7,
+   "partTitle": "Part 7. Complexity, Results & Conclusion: 연산 복잡도와 최종 결론",
+   "no": 190,
+   "word": "empirically",
+   "pos": "부",
+   "meaning": "실증적으로, 실험을 통하여",
+   "context": "이론적 추정에 그치지 않고 대규모 데이터셋 벤치마크 실험 결과를 통해 직접 증명되었음을 뜻함.",
+   "exampleEn": "The effectiveness of multi-head attention was empirically verified across multiple translation pairs.",
+   "exampleKo": "멀티헤드 어텐션의 유효성은 다수의 번역 쌍 전반에서 실증적으로 검증되었다.",
+   "paperExamples": []
+  },
+  {
+   "id": "w191",
+   "part": 7,
+   "partTitle": "Part 7. Complexity, Results & Conclusion: 연산 복잡도와 최종 결론",
+   "no": 191,
+   "word": "breakthrough",
+   "pos": "명",
+   "meaning": "획기적 약진, 중대한 돌파구",
+   "context": "순환을 완전히 제거하고 어텐션만으로 전 분야 SOTA를 달성한 트랜스포머의 기술적 위상을 표현.",
+   "exampleEn": "The Transformer architecture represents an unprecedented breakthrough in representation learning.",
+   "exampleKo": "트랜스포머 아키텍처는 표현 학습 분야에서 전례 없는 획기적 돌파구를 대변합니다.",
+   "paperExamples": []
+  },
+  {
+   "id": "w192",
+   "part": 7,
+   "partTitle": "Part 7. Complexity, Results & Conclusion: 연산 복잡도와 최종 결론",
+   "no": 192,
+   "word": "streamline",
+   "pos": "동",
+   "meaning": "간소화하다, 능률화하다",
+   "context": "복잡한 재귀 연산 루프를 없애고 단일 행렬 곱셈 파이프라인으로 연산 흐름을 일원화/간소화함.",
+   "exampleEn": "Vectorized matrix multiplication streamlines the entire inference computational graph.",
+   "exampleKo": "벡터화된 행렬 곱셈은 전체 추론 연산 그래프를 대폭 간소화하고 능률화한다.",
+   "paperExamples": []
+  },
+  {
+   "id": "w193",
+   "part": 7,
+   "partTitle": "Part 7. Complexity, Results & Conclusion: 연산 복잡도와 최종 결론",
+   "no": 193,
+   "word": "versatile",
+   "pos": "형",
+   "meaning": "다재다능한, 범용의",
+   "context": "NLP 번역에서 출발하여 비전(ViT), 음성(Whisper), 멀티모달 등으로 무한 확장된 트랜스포머의 범용성.",
+   "exampleEn": "The Transformer has established itself as an exceptionally versatile universal backbone.",
+   "exampleKo": "트랜스포머는 대단히 다재다능한 범용 백본 네트워크로 확고히 자리 잡았습니다.",
+   "paperExamples": []
+  }
+ ]
+}
