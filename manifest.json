@@ -1,6 +1,6 @@
 {
  "schema": 1,
- "generatedAt": "2026-09-22T18:23:19Z",
+ "generatedAt": "2026-09-22T18:41:10Z",
  "roadmap": {
   "version": 1,
   "file": {
@@ -13,21 +13,48 @@
   {
    "id": "attention",
    "title": "Attention Is All You Need",
-   "version": 2,
-   "updatedAt": "2026-09-22T18:23:19Z",
+   "version": 3,
+   "updatedAt": "2026-09-22T18:41:10Z",
    "sentences": 175,
    "words": 193,
-   "changes": "학습 문서 교체(2026-09-23): 175문장, Conclusion·수식 정리 추가",
+   "changes": "논문 그림·표 첨부, 해설 단락·강조 표시",
    "paper": {
     "path": "papers/attention/paper.json",
-    "sha256": "af3887ef18c29c593987f0c5342cf3a66db475662ffbdb777a1d5b9554780143",
-    "size": 849971
+    "sha256": "50c975df24d5c74846ca9ff246bd80758704c7f1dcab13f16b905d0905634e9a",
+    "size": 866923
    },
    "voca": {
     "path": "papers/attention/voca.json",
     "sha256": "47259fed9f3f41f55574ba86847a65682c259b16888dc62c0775b6c4dc240f7b",
     "size": 257269
-   }
+   },
+   "media": [
+    {
+     "path": "papers/attention/media/image4.png",
+     "sha256": "76521a3b54c7702960b3c9c6f88a87a4df965da598612ef1220638aa76f606ea",
+     "size": 301276
+    },
+    {
+     "path": "papers/attention/media/image5.png",
+     "sha256": "38d139e094af01c8ae515e77fc9b43117d7c3da93905bd063eb1e2a316b17c83",
+     "size": 62745
+    },
+    {
+     "path": "papers/attention/media/image6.png",
+     "sha256": "92e3fd33ab65a980fdfb45214da7682b6371ba824a998c6c81eeacd680ba7f36",
+     "size": 71650
+    },
+    {
+     "path": "papers/attention/media/image7.png",
+     "sha256": "b0f65599120983359b93243883340f8f84bf084e8d445ebd9c626cc07e72aee5",
+     "size": 63695
+    },
+    {
+     "path": "papers/attention/media/image8.gif",
+     "sha256": "6e64b4150cbbe67820b9c76f21d479b527fb6d84ae82e34fb1a8e9a816b05651",
+     "size": 367769
+    }
+   ]
   }
  ]
 }
