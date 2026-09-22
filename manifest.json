@@ -1,6 +1,6 @@
 {
  "schema": 1,
- "generatedAt": "2026-09-19T01:31:08Z",
+ "generatedAt": "2026-09-22T18:23:19Z",
  "roadmap": {
   "version": 1,
   "file": {
@@ -13,20 +13,20 @@
   {
    "id": "attention",
    "title": "Attention Is All You Need",
-   "version": 1,
-   "updatedAt": "2026-09-19T01:31:07Z",
-   "sentences": 152,
+   "version": 2,
+   "updatedAt": "2026-09-22T18:23:19Z",
+   "sentences": 175,
    "words": 193,
-   "changes": "첫 게시",
+   "changes": "학습 문서 교체(2026-09-23): 175문장, Conclusion·수식 정리 추가",
    "paper": {
     "path": "papers/attention/paper.json",
-    "sha256": "83b661fcb04a9ee5c58948ac9134df88b92190d198a07bacf5aff6beef9b04b6",
-    "size": 928784
+    "sha256": "af3887ef18c29c593987f0c5342cf3a66db475662ffbdb777a1d5b9554780143",
+    "size": 849971
    },
    "voca": {
     "path": "papers/attention/voca.json",
-    "sha256": "ecda4182fc375c9dfc0486bebb9cf618514ea68ee250b6780ec5155d7e1c7753",
-    "size": 254124
+    "sha256": "47259fed9f3f41f55574ba86847a65682c259b16888dc62c0775b6c4dc240f7b",
+    "size": 257269
    }
   }
  ]
