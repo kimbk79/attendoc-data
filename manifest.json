@@ -1,6 +1,6 @@
 {
  "schema": 1,
- "generatedAt": "2026-09-22T18:41:10Z",
+ "generatedAt": "2026-09-23T00:37:09Z",
  "roadmap": {
   "version": 1,
   "file": {
@@ -13,15 +13,15 @@
   {
    "id": "attention",
    "title": "Attention Is All You Need",
-   "version": 3,
-   "updatedAt": "2026-09-22T18:41:10Z",
+   "version": 4,
+   "updatedAt": "2026-09-23T00:37:09Z",
    "sentences": 175,
    "words": 193,
-   "changes": "논문 그림·표 첨부, 해설 단락·강조 표시",
+   "changes": "표 지수 표기 정리",
    "paper": {
     "path": "papers/attention/paper.json",
-    "sha256": "50c975df24d5c74846ca9ff246bd80758704c7f1dcab13f16b905d0905634e9a",
-    "size": 866923
+    "sha256": "0526d333e2be977a8f8614589189bc8994097b32dcee632621fccf75884a85b1",
+    "size": 866935
    },
    "voca": {
     "path": "papers/attention/voca.json",
